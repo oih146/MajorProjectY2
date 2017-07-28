@@ -86,6 +86,7 @@
     <Compile Include="Assets\Scripts\BaseClasses\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\MagicAttack.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
