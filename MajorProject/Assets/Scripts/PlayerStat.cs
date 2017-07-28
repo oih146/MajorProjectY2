@@ -7,6 +7,7 @@ public class PlayerStat : CharacterStatSheet {
     public float m_GoodEvil;
     public float m_LawOrder;
     public float m_charisma;
+    public bool m_inBattle;
 
     // Use this for initialization
     void Start () {

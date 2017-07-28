@@ -1,10 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TurnBasedScript : MonoBehaviour {
 
-    bool m_playerTurn
+    public BattleMenuScript battleMenu;
+
+    public bool m_playerTurn;
+    public bool PlayerTurn
     {
         get
         {
@@ -13,44 +17,85 @@ public class TurnBasedScript : MonoBehaviour {
         set 
         {
             m_playerCount = 0;
+            if (value == false)
+                SetEnemyTeamTurn();
+            else
+                SetPlayerTeamTurn();
             m_playerTurn = value;
         }
     }
 
     private int m_playerCount;
-    public static CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[4];
-    public static CharacterStatSheet[] enemyObjects = new CharacterStatSheet[4];
+    public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
+    public CharacterStatSheet[] enemyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet m_attackingCharacter;
     RaycastHit hitInfo;
-
-
+    public GameObject healthBarSlider;
+    public bool animationPlaying;
     // Use this for initialization
     void Start () {
-		
-	}
+        foreach (CharacterStatSheet charSS in friendlyObjects)
+        {
+            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+            vecbuffer.y -= 30;
+            healthbarBuffer.transform.position = vecbuffer;
+            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+            //healthbarBuffer.transform.parent = gameObject.transform;
+        }
+
+        foreach (CharacterStatSheet charSS in enemyObjects)
+        {
+            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+            vecbuffer.y -= 30;
+            healthbarBuffer.transform.position = vecbuffer;
+            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+            //healthbarBuffer.transform.parent = gameObject.transform;
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        if (m_playerTurn == true && Input.GetMouseButtonDown(0))
+        if (PlayerTurn == true && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity) && hitInfo.collider.tag == "Enemy")
             {
-                m_attackingCharacter = hitInfo.collider.gameObject.GetComponent<CharacterStatSheet>();
+                if (hitInfo.collider.gameObject.GetComponent<CharacterStatSheet>().m_isDead == false)
+                {
+                    m_attackingCharacter = hitInfo.collider.gameObject.GetComponent<CharacterStatSheet>();
+                }
             }
         }
     }
 
+    CharacterStatSheet[] GetAttackingTeam()
+    {
+        if (PlayerTurn == true)
+            return friendlyObjects;
+        return enemyObjects;
+    }
+
+    CharacterStatSheet[] GetDefendingTeam()
+    {
+        if (PlayerTurn == false)
+            return friendlyObjects;
+        return enemyObjects;
+    }
+
     public void SetPlayerTeamTurn()
     {
-        m_playerTurn = true;
+        //PlayerTurn = true;
         SetPlayerButtons(true);
         m_attackingCharacter = null;
     }
 
     public void SetEnemyTeamTurn()
     {
-        m_playerTurn = false;
+        //PlayerTurn = false;
         SetPlayerButtons(false);
         m_attackingCharacter = friendlyObjects[0];
     }
@@ -59,16 +104,28 @@ public class TurnBasedScript : MonoBehaviour {
     {
         SetAttackButton(status);
         SetFleeButton(status);
+        SetMagicButton(status);
+        SetEndTurnButton(status);
     }
 
     void SetAttackButton(bool newActive)
     {
-        BattleMenuScript.AttackButton.gameObject.SetActive(newActive);
+        battleMenu.AttackButton.gameObject.SetActive(newActive);
     }
 
     void SetFleeButton(bool newActive)
     {
-        BattleMenuScript.FleeButton.gameObject.SetActive(newActive);
+        battleMenu.FleeButton.gameObject.SetActive(newActive);
+    }
+
+    void SetMagicButton(bool newActive)
+    {
+        battleMenu.MagicButton.gameObject.SetActive(newActive);
+    }
+
+    void SetEndTurnButton(bool newActive)
+    {
+        battleMenu.EndTurnButton.gameObject.SetActive(newActive);
     }
 
     public void EndTurnPressed()
@@ -79,56 +136,105 @@ public class TurnBasedScript : MonoBehaviour {
     void NextPlayerTurn()
     {
         m_playerCount++;
-        if(m_playerTurn == true && friendlyObjects[m_playerCount] == null)
+        if (m_playerCount >= GetAttackingTeam().Length)
         {
-            while (friendlyObjects[m_playerCount] == null)
-            {
-                m_playerCount++;
-                if(m_playerCount > friendlyObjects.Length)
-                {
-                    SetEnemyTeamTurn();
-                    return;
-                }
-            }
+           PlayerTurn = !PlayerTurn;
+           if (PlayerTurn == true)
+           {
+               SetPlayerButtons(true);
+               m_attackingCharacter = null;
+           }
         }
-        else if (m_playerTurn == false && enemyObjects[m_playerCount] == null)
+
+        if(PlayerTurn == false)
         {
-            while (enemyObjects[m_playerCount] == null)
-            {
-                m_playerCount++;
-                if (m_playerCount > enemyObjects.Length)
-                {
-                    SetPlayerTeamTurn();
-                    return;
-                }
-            }
+            EnemiesAttack();
+        }
+
+        SetPlayerButtons(true);
+        m_attackingCharacter = null;
+    }
+
+    public void MeleeButtonPressed()
+    {
+        if (m_attackingCharacter != null)
+        {
+
+            //Play Animation 
+            MeleeAttack(GetAttackingTeam()[m_playerCount]);
+            Debug.Log("Melee " + m_attackingCharacter.gameObject.name.ToString());
+
+            SetAttackButton(false);
+            //if (animationPlaying == false)
+            NextPlayerTurn();
         }
     }
 
-    public void AttackButtonPressed()
+    public void MagicButtonPressed()
     {
         if (m_attackingCharacter != null)
         {
             //Play Animation 
-            MeleeAttack();
-            Debug.Log("Attacked " + m_attackingCharacter.gameObject.name.ToString());
+
+            //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
         }
-        SetAttackButton(false);
+        SetMagicButton(false);
         NextPlayerTurn();
     }
 
-    public void MeleeAttack()
+    public void MeleeAttack(CharacterStatSheet attackingPlayer)
     {
-        if(m_playerTurn == true)
-            m_attackingCharacter.m_health -= friendlyObjects[m_playerCount].m_weapon.GetAttack();
-        else
-        {
-            m_attackingCharacter.m_health -= enemyObjects[m_playerCount].m_weapon.GetAttack();
-        }
+        animationPlaying = true;
+        StopCoroutine("Attacking");
+        StartCoroutine(Attacking(attackingPlayer.m_weapon));
     }
 
-    public static void SetEnemy(CharacterStatSheet[] enemyPlayers)
+    IEnumerator Attacking(WeaponBase weapontoUse)
     {
+        CharacterStatSheet attackbuffer = m_attackingCharacter;
+        yield return new WaitForSeconds(2.0f);
+        animationPlaying = false;
+        attackbuffer.m_health -= weapontoUse.GetAttack();
+        attackbuffer.DeathCheck();
+
+        Debug.Log(GetAttackingTeam()[m_playerCount].name + " is attacking ");
+
+    }
+
+    public void StartBattle(CharacterStatSheet[] friendlyPlayers, CharacterStatSheet[] enemyPlayers)
+    {
+        foreach (CharacterStatSheet charSS in friendlyPlayers)
+        {
+            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+            vecbuffer.y -= 30;
+            healthbarBuffer.transform.position = vecbuffer;
+            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+            healthbarBuffer.transform.parent = gameObject.transform;
+        }
+
+        foreach (CharacterStatSheet charSS in enemyPlayers)
+        {
+            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+            vecbuffer.y -= 30;
+            healthbarBuffer.transform.position = vecbuffer;
+            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+            healthbarBuffer.transform.parent = gameObject.transform;
+        }
+        SetPlayers(friendlyPlayers);
+        SetEnemy(enemyPlayers);
+    }
+
+    public void SetEnemy(CharacterStatSheet[] enemyPlayers)
+    {
+        for(int j = 0; j < enemyObjects.Length; j++)
+        {
+           enemyObjects[j] = null;
+        }
+        enemyObjects = new CharacterStatSheet[enemyPlayers.Length];
         int i = 0;
         foreach(CharacterStatSheet charSS in enemyPlayers)
         {
@@ -137,8 +243,13 @@ public class TurnBasedScript : MonoBehaviour {
         }
     }
 
-    public static void SetPlayers(CharacterStatSheet[] friendlyPlayers)
+    public void SetPlayers(CharacterStatSheet[] friendlyPlayers)
     {
+        for (int j = 0; j < friendlyObjects.Length; j++)
+        {
+            friendlyObjects[j] = null;
+        }
+        friendlyObjects = new CharacterStatSheet[friendlyPlayers.Length];
         int i = 0;
         foreach (CharacterStatSheet charSS in friendlyPlayers)
         {
@@ -147,36 +258,51 @@ public class TurnBasedScript : MonoBehaviour {
         }
     }
 
-    void EnemyAttacks()
+    void EnemiesAttack()
     {
-        for(;m_playerCount < enemyObjects.Length;)
+        if (GetAttackingTeam()[m_playerCount].m_isDead == false)
         {
-            MeleeAttack();
-            NextPlayerTurn();
+            EnemyTurn();
         }
+        NextPlayerTurn();
     }
 
     void EnemyTurn()
     {
         EnemyDecideTarget();
-
+        EnemyDecideAttack();
     }
 
     void EnemyDecideTarget()
     {
         int playerToAttack = Random.Range(0, friendlyObjects.Length);
+        while (friendlyObjects[playerToAttack] == null)
+        {
+            playerToAttack = Random.Range(0, friendlyObjects.Length);
+        }
         m_attackingCharacter = friendlyObjects[playerToAttack];
     }
 
     void EnemyDecideAttack()
     {
-        if(enemyObjects[m_playerCount].m_knowMagic == true)
+        if(Random.Range(0, 1) >= 0.5f && enemyObjects[m_playerCount].m_knowMagic == true)
         {
-
+            int spellIndex = Random.Range(0, enemyObjects[m_playerCount].m_spells.Length);
+            if(enemyObjects[m_playerCount].m_spells[spellIndex].m_actualCooldown > 0)
+            {
+                MeleeAttack(GetAttackingTeam()[m_playerCount]);
+                return;
+            }
+            MagicAttack(GetAttackingTeam()[m_playerCount], spellIndex);
         }
         else
         {
-
+            MeleeAttack(GetAttackingTeam()[m_playerCount]);
         }
+    }
+
+    void MagicAttack(CharacterStatSheet attackingCharacter, int spellIndex)
+    {
+        Attacking(attackingCharacter.m_spells[spellIndex]);
     }
 }

@@ -5,6 +5,9 @@ using UnityEngine;
 public class MagicAttack : WeaponBase {
 
     public string m_AttackName;
+    public int m_CooldownTimeChecker;
+    [HideInInspector]
+    public int m_actualCooldown;
 
 	// Use this for initialization
 	void Start () {

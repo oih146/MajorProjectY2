@@ -18,19 +18,33 @@ public enum LawNOrder
 
 public class CharacterStatSheet : MonoBehaviour {
 
+    public float m_maxHealth;
+    //[HideInInspector]
     public float m_health;
     public float m_mana;
     public WeaponBase m_weapon;
     public bool m_knowMagic;
     public MagicAttack[] m_spells;
+    public bool m_isDead = false;
 
     // Use this for initialization
     void Start () {
-		
+        m_health = m_maxHealth;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    public bool DeathCheck()
+    {
+        if(m_health <= 0)
+        {
+            m_isDead = true;
+            //play death anim
+            return true;
+        }
+        return false;
+    }
 }

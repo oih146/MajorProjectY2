@@ -91,10 +91,6 @@
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Editor\GitHub\CREDITS.txt" />
-    <None Include="Assets\Editor\GitHub\EULA.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
 </Project>

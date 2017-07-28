@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 public class BattleMenuScript : MonoBehaviour {
 
-    public static Button AttackButton;
-    public static Button FleeButton;
-    public static Button EndTurnButton;
+    public Button AttackButton;
+    public Button FleeButton;
+    public Button EndTurnButton;
+    public Button MagicButton;
 
 	// Use this for initialization
 	void Start () {
