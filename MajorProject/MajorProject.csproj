@@ -86,14 +86,11 @@
     <Compile Include="Assets\Scripts\BaseClasses\EnemyBase.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
+    <Compile Include="Assets\Scripts\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\MagicAttack.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Editor\GitHub\CREDITS.txt" />
-    <None Include="Assets\Editor\GitHub\EULA.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
