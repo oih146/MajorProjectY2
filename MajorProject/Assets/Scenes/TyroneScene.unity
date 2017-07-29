@@ -1004,6 +1004,7 @@ GameObject:
   - component: {fileID: 1169053349}
   - component: {fileID: 1169053348}
   - component: {fileID: 1169053352}
+  - component: {fileID: 1169053353}
   m_Layer: 0
   m_Name: Bandit
   m_TagString: Enemy
@@ -1093,7 +1094,25 @@ MonoBehaviour:
   m_knowMagic: 0
   m_spells: []
   m_isDead: 0
+  m_animator: {fileID: 1169053353}
   isCrippled: 0
+--- !u!95 &1169053353
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1169053347}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ebe7d1b9a8cf34540916c5d10e2a1033, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1321850166
 GameObject:
   m_ObjectHideFlags: 0
@@ -1106,6 +1125,7 @@ GameObject:
   - component: {fileID: 1321850168}
   - component: {fileID: 1321850167}
   - component: {fileID: 1321850171}
+  - component: {fileID: 1321850172}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1195,10 +1215,28 @@ MonoBehaviour:
   m_knowMagic: 0
   m_spells: []
   m_isDead: 0
+  m_animator: {fileID: 1321850172}
   m_GoodEvil: 0
   m_LawOrder: 0
   m_charisma: 0
   m_inBattle: 0
+--- !u!95 &1321850172
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1321850166}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ebe7d1b9a8cf34540916c5d10e2a1033, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1337527133
 GameObject:
   m_ObjectHideFlags: 0
@@ -1273,6 +1311,7 @@ GameObject:
   - component: {fileID: 1349507025}
   - component: {fileID: 1349507024}
   - component: {fileID: 1349507023}
+  - component: {fileID: 1349507028}
   m_Layer: 0
   m_Name: Bandit (1)
   m_TagString: Enemy
@@ -1298,6 +1337,7 @@ MonoBehaviour:
   m_knowMagic: 0
   m_spells: []
   m_isDead: 0
+  m_animator: {fileID: 1169053353}
   isCrippled: 0
 --- !u!23 &1349507024
 MeshRenderer:
@@ -1363,6 +1403,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1349507028
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1349507022}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ebe7d1b9a8cf34540916c5d10e2a1033, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1457161368
 GameObject:
   m_ObjectHideFlags: 0
