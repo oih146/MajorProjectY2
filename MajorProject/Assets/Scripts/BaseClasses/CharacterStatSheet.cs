@@ -27,6 +27,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public MagicAttack[] m_spells;
     public bool m_isDead = false;
     public Animator m_animator;
+    public bool m_attacking;
 
     // Use this for initialization
     void Start () {
@@ -57,5 +58,15 @@ public class CharacterStatSheet : MonoBehaviour {
     public AnimatorStateInfo GetAnimatorStateInfo()
     {
         return m_animator.GetCurrentAnimatorStateInfo(0);
+    }
+
+    public void HitPointOpen()
+    {
+        m_attacking = true;
+    }
+
+    public void HitPointClosed()
+    {
+        m_attacking = false;
     }
 }

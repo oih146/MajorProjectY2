@@ -19,8 +19,8 @@ public class TurnBasedScript : MonoBehaviour {
             m_playerCount = 0;
             if (value == false)
                 SetEnemyTeamTurn();
-            else
-                SetPlayerTeamTurn();
+            //else
+            //    SetPlayerTeamTurn();
             m_playerTurn = value;
         }
     }
@@ -29,6 +29,7 @@ public class TurnBasedScript : MonoBehaviour {
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet[] enemyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet m_attackingCharacter;
+    public CharacterStatSheet m_previousAttacker;
     RaycastHit hitInfo;
     public GameObject healthBarSlider;
     public bool animationPlaying;
@@ -145,24 +146,28 @@ public class TurnBasedScript : MonoBehaviour {
 
     IEnumerator nextPlayerTurn()
     {
+        m_previousAttacker = GetCurrentMover();
         m_playerCount++;
         if (m_playerCount >= GetAttackingTeam().Length)
         {
            PlayerTurn = !PlayerTurn;
-           if (PlayerTurn == true)
-           {
-               SetPlayerButtons(true);
-               m_attackingCharacter = null;
-           }
+            if (PlayerTurn == false)
+            {
+                SetPlayerButtons(false);
+                m_attackingCharacter = null;
+            }
         }
-        yield return new WaitForSeconds(GetCurrentMover().GetAnimatorStateInfo().length - GetCurrentMover().GetAnimatorStateInfo().normalizedTime);
-        if(PlayerTurn == false)
+        yield return new WaitForSeconds(GetCurrentMover().GetAnimatorStateInfo().length);
+        if (PlayerTurn == false)
         {
             EnemiesAttack();
         }
 
-        SetPlayerButtons(true);
-        m_attackingCharacter = null;
+        if (PlayerTurn == true)
+        {
+            SetPlayerButtons(true);
+            m_attackingCharacter = null;
+        }
     }
 
     public void MeleeButtonPressed()
@@ -186,31 +191,31 @@ public class TurnBasedScript : MonoBehaviour {
         if (m_attackingCharacter != null)
         {
             //Play Animation 
-
+            Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
+            MagicAttack(GetCurrentMover(), 0);
             //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
+            SetMagicButton(false);
+            NextPlayerTurn();
         }
-        SetMagicButton(false);
-        NextPlayerTurn();
+
     }
 
     public void MeleeAttack(CharacterStatSheet attackingPlayer)
     {
         animationPlaying = true;
-        StopCoroutine("Attacking");
+        //StopCoroutine("Attacking");
         GetCurrentMover().m_animator.Play("MeleeAttack");
         StartCoroutine(Attacking(attackingPlayer.m_weapon));
     }
 
     IEnumerator Attacking(WeaponBase weapontoUse)
     {
-        CharacterStatSheet attackbuffer = m_attackingCharacter;
-        yield return new WaitForSeconds(0);
-        animationPlaying = false;
-        attackbuffer.m_health -= weapontoUse.GetAttack();
-        attackbuffer.DeathCheck();
-
+        CharacterStatSheet attackerBuffer = m_attackingCharacter;
         Debug.Log(GetAttackingTeam()[m_playerCount].name + " is attacking ");
-
+        yield return new WaitUntil(() => GetCurrentMover().m_attacking);
+        animationPlaying = false;
+        attackerBuffer.m_health -= weapontoUse.GetAttack();
+        attackerBuffer.DeathCheck();
     }
 
     public void StartBattle(CharacterStatSheet[] friendlyPlayers, CharacterStatSheet[] enemyPlayers)
@@ -315,6 +320,8 @@ public class TurnBasedScript : MonoBehaviour {
 
     void MagicAttack(CharacterStatSheet attackingCharacter, int spellIndex)
     {
-        Attacking(attackingCharacter.m_spells[spellIndex]);
+        GetCurrentMover().m_animator.Play("MagicAttack");
+        StartCoroutine(Attacking(attackingCharacter.m_spells[spellIndex]));
+        //Attacking(attackingCharacter.m_spells[spellIndex]);
     }
 }
