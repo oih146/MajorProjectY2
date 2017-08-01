@@ -8,6 +8,7 @@ public class PlayerStat : CharacterStatSheet {
     public float m_LawOrder;
     public float m_charisma;
     public bool m_inBattle;
+    public CharacterStatSheet[] m_allies = new CharacterStatSheet[1];
 
     // Use this for initialization
     void Start () {
