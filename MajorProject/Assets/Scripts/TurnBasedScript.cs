@@ -24,7 +24,26 @@ public class TurnBasedScript : MonoBehaviour {
             m_playerTurn = value;
         }
     }
-
+    public bool m_isFighting = false;
+    public bool BattleActive
+    {
+        get
+        {
+            return m_isFighting;
+        }
+        set
+        {
+            if(value == true)
+            {
+                SetPlayerButtons(true);
+            }
+            else
+            {
+                SetPlayerButtons(false);
+            }
+            m_isFighting = value;
+        }
+    }
     private int m_playerCount;
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet[] enemyObjects = new CharacterStatSheet[0];
@@ -60,7 +79,7 @@ public class TurnBasedScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (PlayerTurn == true && Input.GetMouseButtonDown(0))
+        if (BattleActive == true && PlayerTurn == true && Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hitInfo, Mathf.Infinity) && hitInfo.collider.tag == "Enemy")
@@ -231,6 +250,7 @@ public class TurnBasedScript : MonoBehaviour {
             healthbarBuffer.transform.parent = gameObject.transform;
         }
 
+        //Straight Characters given
         foreach (CharacterStatSheet charSS in enemyPlayers)
         {
             GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
@@ -241,6 +261,7 @@ public class TurnBasedScript : MonoBehaviour {
             healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
             healthbarBuffer.transform.parent = gameObject.transform;
         }
+
         SetPlayers(friendlyPlayers);
         SetEnemy(enemyPlayers);
     }
