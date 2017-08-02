@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using PixelCrushers.DialogueSystem;
 public class TurnBasedScript : MonoBehaviour {
 
     public BattleMenuScript battleMenu;
@@ -199,6 +199,7 @@ public class TurnBasedScript : MonoBehaviour {
                 friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = true;
             }
         }
+        
     }
 
     public void MeleeButtonPressed()

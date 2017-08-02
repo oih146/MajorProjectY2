@@ -173,6 +173,7 @@
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
+    <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
   </ItemGroup>
   <ItemGroup>
