@@ -28,10 +28,12 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_isDead = false;
     public Animator m_animator;
     public bool m_attacking;
+    public UnityEngine.UI.Slider m_healthBar;
 
     // Use this for initialization
     void Start () {
         m_health = m_maxHealth;
+        m_healthBar = gameObject.GetComponentInChildren<UnityEngine.UI.Slider>();
 	}
 	
 	// Update is called once per frame
@@ -48,6 +50,16 @@ public class CharacterStatSheet : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public UnityEngine.UI.Slider GetHealthBar()
+    {
+        return m_healthBar;
+    }
+
+    public void ReCheckHealth()
+    {
+        m_healthBar.value = m_health;
     }
 
     public void GetHitAnim()

@@ -44,6 +44,8 @@ public class TurnBasedScript : MonoBehaviour {
             m_isFighting = value;
         }
     }
+
+    public bool BattleOver = false;
     private int m_playerCount;
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet[] enemyObjects = new CharacterStatSheet[0];
@@ -54,27 +56,27 @@ public class TurnBasedScript : MonoBehaviour {
     public bool animationPlaying;
     // Use this for initialization
     void Start () {
-        foreach (CharacterStatSheet charSS in friendlyObjects)
-        {
-            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
-            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y -= 30;
-            healthbarBuffer.transform.position = vecbuffer;
-            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
-            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
-            //healthbarBuffer.transform.parent = gameObject.transform;
-        }
+        //foreach (CharacterStatSheet charSS in friendlyObjects)
+        //{
+        //    GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+        //    Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+        //    vecbuffer.y -= 30;
+        //    healthbarBuffer.transform.position = vecbuffer;
+        //    healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+        //    healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+        //    //healthbarBuffer.transform.parent = gameObject.transform;
+        //}
 
-        foreach (CharacterStatSheet charSS in enemyObjects)
-        {
-            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
-            Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y -= 30;
-            healthbarBuffer.transform.position = vecbuffer;
-            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
-            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
-            //healthbarBuffer.transform.parent = gameObject.transform;
-        }
+        //foreach (CharacterStatSheet charSS in enemyObjects)
+        //{
+        //    GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+        //    Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
+        //    vecbuffer.y -= 30;
+        //    healthbarBuffer.transform.position = vecbuffer;
+        //    healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+        //    healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
+        //    //healthbarBuffer.transform.parent = gameObject.transform;
+        //}
     }
 	
 	// Update is called once per frame
@@ -177,15 +179,25 @@ public class TurnBasedScript : MonoBehaviour {
             }
         }
         yield return new WaitForSeconds(GetCurrentMover().GetAnimatorStateInfo().length);
-        if (PlayerTurn == false)
+        if (PlayerTurn == false && enemyObjects.Length > 0)
         {
             EnemiesAttack();
         }
 
-        if (PlayerTurn == true)
+        if (PlayerTurn == true && BattleOver != true)
         {
             SetPlayerButtons(true);
             m_attackingCharacter = null;
+        }
+
+        if (BattleOver)
+        {
+            SetPlayerButtons(false);
+            if (friendlyObjects.Length > 0)
+            {
+                friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = false;
+                friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = true;
+            }
         }
     }
 
@@ -229,37 +241,77 @@ public class TurnBasedScript : MonoBehaviour {
 
     IEnumerator Attacking(WeaponBase weapontoUse)
     {
+        CharacterStatSheet attacker = GetCurrentMover();
         CharacterStatSheet attackerBuffer = m_attackingCharacter;
+        int turnbuffer = m_playerCount;
+        bool playerTurnBuffer = PlayerTurn;
         Debug.Log(GetAttackingTeam()[m_playerCount].name + " is attacking ");
-        yield return new WaitUntil(() => GetCurrentMover().m_attacking);
+        yield return new WaitUntil(() => attacker.m_attacking);
         animationPlaying = false;
         attackerBuffer.m_health -= weapontoUse.GetAttack();
-        attackerBuffer.DeathCheck();
+        attackerBuffer.ReCheckHealth();
+        Debug.Log("Attack Hit");
+        //if(PlayerTurn != playerTurnBuffer)
+        //{
+        //    if (PlayerTurn == true)
+        //        friendlyObjects[turnbuffer].m_health = attackerBuffer.m_health;
+        //    else
+        //        enemyObjects[turnbuffer].m_health = attackerBuffer.m_health;
+        //} else
+        //{
+        //    if (PlayerTurn == true)
+        //        enemyObjects[turnbuffer].m_health = attackerBuffer.m_health;
+        //    else
+        //        friendlyObjects[turnbuffer].m_health = attackerBuffer.m_health;
+        //}
+
+
+        if(attackerBuffer.DeathCheck())
+        {
+            if (playerTurnBuffer == true)
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+            else
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+            if (enemyObjects.Length == 0)
+            {
+                Debug.Log("Battle Over, You Win");
+                BattleOver = true;
+            }
+            else if (friendlyObjects.Length == 0)
+            {
+                Debug.Log("Battle Over, You Lose");
+                BattleOver = true;
+            }
+
+        }
     }
 
     public void StartBattle(CharacterStatSheet[] friendlyPlayers, CharacterStatSheet[] enemyPlayers)
     {
         foreach (CharacterStatSheet charSS in friendlyPlayers)
         {
-            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            charSS.GetHealthBar().gameObject.SetActive(true);
+            //GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.transform.GetChild(0).transform);
             Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y -= 30;
-            healthbarBuffer.transform.position = vecbuffer;
-            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
-            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
-            healthbarBuffer.transform.parent = gameObject.transform;
+            vecbuffer.y += 30;
+            charSS.GetHealthBar().transform.position = vecbuffer;
+            charSS.GetHealthBar().GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            charSS.GetHealthBar().GetComponent<Slider>().value = charSS.m_health;
+            //healthbarBuffer.transform.SetParent(charSS.transform.GetChild(0).transform);
         }
 
         //Straight Characters given
         foreach (CharacterStatSheet charSS in enemyPlayers)
         {
-            GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.gameObject.transform);
+            charSS.GetHealthBar().gameObject.SetActive(true);
+            //GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.transform.GetChild(0).transform);
             Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y -= 30;
-            healthbarBuffer.transform.position = vecbuffer;
-            healthbarBuffer.GetComponent<Slider>().maxValue = charSS.m_maxHealth;
-            healthbarBuffer.GetComponent<Slider>().value = charSS.m_health;
-            healthbarBuffer.transform.parent = gameObject.transform;
+            vecbuffer.y += 30;
+            charSS.GetHealthBar().transform.position = vecbuffer;
+            charSS.GetHealthBar().transform.localScale = new Vector3(1, 1, 1);
+            charSS.GetHealthBar().GetComponent<Slider>().maxValue = charSS.m_maxHealth;
+            charSS.GetHealthBar().GetComponent<Slider>().value = charSS.m_health;
+            //healthbarBuffer.transform.SetParent(charSS.transform.GetChild(0).transform);
         }
 
         SetPlayers(friendlyPlayers);
@@ -344,5 +396,23 @@ public class TurnBasedScript : MonoBehaviour {
         GetCurrentMover().m_animator.Play("MagicAttack");
         StartCoroutine(Attacking(attackingCharacter.m_spells[spellIndex]));
         //Attacking(attackingCharacter.m_spells[spellIndex]);
+    }
+
+    CharacterStatSheet[] ResizeArrayOnDeath(CharacterStatSheet[] oldArray)
+    {
+        //
+        int playerCounter = 0;
+        foreach (CharacterStatSheet charSS in oldArray)
+        {
+            if (charSS != null && charSS.m_isDead != true)
+                playerCounter++;
+        }
+        CharacterStatSheet[] newArray = new CharacterStatSheet[playerCounter];
+        for (int i = 0; i < newArray.Length; i++)
+        {
+            if (oldArray[i] != null && oldArray[i].m_isDead != true)
+                newArray[i] = oldArray[i];
+        }
+        return newArray;
     }
 }

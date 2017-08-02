@@ -5,12 +5,12 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour {
 
     public float maxSpeed = 10f;
-    Rigidbody2D rigid;
+    Rigidbody rigid;
 
 	// Use this for initialization
 	void Start () {
-        rigid = gameObject.GetComponent<Rigidbody2D>();
-        rigid.gravityScale = 0;
+        rigid = gameObject.GetComponent<Rigidbody>();
+        rigid.useGravity = false;
 	}
 	
 	// Update is called once per frame
