@@ -44,8 +44,9 @@ public class TurnBasedScript : MonoBehaviour {
             m_isFighting = value;
         }
     }
-
+    public Vector3 attackPos;
     public bool BattleOver = false;
+    public bool WonBattleQ;
     private int m_playerCount;
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
     public CharacterStatSheet[] enemyObjects = new CharacterStatSheet[0];
@@ -167,6 +168,13 @@ public class TurnBasedScript : MonoBehaviour {
 
     IEnumerator nextPlayerTurn()
     {
+        yield return new WaitForSeconds(GetCurrentMover().GetAnimatorStateInfo().length);
+        //attackPos = GetCurrentMover().GetComponentInParent<Transform>().position;
+        //attackPos.z = 0;
+        //GetCurrentMover().GetComponentInParent<Transform>().position = attackPos;
+        //attackPos = m_attackingCharacter.GetComponentInParent<Transform>().position;
+        //attackPos.z = 0;
+        //m_attackingCharacter.GetComponentInParent<Transform>().position = attackPos;
         m_previousAttacker = GetCurrentMover();
         m_playerCount++;
         if (m_playerCount >= GetAttackingTeam().Length)
@@ -178,7 +186,6 @@ public class TurnBasedScript : MonoBehaviour {
                 m_attackingCharacter = null;
             }
         }
-        yield return new WaitForSeconds(GetCurrentMover().GetAnimatorStateInfo().length);
         if (PlayerTurn == false && enemyObjects.Length > 0)
         {
             EnemiesAttack();
@@ -192,12 +199,7 @@ public class TurnBasedScript : MonoBehaviour {
 
         if (BattleOver)
         {
-            SetPlayerButtons(false);
-            if (friendlyObjects.Length > 0)
-            {
-                friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = false;
-                friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = true;
-            }
+            EndBattle(WonBattleQ);
         }
         
     }
@@ -237,6 +239,12 @@ public class TurnBasedScript : MonoBehaviour {
         animationPlaying = true;
         //StopCoroutine("Attacking");
         GetCurrentMover().m_animator.Play("MeleeAttack");
+        //attackPos = GetCurrentMover().GetComponentInParent<Transform>().position;
+        //attackPos.z = -1;
+        //GetCurrentMover().GetComponentInParent<Transform>().position = attackPos;
+        //attackPos = m_attackingCharacter.GetComponentInParent<Transform>().position;
+        //attackPos.z = -1;
+        //m_attackingCharacter.GetComponentInParent<Transform>().position = attackPos;
         StartCoroutine(Attacking(attackingPlayer.m_weapon));
     }
 
@@ -277,11 +285,13 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 Debug.Log("Battle Over, You Win");
                 BattleOver = true;
+                WonBattleQ = true;
             }
             else if (friendlyObjects.Length == 0)
             {
                 Debug.Log("Battle Over, You Lose");
                 BattleOver = true;
+                WonBattleQ = false;
             }
 
         }
@@ -407,6 +417,8 @@ public class TurnBasedScript : MonoBehaviour {
         {
             if (charSS != null && charSS.m_isDead != true)
                 playerCounter++;
+            else if (charSS.m_isDead == true)
+                charSS.GetComponent<BoxCollider>().enabled = false;
         }
         CharacterStatSheet[] newArray = new CharacterStatSheet[playerCounter];
         for (int i = 0; i < newArray.Length; i++)
@@ -415,5 +427,22 @@ public class TurnBasedScript : MonoBehaviour {
                 newArray[i] = oldArray[i];
         }
         return newArray;
+    }
+
+    public void EndBattle(bool didWin)
+    {
+        SetPlayerButtons(false);
+        friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
+        friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
+        foreach (CharacterStatSheet charSS in friendlyObjects)
+        {
+            charSS.GetHealthBar().gameObject.SetActive(false);
+        }
+
+        //Straight Characters given
+        foreach (CharacterStatSheet charSS in enemyObjects)
+        {
+            charSS.GetHealthBar().gameObject.SetActive(false);
+        }
     }
 }
