@@ -20,15 +20,15 @@ MonoBehaviour:
     bold: 1
     italic: 0
     underline: 0
-  - color: {r: .266666681, g: .713725507, b: .203921571, a: 1}
+  - color: {r: 0.26666668, g: 0.7137255, b: 0.20392157, a: 1}
     bold: 1
     italic: 0
     underline: 0
-  - color: {r: .274509817, g: .533333361, b: .90196079, a: 1}
+  - color: {r: 0.27450982, g: 0.53333336, b: 0.9019608, a: 1}
     bold: 1
     italic: 0
     underline: 0
-  - color: {r: .800000012, g: .800000012, b: .800000012, a: 1}
+  - color: {r: 0.8, g: 0.8, b: 0.8, a: 1}
     bold: 1
     italic: 0
     underline: 0
@@ -151,7 +151,7 @@ MonoBehaviour:
     - title: Initial Value
       value: 
       type: 0
-      typeString: 
+      typeString: CustomFieldType_Text
     - title: Description
       value: Show alert messages during gameplay by setting this variable.
       type: 0
@@ -175,6 +175,23 @@ MonoBehaviour:
       value: 2
       type: 5
       typeString: 
+    overrideSettings:
+      useOverrides: 0
+      overrideSubtitleSettings: 0
+      showNPCSubtitlesDuringLine: 1
+      showNPCSubtitlesWithResponses: 1
+      showPCSubtitlesDuringLine: 0
+      skipPCSubtitleAfterResponseMenu: 0
+      subtitleCharsPerSecond: 30
+      minSubtitleSeconds: 2
+      continueButton: 0
+      overrideSequenceSettings: 0
+      defaultSequence: 
+      defaultPlayerSequence: 
+      defaultResponseMenuSequence: 
+      overrideInputSettings: 0
+      alwaysForceResponseMenu: 1
+      responseTimeout: 0
     nodeColor: Red
     dialogueEntries:
     - id: 0
@@ -229,6 +246,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -281,6 +303,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: Item["Hack_the_Mainframe"].State ~= "success"
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -327,6 +354,11 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -379,6 +411,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: Item["Hack_the_Mainframe"].State == "success"
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -425,6 +462,11 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -444,11 +486,28 @@ MonoBehaviour:
     - title: Actor
       value: 1
       type: 5
-      typeString: 
+      typeString: CustomFieldType_Actor
     - title: Conversant
       value: 3
       type: 5
-      typeString: 
+      typeString: CustomFieldType_Actor
+    overrideSettings:
+      useOverrides: 0
+      overrideSubtitleSettings: 0
+      showNPCSubtitlesDuringLine: 1
+      showNPCSubtitlesWithResponses: 1
+      showPCSubtitlesDuringLine: 0
+      skipPCSubtitleAfterResponseMenu: 0
+      subtitleCharsPerSecond: 30
+      minSubtitleSeconds: 2
+      continueButton: 0
+      overrideSequenceSettings: 0
+      defaultSequence: 
+      defaultPlayerSequence: 
+      defaultResponseMenuSequence: 
+      overrideInputSettings: 0
+      alwaysForceResponseMenu: 1
+      responseTimeout: 0
     nodeColor: Red
     dialogueEntries:
     - id: 0
@@ -471,7 +530,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: 
-        type: 4
+        type: 0
         typeString: 
       - title: Video File
         value: 
@@ -503,10 +562,15 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 119
+        y: 20
         width: 160
         height: 30
     - id: 1
@@ -555,10 +619,15 @@ MonoBehaviour:
         priority: 2
       conditionsString: Item["Hack_the_Mainframe"].State == "unassigned"
       userScript: Item["Hack_the_Mainframe"].State = "active"
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 31
+        y: 70
         width: 160
         height: 30
     - id: 2
@@ -601,10 +670,15 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: 'Variable["Alert"] = "Orders: Hack the Mainframe"'
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 30
+        y: 120
         width: 160
         height: 30
     - id: 3
@@ -653,10 +727,15 @@ MonoBehaviour:
         priority: 2
       conditionsString: Item["Hack_the_Mainframe"].State == "success"
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 210
+        y: 70
         width: 160
         height: 30
     - id: 4
@@ -679,7 +758,7 @@ MonoBehaviour:
         typeString: 
       - title: Dialogue Text
         value: 
-        type: 4
+        type: 0
         typeString: 
       - title: Video File
         value: 
@@ -699,10 +778,15 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 0
-        y: 0
+        x: 214
+        y: 120
         width: 160
         height: 30
   - id: 3
@@ -723,6 +807,23 @@ MonoBehaviour:
       value: 4
       type: 5
       typeString: 
+    overrideSettings:
+      useOverrides: 0
+      overrideSubtitleSettings: 0
+      showNPCSubtitlesDuringLine: 1
+      showNPCSubtitlesWithResponses: 1
+      showPCSubtitlesDuringLine: 0
+      skipPCSubtitleAfterResponseMenu: 0
+      subtitleCharsPerSecond: 30
+      minSubtitleSeconds: 2
+      continueButton: 0
+      overrideSequenceSettings: 0
+      defaultSequence: 
+      defaultPlayerSequence: 
+      defaultResponseMenuSequence: 
+      overrideInputSettings: 0
+      alwaysForceResponseMenu: 1
+      responseTimeout: 0
     nodeColor: Red
     dialogueEntries:
     - id: 0
@@ -771,6 +872,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -829,6 +935,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -875,6 +986,11 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -927,6 +1043,11 @@ MonoBehaviour:
         priority: 2
       conditionsString: Item["Hack_the_Mainframe"].State == "active"
       userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0
@@ -981,6 +1102,11 @@ MonoBehaviour:
       userScript: 'Item["Hack_the_Mainframe"].State = "success"
 
         Variable["Alert"] = "Accomplished: Hack the Mainframe"'
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
         x: 0

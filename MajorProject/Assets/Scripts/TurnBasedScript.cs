@@ -238,7 +238,8 @@ public class TurnBasedScript : MonoBehaviour {
     {
         animationPlaying = true;
         //StopCoroutine("Attacking");
-        GetCurrentMover().m_animator.Play("MeleeAttack");
+        GetCurrentMover().m_animator.Play("Stab");
+        //GetCurrentMover().m_animator.Play("MeleeAttack");
         //attackPos = GetCurrentMover().GetComponentInParent<Transform>().position;
         //attackPos.z = -1;
         //GetCurrentMover().GetComponentInParent<Transform>().position = attackPos;
@@ -340,6 +341,7 @@ public class TurnBasedScript : MonoBehaviour {
         foreach(CharacterStatSheet charSS in enemyPlayers)
         {
             enemyObjects[i] = charSS;
+            charSS.m_animator.Play("Idle");
             i++;
         }
     }
@@ -355,6 +357,7 @@ public class TurnBasedScript : MonoBehaviour {
         foreach (CharacterStatSheet charSS in friendlyPlayers)
         {
             friendlyObjects[i] = charSS;
+            charSS.m_animator.Play("Idle");
             i++;
         }
     }
@@ -418,7 +421,10 @@ public class TurnBasedScript : MonoBehaviour {
             if (charSS != null && charSS.m_isDead != true)
                 playerCounter++;
             else if (charSS.m_isDead == true)
+            {
                 charSS.GetComponent<BoxCollider>().enabled = false;
+                charSS.GetHealthBar().gameObject.SetActive(false);
+            }
         }
         CharacterStatSheet[] newArray = new CharacterStatSheet[playerCounter];
         for (int i = 0; i < newArray.Length; i++)
@@ -437,12 +443,14 @@ public class TurnBasedScript : MonoBehaviour {
         foreach (CharacterStatSheet charSS in friendlyObjects)
         {
             charSS.GetHealthBar().gameObject.SetActive(false);
+            charSS.m_animator.Stop();
         }
 
         //Straight Characters given
         foreach (CharacterStatSheet charSS in enemyObjects)
         {
             charSS.GetHealthBar().gameObject.SetActive(false);
+            charSS.m_animator.Stop();
         }
     }
 }

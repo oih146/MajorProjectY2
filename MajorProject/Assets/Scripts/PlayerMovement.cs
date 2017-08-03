@@ -11,8 +11,8 @@ public class PlayerMovement : MonoBehaviour {
 	void Start () {
         rigid = gameObject.GetComponent<Rigidbody>();
         rigid.useGravity = false;
-        rigid.isKinematic = true;
-        enabled = false;
+        //rigid.isKinematic = true;
+        //enabled = false;
 	}
 	
 	// Update is called once per frame

@@ -47,6 +47,7 @@ public class CharacterStatSheet : MonoBehaviour {
         {
             m_isDead = true;
             //play death anim
+            m_animator.Stop();
             return true;
         }
         return false;
