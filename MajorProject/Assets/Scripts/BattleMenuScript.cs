@@ -9,6 +9,7 @@ public class BattleMenuScript : MonoBehaviour {
     public Button FleeButton;
     public Button EndTurnButton;
     public Button MagicButton;
+    public Button CancelAttackButton;
 
 	// Use this for initialization
 	void Start () {

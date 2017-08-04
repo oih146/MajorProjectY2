@@ -4,16 +4,16 @@ using UnityEngine;
 
 public enum GoodNEvil
 {
-    Knight = 0,
-    BlackGuard = -1,
-    Paladin = 1
+    Knight = 50,
+    BlackGuard = 0,
+    Paladin = 100
 }
 
 public enum LawNOrder
 {
-    Neutral = 0,
-    Lawful = 1,
-    Chaotic = -1
+    Neutral = 50,
+    Lawful = 100,
+    Chaotic = 0
 }
 
 public class CharacterStatSheet : MonoBehaviour {
@@ -21,7 +21,32 @@ public class CharacterStatSheet : MonoBehaviour {
     public float m_maxHealth;
     //[HideInInspector]
     public float m_health;
-    public float m_mana;
+
+    public float Health
+    {
+        get
+        {
+            return m_health;
+        }
+
+        set
+        {
+            m_health = value;
+        }
+    }
+    public float m_armour;
+    public float Armour
+    {
+        get
+        {
+            return m_armour;
+        }
+
+        set
+        {
+            m_armour = value;
+        }
+    }
     public WeaponBase m_weapon;
     public bool m_knowMagic;
     public MagicAttack[] m_spells;

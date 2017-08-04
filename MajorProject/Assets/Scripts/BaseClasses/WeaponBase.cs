@@ -5,6 +5,7 @@ using UnityEngine;
 public class WeaponBase : MonoBehaviour {
 
     public float m_attackDamage;
+    public bool m_attackAll;
     //public float m_LawOrderShift;
     public Animator m_animator;
 
