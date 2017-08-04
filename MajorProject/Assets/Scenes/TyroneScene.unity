@@ -1651,7 +1651,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22425718, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 22425718, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_SizeDelta.x
@@ -1659,7 +1659,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22425718, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 22425720, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_AnchorMin.y
@@ -4388,7 +4388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!23 &993440102
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4624,10 +4624,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8872b5070f86f1e478f6af853f5eb1bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttackButton: {fileID: 759599492}
-  FleeButton: {fileID: 755428234}
-  EndTurnButton: {fileID: 182445985}
-  MagicButton: {fileID: 399670677}
+  AttackButton: {fileID: 0}
+  FleeButton: {fileID: 0}
+  EndTurnButton: {fileID: 0}
+  MagicButton: {fileID: 0}
   CancelAttackButton: {fileID: 0}
 --- !u!114 &1053617244 stripped
 MonoBehaviour:

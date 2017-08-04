@@ -182,6 +182,9 @@
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
+    <Compile Include="Assets\Scripts\UI\Button.cs" />
+    <Compile Include="Assets\Scripts\UI\Credits.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dialogue System\DLLs\_README.txt" />
