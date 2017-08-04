@@ -408,6 +408,11 @@ public class TurnBasedScript : MonoBehaviour {
         Vector3 buff = friendlyObjects[0].GetHealthBar().transform.position;
         buff.y += 120;
         friendlyObjects[0].GetHealthBar().transform.position = buff;
+        PlayerStat dummy = (PlayerStat)friendlyObjects[0];
+        for(int i = 1; i < dummy.m_spellsAvaliable + 1; i++)
+        {
+            battleMenu.MagicButton.transform.GetChild(i).gameObject.SetActive(true);
+        }
         //Meant to reposition ally health bar, follow script throws off placement
         //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
         //otherbuff.y += 35;
