@@ -163,6 +163,7 @@
     <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateQuestLogWindow.cs" />
     <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateTextFieldUI.cs" />
     <Compile Include="Assets\PointerBounce.cs" />
+    <Compile Include="Assets\Scripts\AlignmentLines.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Background.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\CharacterStatSheet.cs" />
@@ -182,6 +183,9 @@
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
+    <Compile Include="Assets\Scripts\UI\Buttons.cs" />
+    <Compile Include="Assets\Scripts\UI\Credits.cs" />
+    <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Dialogue System\DLLs\_README.txt" />

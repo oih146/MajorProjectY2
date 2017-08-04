@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour {
     public GameObject[] menus;
-    public Button[] menuButtons;
-    public Button[] optionButtons;
-    public Button[] creditButtons;
+    public Buttons[] menuButtons;
+    public Buttons[] optionButtons;
+    public Buttons[] creditButtons;
     int curMenu = 0;
 
 

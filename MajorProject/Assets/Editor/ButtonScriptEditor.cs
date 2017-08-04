@@ -4,15 +4,15 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
-[CustomEditor(typeof(Button))]
+[CustomEditor(typeof(Buttons))]
 public class NewBehaviourScript : Editor {
 
     public override void OnInspectorGUI()
     {
-        Button myButton = (Button)target;
+        Buttons myButton = (Buttons)target;
 
         EditorGUILayout.LabelField("Current Menu:", SceneManager.GetActiveScene().name);
-        myButton.buttonType = (Buttons)EditorGUILayout.EnumPopup("Button Type", myButton.buttonType);
+        myButton.buttonType = (Buttonss)EditorGUILayout.EnumPopup("Button Type", myButton.buttonType);
         myButton.transType = (Transitions)EditorGUILayout.EnumPopup("Transition Type", myButton.transType);
         EditorGUILayout.Space();
         EditorGUILayout.LabelField("Transition Options");

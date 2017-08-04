@@ -236,7 +236,7 @@ public class TurnBasedScript : MonoBehaviour {
     public void MagicButtonPressed()
     {
         bool magicAvaliable = false;
-        for(int i = 1; i < battleMenu.MagicButton.transform.childCount; i++)
+        for(int i = battleMenu.MagicButton.transform.childCount - 1; i > 0; i--)
         {
             if (battleMenu.MagicButton.transform.GetChild(i).gameObject.activeInHierarchy == true)
             {
