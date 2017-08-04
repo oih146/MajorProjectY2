@@ -162,7 +162,6 @@
     <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateDialogueUI.cs" />
     <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateQuestLogWindow.cs" />
     <Compile Include="Assets\Dialogue System\Scripts\Templates\TemplateTextFieldUI.cs" />
-    <Compile Include="Assets\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\AlignmentLines.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Background.cs" />
@@ -171,6 +170,7 @@
     <Compile Include="Assets\Scripts\BaseClasses\WeaponBase.cs" />
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
     <Compile Include="Assets\Scripts\BattleTrigger.cs" />
+    <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\EndPrototype.cs" />
     <Compile Include="Assets\Scripts\FollowTarget.cs" />
@@ -179,11 +179,12 @@
     <Compile Include="Assets\Scripts\Notification.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
+    <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
-    <Compile Include="Assets\Scripts\UI\Buttons.cs" />
+    <Compile Include="Assets\Scripts\UI\Button.cs" />
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
   </ItemGroup>

@@ -5,12 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public enum Buttons { Start, Exit }
+public enum Buttonss { Start, Exit }
 public enum Transitions { Pulse, ColorTransition}
 
-public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
+public class Buttons : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler, IPointerClickHandler
 {
-    public Buttons buttonType;
+    public Buttonss buttonType;
     public Transitions transType;
     Color defaultColour;
     bool pulseActive = false;

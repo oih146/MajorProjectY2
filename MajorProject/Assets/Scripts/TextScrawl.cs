@@ -5,23 +5,27 @@ using UnityEngine;
 public class TextScrawl : MonoBehaviour {
 
     public PlayerMovement player;
-    public UnityEngine.UI.Scrollbar verticalScroller;
+    public UnityEngine.UI.Text textBox;
     public UnityEngine.UI.Image blackScreen;
     public bool fadeIn = false;
+    public float m_yPosLimit;
+    public float m_riseSpeed;
 	// Use this for initialization
 	void Start () {
-        verticalScroller.value = 1;
+
     }
 	
 	// Update is called once per frame
 	void Update () {
-        if (verticalScroller.value > 0)
+        if (textBox.gameObject.transform.localPosition.y < m_yPosLimit - 30)
         {
-            verticalScroller.value -= 0.001f;
+            Vector3 buff = textBox.transform.localPosition;
+            buff.y = Mathf.Lerp(buff.y, m_yPosLimit, m_riseSpeed);
+            textBox.transform.localPosition = buff;
         }
         else
         {
-            verticalScroller.transform.parent.gameObject.SetActive(false);
+            textBox.transform.parent.gameObject.SetActive(false);
             fadeIn = true;
         }
         if (fadeIn && blackScreen.color.a > 0.001f)
