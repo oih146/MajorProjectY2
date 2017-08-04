@@ -227,15 +227,12 @@ public class TurnBasedScript : MonoBehaviour {
 
     public void MagicButtonPressed()
     {
-        if (m_attackingCharacter != null)
-        {
             //Play Animation 
             Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
             MagicAttack(GetCurrentMover(), 0);
             //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
             SetMagicButton(false);
             NextPlayerTurn();
-        }
 
     }
 
