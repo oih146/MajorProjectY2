@@ -138,6 +138,7 @@ public class TurnBasedScript : MonoBehaviour {
         //SetFleeButton(status);
         SetMagicButton(status);
         SetEndTurnButton(status);
+        SetSpellCharges(status);
     }
 
     void SetAttackButton(bool newActive)
@@ -153,6 +154,14 @@ public class TurnBasedScript : MonoBehaviour {
     void SetMagicButton(bool newActive)
     {
         battleMenu.MagicButton.gameObject.SetActive(newActive);
+    }
+
+    void SetSpellCharges(bool newActive)
+    {
+        foreach(Image imag in battleMenu.spellCharges)
+        {
+            imag.gameObject.SetActive(newActive);
+        }
     }
 
     void SetEndTurnButton(bool newActive)
@@ -236,11 +245,11 @@ public class TurnBasedScript : MonoBehaviour {
     public void MagicButtonPressed()
     {
         bool magicAvaliable = false;
-        for(int i = 1; i < battleMenu.MagicButton.transform.childCount; i++)
+        for(int i = battleMenu.spellCharges.Length - 1; i > 0; i--)
         {
-            if (battleMenu.MagicButton.transform.GetChild(i).gameObject.activeInHierarchy == true)
+            if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
             {
-                battleMenu.MagicButton.transform.GetChild(i).gameObject.SetActive(false);
+                battleMenu.spellCharges[i].gameObject.SetActive(false);
                 magicAvaliable = true;
                 break;
             }
@@ -409,9 +418,9 @@ public class TurnBasedScript : MonoBehaviour {
         buff.y += 120;
         friendlyObjects[0].GetHealthBar().transform.position = buff;
         PlayerStat dummy = (PlayerStat)friendlyObjects[0];
-        for(int i = 1; i < dummy.m_spellsAvaliable + 1; i++)
+        for(int i = 0; i < dummy.m_spellsAvaliable; i++)
         {
-            battleMenu.MagicButton.transform.GetChild(i).gameObject.SetActive(true);
+            battleMenu.spellCharges[i].gameObject.SetActive(true);
         }
         //Meant to reposition ally health bar, follow script throws off placement
         //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);

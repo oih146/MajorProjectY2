@@ -5,6 +5,7 @@ using PixelCrushers.DialogueSystem;
 
 public class PlayerStat : CharacterStatSheet {
 
+    public AlignmentLines m_alignmentLines;
     public float m_GoodEvil;
     public float Light
     {
@@ -17,9 +18,15 @@ public class PlayerStat : CharacterStatSheet {
         {
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-220, 40, 1);
-            buff.GetComponent<UnityEngine.UI.Text>().text = "Light is " + value;
-            m_GoodEvil = value;
+            buff.transform.localPosition = new Vector3(-300, 0, 1);
+            if (value < 0)
+                m_GoodEvil = 0;
+            else if (value > 100)
+                m_GoodEvil = 100;
+            else
+                m_GoodEvil = value;
+            buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine((int)m_GoodEvil);
+
         }
     }
     public float m_OrderChaos;
@@ -34,16 +41,22 @@ public class PlayerStat : CharacterStatSheet {
         {
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-220, 28);
-            buff.GetComponent<UnityEngine.UI.Text>().text = "Law is " + value;
-            m_OrderChaos = value;
+            buff.transform.localPosition = new Vector3(-300, -15, 1);
+            if (value < 0)
+                m_OrderChaos = 0;
+            else if (value > 100)
+                m_OrderChaos = 100;
+            else
+                m_OrderChaos = value;
+            buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine((int)m_OrderChaos);
+
         }
     }
     public GameObject m_notificationBox;
     public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
-    public int m_maxSpellsPerDay;
+    public static int m_maxSpellsPerDay = 3;
     public int MaxSpells
     {
         get
@@ -68,7 +81,7 @@ public class PlayerStat : CharacterStatSheet {
 
     // Use this for initialization
     void Start () {
-		
+        m_spellsAvaliable = m_maxSpellsPerDay;
 	}
 	
 	// Update is called once per frame
