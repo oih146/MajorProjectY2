@@ -43,6 +43,27 @@ public class PlayerStat : CharacterStatSheet {
     public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
+    public int m_maxSpellsPerDay;
+    public int MaxSpells
+    {
+        get
+        {
+            return m_maxSpellsPerDay;
+        }
+    }
+    public int m_spellsAvaliable;
+    public int SpellAvaliable
+    {
+        get
+        {
+            return m_spellsAvaliable;
+        }
+
+        set
+        {
+            m_spellsAvaliable = value;
+        }
+    }
     public CharacterStatSheet[] m_allies = new CharacterStatSheet[1];
 
     // Use this for initialization
