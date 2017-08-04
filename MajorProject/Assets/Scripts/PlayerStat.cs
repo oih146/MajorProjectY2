@@ -15,13 +15,10 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            if (value != m_GoodEvil)
-            {
-                GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-                buff.SetActive(true);
-                buff.transform.position = new Vector3(-220, 40);
-                buff.GetComponent<UnityEngine.UI.Text>().text = "Light is " + value;
-            }
+            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
+            buff.SetActive(true);
+            buff.transform.localPosition = new Vector3(-220, 40, 1);
+            buff.GetComponent<UnityEngine.UI.Text>().text = "Light is " + value;
             m_GoodEvil = value;
         }
     }
@@ -35,13 +32,10 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            if (value != m_OrderChaos)
-            {
-                GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-                buff.SetActive(true);
-                buff.transform.position = new Vector3(-220, 40);
-                buff.GetComponent<UnityEngine.UI.Text>().text = "Law is " + value;
-            }
+            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
+            buff.SetActive(true);
+            buff.transform.localPosition = new Vector3(-220, 28);
+            buff.GetComponent<UnityEngine.UI.Text>().text = "Law is " + value;
             m_OrderChaos = value;
         }
     }
@@ -63,9 +57,16 @@ public class PlayerStat : CharacterStatSheet {
 
     public void CheckAlignment()
     {
-        AddToOrderChaos(DialogueLua.GetVariable("Law").AsFloat);
-        AddToGoodEvil(DialogueLua.GetVariable("Light").AsFloat);
+       SetAlignment();
+    }
+
+    void SetAlignment()
+    {
+        if(DialogueLua.GetVariable("Law").AsFloat != 0)
+            AddToOrderChaos(DialogueLua.GetVariable("Law").AsFloat);
         DialogueLua.SetVariable("Law", 0);
+        if(DialogueLua.GetVariable("Light").AsFloat != 0)
+            AddToGoodEvil(DialogueLua.GetVariable("Light").AsFloat);
         DialogueLua.SetVariable("Light", 0);
     }
 

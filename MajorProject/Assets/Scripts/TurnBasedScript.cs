@@ -7,6 +7,8 @@ public class TurnBasedScript : MonoBehaviour {
 
     public BattleMenuScript battleMenu;
 
+    public PointerBounce turnPointer;
+
     public bool m_playerTurn;
     public bool PlayerTurn
     {
@@ -177,6 +179,7 @@ public class TurnBasedScript : MonoBehaviour {
         //m_attackingCharacter.GetComponentInParent<Transform>().position = attackPos;
         m_previousAttacker = GetCurrentMover();
         m_playerCount++;
+        turnPointer.gameObject.SetActive(true);
         if (m_playerCount >= GetAttackingTeam().Length)
         {
            PlayerTurn = !PlayerTurn;
@@ -201,7 +204,9 @@ public class TurnBasedScript : MonoBehaviour {
         {
             EndBattle(WonBattleQ);
         }
-        
+        else
+            SetTurnPointer();
+
     }
 
     public void MeleeButtonPressed()
@@ -239,6 +244,8 @@ public class TurnBasedScript : MonoBehaviour {
         animationPlaying = true;
         //StopCoroutine("Attacking");
         GetCurrentMover().m_animator.Play("Stab");
+        turnPointer.gameObject.SetActive(false);
+        //turnPointer.FindNextPos(Camera.main.WorldToScreenPoint(GetCurrentMover().transform.position));
         //GetCurrentMover().m_animator.Play("MeleeAttack");
         //attackPos = GetCurrentMover().GetComponentInParent<Transform>().position;
         //attackPos.z = -1;
@@ -279,7 +286,12 @@ public class TurnBasedScript : MonoBehaviour {
         if(attackerBuffer.DeathCheck())
         {
             if (playerTurnBuffer == true)
+            {
                 enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                Debug.Log("Battle Over, You Lose");
+                BattleOver = true;
+                WonBattleQ = false;
+            }
             else
                 friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
             if (enemyObjects.Length == 0)
@@ -287,12 +299,6 @@ public class TurnBasedScript : MonoBehaviour {
                 Debug.Log("Battle Over, You Win");
                 BattleOver = true;
                 WonBattleQ = true;
-            }
-            else if (friendlyObjects.Length == 0)
-            {
-                Debug.Log("Battle Over, You Lose");
-                BattleOver = true;
-                WonBattleQ = false;
             }
 
         }
@@ -305,7 +311,7 @@ public class TurnBasedScript : MonoBehaviour {
             charSS.GetHealthBar().gameObject.SetActive(true);
             //GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.transform.GetChild(0).transform);
             Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y += 30;
+            vecbuffer.y += 35;
             charSS.GetHealthBar().transform.position = vecbuffer;
             charSS.GetHealthBar().GetComponent<Slider>().maxValue = charSS.m_maxHealth;
             charSS.GetHealthBar().GetComponent<Slider>().value = charSS.m_health;
@@ -318,16 +324,26 @@ public class TurnBasedScript : MonoBehaviour {
             charSS.GetHealthBar().gameObject.SetActive(true);
             //GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.transform.GetChild(0).transform);
             Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y += 30;
+            vecbuffer.y += 35;
             charSS.GetHealthBar().transform.position = vecbuffer;
             charSS.GetHealthBar().transform.localScale = new Vector3(1, 1, 1);
             charSS.GetHealthBar().GetComponent<Slider>().maxValue = charSS.m_maxHealth;
             charSS.GetHealthBar().GetComponent<Slider>().value = charSS.m_health;
             //healthbarBuffer.transform.SetParent(charSS.transform.GetChild(0).transform);
         }
-
+        m_playerCount = 0;
         SetPlayers(friendlyPlayers);
         SetEnemy(enemyPlayers);
+        turnPointer.gameObject.SetActive(true);
+
+        Vector3 buff = friendlyObjects[0].GetHealthBar().transform.position;
+        buff.y += 120;
+        friendlyObjects[0].GetHealthBar().transform.position = buff;
+        //Meant to reposition ally health bar, follow script throws off placement
+        //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
+        //otherbuff.y += 35;
+        //friendlyObjects[1].GetHealthBar().transform.position = otherbuff;
+        SetTurnPointer();
     }
 
     public void SetEnemy(CharacterStatSheet[] enemyPlayers)
@@ -414,7 +430,6 @@ public class TurnBasedScript : MonoBehaviour {
 
     CharacterStatSheet[] ResizeArrayOnDeath(CharacterStatSheet[] oldArray)
     {
-        //
         int playerCounter = 0;
         foreach (CharacterStatSheet charSS in oldArray)
         {
@@ -427,10 +442,14 @@ public class TurnBasedScript : MonoBehaviour {
             }
         }
         CharacterStatSheet[] newArray = new CharacterStatSheet[playerCounter];
-        for (int i = 0; i < newArray.Length; i++)
+        int y = 0;
+        for (int i = 0; y < newArray.Length; i++)
         {
             if (oldArray[i] != null && oldArray[i].m_isDead != true)
-                newArray[i] = oldArray[i];
+            {
+                newArray[y] = oldArray[i];
+                y++;
+            }
         }
         return newArray;
     }
@@ -452,5 +471,12 @@ public class TurnBasedScript : MonoBehaviour {
             charSS.GetHealthBar().gameObject.SetActive(false);
             charSS.m_animator.Stop();
         }
+    }
+
+    void SetTurnPointer()
+    {
+        Vector3 buff = GetCurrentMover().transform.position;
+        buff.y += 3;
+        turnPointer.FindNextPos(Camera.main.WorldToScreenPoint(buff));
     }
 }

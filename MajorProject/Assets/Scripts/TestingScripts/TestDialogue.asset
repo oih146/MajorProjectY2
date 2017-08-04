@@ -518,7 +518,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["Law"] = "-30";
+      userScript: Variable["Law"] = -30;
       onExecute:
         m_PersistentCalls:
           m_Calls:
