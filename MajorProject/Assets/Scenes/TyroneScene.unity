@@ -2060,7 +2060,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 22425732, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_SizeDelta.x
-      value: 468
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 22425732, guid: 58ac37417e60e534f91138088a3e6f70, type: 2}
       propertyPath: m_SizeDelta.y
@@ -7327,9 +7327,60 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 212033659368573122, guid: 20bd8e5b7d52e5742897ed8723d3e58a,
+        type: 2}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212033659368573122, guid: 20bd8e5b7d52e5742897ed8723d3e58a,
+        type: 2}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 212033659368573122, guid: 20bd8e5b7d52e5742897ed8723d3e58a,
+        type: 2}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 20bd8e5b7d52e5742897ed8723d3e58a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1922249478 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1825087728186630, guid: 20bd8e5b7d52e5742897ed8723d3e58a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1922249477}
+--- !u!1 &1922249479 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1311109559833262, guid: 20bd8e5b7d52e5742897ed8723d3e58a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1922249477}
+--- !u!114 &1922249480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1922249478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70aa29c6d9288dd4b8171e1d11f74b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parallaxTarget: {fileID: 283066841}
+  m_moveSpeed: 0.1
+--- !u!114 &1922249481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1922249479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70aa29c6d9288dd4b8171e1d11f74b9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_parallaxTarget: {fileID: 283066841}
+  m_moveSpeed: 0.3
 --- !u!1 &1953656619
 GameObject:
   m_ObjectHideFlags: 0
