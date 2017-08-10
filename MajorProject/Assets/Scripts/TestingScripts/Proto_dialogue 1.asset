@@ -200,6 +200,20 @@ MonoBehaviour:
       value: Spell points
       type: 0
       typeString: 
+  - id: 7
+    fields:
+    - title: Name
+      value: ConTrigger
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: 
+      type: 0
+      typeString: CustomFieldType_Text
   conversations:
   - id: 1
     fields:
@@ -2819,7 +2833,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["ConTrigger"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2892,7 +2906,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["ConTrigger"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2966,7 +2980,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["ConTrigger"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3040,7 +3054,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Variable["Law"] = -2;
+      userScript: Variable["Law"] = -2; Variable["ConTrigger"] = true
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -3184,8 +3198,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1051.6494
-        y: 495.77316
+        x: 1050.6494
+        y: 494.77316
         width: 160
         height: 30
     - id: 16
@@ -3252,8 +3266,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1252.6804
-        y: 498.86597
+        x: 1251.6804
+        y: 500.86597
         width: 160
         height: 30
     - id: 17
@@ -4203,7 +4217,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 727.9382
+        x: 726.9382
         y: 397.31955
         width: 160
         height: 30
@@ -4253,6 +4267,10 @@ MonoBehaviour:
         value: 
         type: 0
         typeString: 
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
       conversationID: 3
       isRoot: 0
       isGroup: 0
@@ -4262,7 +4280,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: 
+      userScript: Variable["Merch_dead"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4338,8 +4356,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1098.0411
-        y: 398.35043
+        x: 1100.0411
+        y: 397.35043
         width: 160
         height: 30
     - id: 14
@@ -4481,8 +4499,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 718.65985
-        y: 511.75256
+        x: 725.65985
+        y: 515.75256
         width: 160
         height: 30
   - id: 4

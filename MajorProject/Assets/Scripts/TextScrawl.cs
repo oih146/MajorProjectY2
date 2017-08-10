@@ -25,6 +25,7 @@ public class TextScrawl : MonoBehaviour {
         else
         {
             textBox.transform.parent.gameObject.SetActive(false);
+            gameObject.SetActive(false);
             fadeScreen.m_fadeIn = true;
             fadeScreen.m_fading = true;
         }

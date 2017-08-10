@@ -54,16 +54,19 @@ public class CharacterStatSheet : MonoBehaviour {
     public Animator m_animator;
     public bool m_attacking;
     public UnityEngine.UI.Slider m_healthBar;
-
+    public bool FadeDeath = false;
+    public SpriteRenderer m_renderer;
+    public float m_fadeSpeed;
     // Use this for initialization
     void Start () {
+
         m_health = m_maxHealth;
         m_healthBar = gameObject.GetComponentInChildren<UnityEngine.UI.Slider>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+
 	}
 
     public bool DeathCheck()
@@ -73,6 +76,7 @@ public class CharacterStatSheet : MonoBehaviour {
             m_isDead = true;
             //play death anim
             m_animator.Stop();
+            StartFadeDeath();
             return true;
         }
         return false;
@@ -106,5 +110,21 @@ public class CharacterStatSheet : MonoBehaviour {
     public void HitPointClosed()
     {
         m_attacking = false;
+    }
+
+    public void StartFadeDeath()
+    {
+        FadeDeath = true;
+    }
+    public void FadingDeath()
+    {
+        Color buffCol = m_renderer.color;
+        buffCol.a = Mathf.Lerp(m_renderer.color.a, 0, m_fadeSpeed * Time.deltaTime);
+        m_renderer.color = buffCol;
+        if (m_renderer.color.a < 0.001f)
+        {
+            FadeDeath = false;
+            gameObject.SetActive(false);
+        }
     }
 }

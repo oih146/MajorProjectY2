@@ -250,7 +250,7 @@ public class TurnBasedScript : MonoBehaviour {
     public void MagicButtonPressed()
     {
         bool magicAvaliable = false;
-        for(int i = battleMenu.spellCharges.Length - 1; i > 0; i--)
+        for(int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
         {
             if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
             {
@@ -407,9 +407,8 @@ public class TurnBasedScript : MonoBehaviour {
             charSS.GetHealthBar().gameObject.SetActive(true);
             //GameObject healthbarBuffer = Instantiate(healthBarSlider, charSS.transform.GetChild(0).transform);
             Vector3 vecbuffer = Camera.main.WorldToScreenPoint(charSS.transform.position);
-            vecbuffer.y += 35;
+            vecbuffer.y += 85;
             charSS.GetHealthBar().transform.position = vecbuffer;
-            charSS.GetHealthBar().transform.localScale = new Vector3(1, 1, 1);
             charSS.GetHealthBar().GetComponent<Slider>().maxValue = charSS.m_maxHealth;
             charSS.GetHealthBar().GetComponent<Slider>().value = charSS.m_health;
             //healthbarBuffer.transform.SetParent(charSS.transform.GetChild(0).transform);
@@ -537,13 +536,23 @@ public class TurnBasedScript : MonoBehaviour {
 
     public void EndBattle(bool didWin)
     {
-        SetPlayerButtons(false);
-        turnPointer.gameObject.SetActive(false);
         if (didWin)
         {
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
+            int spellLeft = 0;
+            foreach(Image spell in battleMenu.spellCharges)
+            {
+                if(spell.gameObject.activeInHierarchy == true)
+                {
+                    spellLeft++;
+                }
+            }
+            PlayerStat playStat = (PlayerStat)friendlyObjects[0];
+            playStat.SpellAvaliable = spellLeft;
         }
+        SetPlayerButtons(false);
+        turnPointer.gameObject.SetActive(false);
         foreach (CharacterStatSheet charSS in friendlyObjects)
         {
             charSS.GetHealthBar().gameObject.SetActive(false);
