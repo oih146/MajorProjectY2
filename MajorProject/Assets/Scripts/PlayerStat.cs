@@ -56,7 +56,7 @@ public class PlayerStat : CharacterStatSheet {
     public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
-    public static int m_maxSpellsPerDay = 3;
+    public static int m_maxSpellsPerDay = 2;
     public int MaxSpells
     {
         get
@@ -89,7 +89,19 @@ public class PlayerStat : CharacterStatSheet {
 		
 	}
 
-    public void CheckAlignment()
+    void OnEnable()
+    {
+        ConversationEvents.OnConversationStart += CheckSpellsPerDay;
+        ConversationEvents.OnConversationEnd += SetSpellsPerDay;
+    }
+
+    void OnDisable()
+    {
+        ConversationEvents.OnConversationStart -= CheckSpellsPerDay;
+        ConversationEvents.OnConversationEnd -= SetSpellsPerDay;
+    }
+
+    public void CheckPlayerStats()
     {
        SetAlignment();
     }
@@ -102,6 +114,16 @@ public class PlayerStat : CharacterStatSheet {
         if(DialogueLua.GetVariable("Light").AsFloat != 0)
             AddToGoodEvil(DialogueLua.GetVariable("Light").AsFloat);
         DialogueLua.SetVariable("Light", 0);
+    }
+
+    void CheckSpellsPerDay()
+    {
+        DialogueLua.SetVariable("SP", SpellAvaliable);
+    }
+
+    void SetSpellsPerDay()
+    {
+        SpellAvaliable = DialogueLua.GetVariable("SP").AsInt;
     }
 
     public void AddToOrderChaos(float amountToAdd)

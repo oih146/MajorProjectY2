@@ -118,6 +118,20 @@ MonoBehaviour:
       value: Good and Evil Alignment
       type: 0
       typeString: CustomFieldType_Text
+  - id: 4
+    fields:
+    - title: Name
+      value: ConTrigger
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: False
+      type: 2
+      typeString: CustomFieldType_Boolean
+    - title: Description
+      value: Triggers Events During Conversation
+      type: 0
+      typeString: CustomFieldType_Text
   conversations:
   - id: 1
     fields:
@@ -545,7 +559,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 306
+        x: 305
         y: 184
         width: 160
         height: 30
@@ -630,8 +644,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 282.28867
-        y: 259.62888
+        x: 281.28867
+        y: 257.62888
         width: 160
         height: 30
     - id: 6
@@ -1205,7 +1219,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["ConTrigger"] = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -1354,8 +1368,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 466
-        y: 589
+        x: 468.1277
+        y: 594.31915
         width: 160
         height: 30
     - id: 16

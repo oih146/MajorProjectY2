@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EndPrototype : MonoBehaviour {
 
-    public GameObject endPrototypeScreen;
-    public PlayerMovement player;
+    public FadeBlack m_fadeBlack;
 
 	// Use this for initialization
 	void Start () {
@@ -21,8 +20,10 @@ public class EndPrototype : MonoBehaviour {
     {
         if(hit.tag == "Player")
         {
-            player.SetMovement(false);
-            endPrototypeScreen.SetActive(true);
+            m_fadeBlack.m_fadeIn = false;
+            m_fadeBlack.m_fading = true;
+            FadeBlack.Activate();
+
         }
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class BattleTrigger : MonoBehaviour {
 
     public TurnBasedScript battleStarter;
+    public bool m_DoMove;
+    public bool m_DoTalk;
 
 	// Use this for initialization
 	void Start () {
@@ -16,6 +18,15 @@ public class BattleTrigger : MonoBehaviour {
 		
 	}
 
+    int FindNotBandits()
+    {
+        int total = 0;
+        if (m_DoMove == true)
+            total++;
+        if (m_DoTalk == true)
+            total++;
+        return total;
+    }
 
     void OnTriggerEnter(Collider hit)
     {
@@ -34,8 +45,9 @@ public class BattleTrigger : MonoBehaviour {
             }
             battleStarter.BattleActive = true;
             Debug.Log("BATTLE!");
-            CharacterStatSheet[] buffer = new CharacterStatSheet[gameObject.transform.childCount];
-            for(int i = 0; i < gameObject.transform.childCount; i++)
+            int takeFromChidCount = FindNotBandits();
+            CharacterStatSheet[] buffer = new CharacterStatSheet[gameObject.transform.childCount - takeFromChidCount];
+            for(int i = 0; i < gameObject.transform.childCount - takeFromChidCount; i++)
             {
                 buffer[i] = gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<CharacterStatSheet>();
             }

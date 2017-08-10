@@ -8,7 +8,6 @@ public class TurnBasedScript : MonoBehaviour {
     public BattleMenuScript battleMenu;
 
     public PointerBounce turnPointer;
-    public GameObject DeathScreen;
     bool m_cancelAttack;
     bool m_moveOn;
     public bool m_playerTurn;
@@ -138,7 +137,8 @@ public class TurnBasedScript : MonoBehaviour {
         //SetFleeButton(status);
         SetMagicButton(status);
         SetEndTurnButton(status);
-        SetSpellCharges(status);
+        SetSpellRoot(status);
+        //SetSpellCharges(status);
     }
 
     void SetAttackButton(bool newActive)
@@ -154,6 +154,11 @@ public class TurnBasedScript : MonoBehaviour {
     void SetMagicButton(bool newActive)
     {
         battleMenu.MagicButton.gameObject.SetActive(newActive);
+    }
+
+    void SetSpellRoot(bool newActive)
+    {
+        battleMenu.SpellChargeRoot.SetActive(newActive);
     }
 
     void SetSpellCharges(bool newActive)
@@ -415,7 +420,7 @@ public class TurnBasedScript : MonoBehaviour {
         turnPointer.gameObject.SetActive(true);
 
         Vector3 buff = friendlyObjects[0].GetHealthBar().transform.position;
-        buff.y += 120;
+        buff.y += 50;
         friendlyObjects[0].GetHealthBar().transform.position = buff;
         PlayerStat dummy = (PlayerStat)friendlyObjects[0];
         for(int i = 0; i < dummy.m_spellsAvaliable; i++)
@@ -552,8 +557,8 @@ public class TurnBasedScript : MonoBehaviour {
             charSS.m_animator.Stop();
         }
 
-        if (!didWin)
-            DeathScreen.SetActive(true);
+        //if (!didWin)
+            
     }
 
     void SetTurnPointer()
