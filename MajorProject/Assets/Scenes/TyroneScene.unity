@@ -5707,7 +5707,7 @@ MonoBehaviour:
     lastEvaluationValue: 0
   skipIfNoValidEntries: 0
   exclusive: 0
-  conversant: {fileID: 254613389}
+  conversant: {fileID: 2043005572}
   useConversationTitlePicker: 1
   selectedDatabase: {fileID: 11400000, guid: a0056df944dae1a4ea71bac4aaf274c5, type: 2}
   actor: {fileID: 283066841}
@@ -5723,7 +5723,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1.77
+  m_Radius: 3.41
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1321850171
 MonoBehaviour:
