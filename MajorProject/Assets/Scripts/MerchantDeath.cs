@@ -12,7 +12,7 @@ public class MerchantDeath : CharacterStatSheet {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(DialogueLua.GetVariable("Merch_dead").AsBool.ToString());
+        //Debug.Log(DialogueLua.GetVariable("Merch_dead").AsBool.ToString());
         if (DialogueLua.GetVariable("Merch_dead").AsBool == true)
         {
             FadeDeath = true;

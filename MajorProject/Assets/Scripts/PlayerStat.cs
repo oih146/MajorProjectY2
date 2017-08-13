@@ -25,8 +25,10 @@ public class PlayerStat : CharacterStatSheet {
                 m_GoodEvil = 100;
             else
                 m_GoodEvil = value;
-            buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine((int)m_GoodEvil);
-
+            if(value > 0)
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
+            else
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
         }
     }
     public float m_OrderChaos;
@@ -48,7 +50,10 @@ public class PlayerStat : CharacterStatSheet {
                 m_OrderChaos = 100;
             else
                 m_OrderChaos = value;
-            buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine((int)m_OrderChaos);
+            if (value > 0)
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
+            else
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
 
         }
     }

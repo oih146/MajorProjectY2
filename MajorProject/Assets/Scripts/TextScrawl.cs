@@ -18,24 +18,7 @@ public class TextScrawl : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-        //if (textBox.gameObject.transform.localPosition.y < m_yPosLimit - 100)
-        //{
-        //    Vector3 buff = textBox.transform.localPosition;
-        //    buff.y = Mathf.Lerp(buff.y, m_yPosLimit, m_riseSpeed);
-        //    textBox.transform.localPosition = buff;
-        //}
-        //else if(textBox.gameObject.transform.localPosition.y > m_yPosLimit - 100 || Input.GetButtonDown("Jump"))
-        //{
-        //    textBox.transform.parent.gameObject.SetActive(false);
-
-        //    fadeScreen.m_fadeIn = true;
-        //    fadeScreen.m_fading = true;
-        //    gameObject.SetActive(false);
-        //}
-    }
-
-    void FixedUpdate()
+    void Update()
     {
         if (textBox.gameObject.transform.localPosition.y < m_yPosLimit - 1f)
         {
@@ -46,12 +29,19 @@ public class TextScrawl : MonoBehaviour {
             buff.y = Mathf.Lerp(m_initYPos, m_yPosLimit, percentageComplete);
             textBox.transform.localPosition = buff;
         }
-        else if (textBox.gameObject.transform.localPosition.y > m_yPosLimit - 1f || Input.GetButtonDown("Jump"))
+        else if (textBox.gameObject.transform.localPosition.y > m_yPosLimit - 1f)
         {
             textBox.transform.parent.gameObject.SetActive(false);
 
-            fadeScreen.m_fadeIn = true;
-            fadeScreen.m_fading = true;
+            FadeBlack.Activate(true);
+            gameObject.SetActive(false);
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            textBox.transform.parent.gameObject.SetActive(false);
+
+            FadeBlack.Activate(true);
             gameObject.SetActive(false);
         }
     }
