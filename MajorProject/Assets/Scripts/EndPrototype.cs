@@ -20,9 +20,7 @@ public class EndPrototype : MonoBehaviour {
     {
         if(hit.tag == "Player")
         {
-            m_fadeBlack.m_fadeIn = false;
-            m_fadeBlack.m_fading = true;
-            FadeBlack.Activate();
+            FadeBlack.Activate(false);
 
         }
     }

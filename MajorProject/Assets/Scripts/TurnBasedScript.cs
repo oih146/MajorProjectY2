@@ -317,6 +317,7 @@ public class TurnBasedScript : MonoBehaviour {
         Debug.Log(GetAttackingTeam()[m_playerCount].name + " is attacking ");
         yield return new WaitUntil(() => attacker.m_attacking);
         animationPlaying = false;
+        Debug.Log("Attacking");
         if (weapontoUse.m_attackAll == false)
         {
             attackerBuffer.m_health -= weapontoUse.GetAttack();
@@ -482,10 +483,10 @@ public class TurnBasedScript : MonoBehaviour {
 
     void EnemyDecideTarget()
     {
-        int playerToAttack = Random.Range(0, friendlyObjects.Length);
+        int playerToAttack = Random.Range(0, friendlyObjects.Length - 1);
         while (friendlyObjects[playerToAttack] == null)
         {
-            playerToAttack = Random.Range(0, friendlyObjects.Length);
+            playerToAttack = Random.Range(0, friendlyObjects.Length - 1);
         }
         m_attackingCharacter = friendlyObjects[playerToAttack];
     }

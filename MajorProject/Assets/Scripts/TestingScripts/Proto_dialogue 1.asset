@@ -1169,7 +1169,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 820
-        y: 451
+        y: 450
         width: 160
         height: 30
     - id: 12
@@ -4209,7 +4209,7 @@ MonoBehaviour:
         priority: 2
       conditionsString: Variable["SP"] > 0
       userScript: 'Variable["Light"] = 2; Variable["Law"] = 2; Variable["Merch_heal"]
-        = True; '
+        = true; '
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4280,7 +4280,7 @@ MonoBehaviour:
       conditionPriority: 2
       outgoingLinks: []
       conditionsString: 
-      userScript: Variable["Merch_dead"] = true;
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -4348,7 +4348,7 @@ MonoBehaviour:
       outgoingLinks: []
       conditionsString: 
       userScript: Variable["Light"] = -2; Variable["Law"] = -2; Variable["Merch_dead"]
-        = True;
+        = true;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
