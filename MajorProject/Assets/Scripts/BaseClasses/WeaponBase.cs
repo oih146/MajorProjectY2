@@ -2,12 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponBase : MonoBehaviour {
 
+public enum AttackStrength
+{
+    Light,
+    Normal,
+    Heavy
+}
+
+public class WeaponBase : MonoBehaviour {
+    
     public float m_attackDamage;
     public bool m_attackAll;
     //public float m_LawOrderShift;
-    public Animator m_animator;
+    public Motion m_animToPlay;
 
     // Use this for initialization
     void Start () {
@@ -18,6 +26,11 @@ public class WeaponBase : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public Motion GetAnimationToPlay()
+    {
+        return m_animToPlay;
+    }
 
     public float GetAttack()
     {

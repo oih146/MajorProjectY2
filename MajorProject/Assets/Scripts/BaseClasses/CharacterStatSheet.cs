@@ -16,6 +16,7 @@ public enum LawNOrder
     Chaotic = 0
 }
 
+[RequireComponent(typeof(CombatStats))]
 public class CharacterStatSheet : MonoBehaviour {
 
     public float m_maxHealth;
@@ -47,27 +48,41 @@ public class CharacterStatSheet : MonoBehaviour {
             m_armour = value;
         }
     }
+    //LEAVE THIS BLANK
+    public WeaponBase m_ActiveWeapon;
     public WeaponBase m_weapon;
+    public CharacterStatSheet m_playerToAttack;
+    public AttackStrength m_attackStrength;
     public bool m_knowMagic;
     public MagicAttack[] m_spells;
     public bool m_isDead = false;
     public Animator m_animator;
     public bool m_attacking;
     public UnityEngine.UI.Slider m_healthBar;
+    public UnityEngine.UI.Slider m_combatBar;
+    private CombatStats m_combatStatistics;
+    public bool m_decidedAttack;
     public bool FadeDeath = false;
     public SpriteRenderer m_renderer;
     public float m_fadeSpeed;
     // Use this for initialization
     void Start () {
-
+        m_combatStatistics = gameObject.GetComponent<CombatStats>();
         m_health = m_maxHealth;
-        m_healthBar = gameObject.GetComponentInChildren<UnityEngine.UI.Slider>();
+        //m_healthBar = gameObject.GetComponentInChildren<UnityEngine.UI.Slider>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
 	}
+
+    public void TakeDamage(float damageToTake)
+    {
+        m_health -= damageToTake;
+        if(m_combatBar.value > 0.9)
+            m_combatBar.GetComponent<CombatSliderScript>().TakeFromTimer(damageToTake / 10);
+    }
 
     public bool DeathCheck()
     {
@@ -85,6 +100,16 @@ public class CharacterStatSheet : MonoBehaviour {
     public UnityEngine.UI.Slider GetHealthBar()
     {
         return m_healthBar;
+    }
+
+    public UnityEngine.UI.Slider GetCombatBar()
+    {
+        return m_combatBar;
+    }
+
+    public CombatStats GetStatistics()
+    {
+        return m_combatStatistics;
     }
 
     public void ReCheckHealth()
