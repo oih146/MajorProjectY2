@@ -4,16 +4,17 @@ using UnityEngine;
 
 public enum GoodNEvil
 {
-    Knight = 50,
     BlackGuard = 0,
+    Knight = 50,
     Paladin = 100
 }
 
 public enum LawNOrder
 {
+    Chaotic = 0,
     Neutral = 50,
-    Lawful = 100,
-    Chaotic = 0
+    Lawful = 100
+   
 }
 
 [RequireComponent(typeof(CombatStats))]

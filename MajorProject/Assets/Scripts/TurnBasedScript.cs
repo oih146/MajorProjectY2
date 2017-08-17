@@ -228,7 +228,7 @@ public class TurnBasedScript : MonoBehaviour {
 
     void SetMagicButton(bool newActive)
     {
-        battleMenu.MagicButton.gameObject.SetActive(newActive);
+        battleMenu.MagicButtonRoot.gameObject.SetActive(newActive);
     }
 
     void SetSpellRoot(bool newActive)
@@ -541,6 +541,13 @@ public class TurnBasedScript : MonoBehaviour {
         {
             battleMenu.spellCharges[i].gameObject.SetActive(true);
         }
+
+        //Disable Inactive Spell Buttons
+        //for(int i = 0; i < battleMenu.magicButtons.Length; i++)
+        //{
+        //    if(friendlyPlayers[0].m_spells[i].ca)
+        //}
+
         //Meant to reposition ally health bar, follow script throws off placement
         //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
         //otherbuff.y += 35;

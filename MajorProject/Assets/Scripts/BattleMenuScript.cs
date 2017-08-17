@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class BattleMenuScript : MonoBehaviour {
 
-    public Button AttackButton;
-    public Button FleeButton;
-    public Button EndTurnButton;
-    public Button MagicButton;
-    public Button CancelAttackButton;
+    public GameObject AttackButton;
+    public GameObject FleeButton;
+    public GameObject EndTurnButton;
+    public GameObject MagicButtonRoot;
+    public Button[] magicButtons;
+    public GameObject CancelAttackButton;
     public GameObject SpellChargeRoot;
     public Image[] spellCharges = new Image[PlayerStat.m_maxSpellsPerDay];
     public GameObject CombatBar;
