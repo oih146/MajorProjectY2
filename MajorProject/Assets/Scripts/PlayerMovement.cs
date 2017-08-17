@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public static bool m_amMoving; 
     public float maxSpeed = 10f;
+    public static float m_speed;
     Rigidbody rigid;
 
 	// Use this for initialization
@@ -26,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
         else
             m_amMoving = false;
         rigid.velocity = new Vector2(move * maxSpeed, rigid.velocity.y);
+        m_speed = move;
 
 	}
 

@@ -30,19 +30,8 @@ public class MagicAttack : WeaponBase {
         LessThan,
         EqualTo
     };
-    [Range(0, 100)]
+    [Range(0, 101)]
     public int alignmentRange;
-    
-
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public static bool GreaterThan(int Is, int Than)
     {
@@ -62,8 +51,8 @@ public class MagicAttack : WeaponBase {
     {
         DoWithFuncs funcToDo = dowithFunc[(int)m_doWith];
         if (m_magicAlignment == Aliginment.Law)
-            return funcToDo(alignmentRange, (int)player.Law);
+            return funcToDo((int)player.Law, alignmentRange);
         else
-            return funcToDo(alignmentRange, (int)player.Light);
+            return funcToDo((int)player.Light, alignmentRange);
     }
 }

@@ -104,6 +104,10 @@ public class TurnBasedScript : MonoBehaviour {
         }
         if (m_playerMoving == false && m_playerChoosing == false && BattleActive == true)
         {
+            if (BattleOver)
+            {
+                EndBattle(WonBattleQ);
+            }
             for (int i = 0; i < friendlyObjects.Length; i++)
             {
                 if (friendlyObjects[i] != null && friendlyObjects[i].GetCombatBar().GetComponent<CombatSliderScript>().CombatActive == false
@@ -115,6 +119,7 @@ public class TurnBasedScript : MonoBehaviour {
 
                 if (friendlyObjects[i].GetCombatBar().value > 0.9 && friendlyObjects[i].m_decidedAttack == false)
                 {
+                    PlayerTurn = true;
                     m_attackingCharacter = null;
                     SetCombatBarMovement(false);
                     m_playerChoosing = true;
@@ -147,6 +152,7 @@ public class TurnBasedScript : MonoBehaviour {
 
                 if (enemyObjects[i].GetCombatBar().value > 0.9 && enemyObjects[i].m_decidedAttack == false)
                 {
+                    PlayerTurn = false;
                     m_attackingCharacter = null;
                     SetCombatBarMovement(false);
 
@@ -347,6 +353,7 @@ public class TurnBasedScript : MonoBehaviour {
             //Debug.Log("Melee " + m_attackingCharacter.gameObject.name.ToString());
             m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_weapon;
             m_decidingCharacter.m_attackStrength = (AttackStrength)meleeType;
+            m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((1 + meleeType) * 5) / 10);
             m_decidingCharacter.m_decidedAttack = true;
             m_playerChoosing = false;
             SetPlayerButtons(false);
@@ -357,7 +364,8 @@ public class TurnBasedScript : MonoBehaviour {
 
     public void MagicButtonPressed(int magicSpell)
     {
-        if (m_decidingCharacter.m_playerToAttack != null)
+        if ((m_decidingCharacter.m_spells[magicSpell].m_attackAll == false && m_decidingCharacter.m_playerToAttack != null) ||
+            m_decidingCharacter.m_spells[magicSpell].m_attackAll == true)
         {
             bool magicAvaliable = false;
             for (int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
@@ -371,14 +379,15 @@ public class TurnBasedScript : MonoBehaviour {
             }
             if (magicAvaliable)
             {
+                m_decidingCharacter.m_attackStrength = 0;
                 m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_spells[magicSpell];
                 m_decidingCharacter.m_decidedAttack = true;
                 //Play Animation 
                 //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
                 //MagicAttack(GetCurrentMover(), 0);
                 //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
-
-                SetMagicButton(false);
+                m_playerChoosing = false;
+                SetPlayerButtons(false);
                 SetCombatBarMovement(true);
                 m_decidingCharacter = null;
             }
@@ -402,6 +411,7 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(true);
         attacker.GetCombatBar().GetComponent<CombatSliderScript>().Restart();
         attacker.m_decidedAttack = false;
+        attacker.m_playerToAttack = null;
     }
 
     IEnumerator Attacking(CharacterStatSheet characterAttacking)
@@ -416,7 +426,7 @@ public class TurnBasedScript : MonoBehaviour {
         Debug.Log("Attacking");
         if (attacker.m_ActiveWeapon.m_attackAll == false)
         {
-            attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack());
+            attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5));
             attackerBuffer.ReCheckHealth();
             if (attackerBuffer.DeathCheck())
             {
@@ -541,12 +551,20 @@ public class TurnBasedScript : MonoBehaviour {
         {
             battleMenu.spellCharges[i].gameObject.SetActive(true);
         }
-
+        int spellNum = friendlyPlayers[0].m_spells.Length;
         //Disable Inactive Spell Buttons
-        //for(int i = 0; i < battleMenu.magicButtons.Length; i++)
-        //{
-        //    if(friendlyPlayers[0].m_spells[i].ca)
-        //}
+        for (int t = 0; t < battleMenu.magicButtons.Length; t++)
+        {
+            if(t < spellNum)
+                if (friendlyPlayers[0].m_spells[t].CanUseSpell((PlayerStat)friendlyPlayers[0]))
+                {
+                    battleMenu.magicButtons[t].interactable = true;
+                }
+                else
+                    battleMenu.magicButtons[t].interactable = false;
+            else
+                battleMenu.magicButtons[t].interactable = false;
+        }
 
         //Meant to reposition ally health bar, follow script throws off placement
         //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
@@ -606,20 +624,33 @@ public class TurnBasedScript : MonoBehaviour {
         }
         enemyObjects[enemyIndex].m_playerToAttack = friendlyObjects[playerToAttack];
 
+        int attackStrength;
+        //decided whether to use magic or not
         if (Random.Range(0, 1) >= 0.5f && enemyObjects[m_playerCount].m_knowMagic == true)
         {
+            //using magic
             int spellIndex = Random.Range(0, enemyObjects[m_playerCount].m_spells.Length);
             if (enemyObjects[m_playerCount].m_spells[spellIndex].m_actualCooldown > 0)
             {
+                attackStrength = Random.Range(0, 3);
+                //cooldown was active so use melee
                 enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_weapon;
-                return;
             }
-            enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_spells[spellIndex];
+            else
+            {
+                attackStrength = 0;
+                enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_spells[spellIndex];
+            }
         }
         else
         {
+            attackStrength = Random.Range(0, 3);
+            //using melee
             enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_weapon;
         }
+        //decide enemy attackStrength
+        enemyObjects[enemyIndex].GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((1 + attackStrength) * 5) / 10);
+        enemyObjects[enemyIndex].m_attackStrength = (AttackStrength)attackStrength;
         m_playerChoosing = false;
         enemyObjects[enemyIndex].m_decidedAttack = true;
         SetCombatBarMovement(true);
@@ -636,6 +667,7 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 charSS.GetComponent<BoxCollider>().enabled = false;
                 charSS.GetHealthBar().gameObject.SetActive(false);
+                charSS.GetCombatBar().gameObject.SetActive(false);
             }
         }
         CharacterStatSheet[] newArray = new CharacterStatSheet[playerCounter];
@@ -674,6 +706,7 @@ public class TurnBasedScript : MonoBehaviour {
         foreach (CharacterStatSheet charSS in friendlyObjects)
         {
             charSS.GetHealthBar().gameObject.SetActive(false);
+            charSS.GetCombatBar().gameObject.SetActive(false);
             charSS.m_animator.Stop();
         }
 

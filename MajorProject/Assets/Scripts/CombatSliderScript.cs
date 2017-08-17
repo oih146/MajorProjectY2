@@ -6,6 +6,8 @@ public class CombatSliderScript : MonoBehaviour {
 
     public UnityEngine.UI.Slider m_combatSlider;
     float m_timeSinceStart;
+    public float m_defaultSpeed;
+    public float m_timeDivider = 1;
     public float m_speed = 0;
     float stopCatcher;
     float m_time;
@@ -34,7 +36,7 @@ public class CombatSliderScript : MonoBehaviour {
 	void Update () {
         if (m_combatActive)
         {
-            m_time += Time.deltaTime;
+            m_time += Time.deltaTime / m_timeDivider;
             float timeSinceLerp = m_time - m_timeSinceStart;
             float percentageComplete = timeSinceLerp / m_speed;
 
@@ -56,5 +58,12 @@ public class CombatSliderScript : MonoBehaviour {
         m_time = Time.time;
         m_timeSinceStart = Time.time;
         m_combatSlider.value = 0;
+        m_speed = m_defaultSpeed;
+        m_timeDivider = 1;
+    }
+
+    public void SlowDown(int howMuch)
+    {
+        m_timeDivider += howMuch;
     }
 }
