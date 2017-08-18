@@ -56,10 +56,8 @@ public class LeapFrogScript : MonoBehaviour {
         {
             Vector3 backCloudTemp = ((!m_FirstRain) ? m_rainHolders[0].transform.position : m_rainHolders[1].transform.position);
             Vector3 frontCloudTemp = ((m_FirstRain) ? m_rainHolders[0].transform.position : m_rainHolders[1].transform.position);
-            float rain1 = backCloudTemp.x;
-            float rain2 = frontCloudTemp.x;
             Vector3 temp = backCloudTemp;
-            float distance = (m_FirstRain) ? rain1 - rain2 : rain2 - rain1;
+            float distance = (m_FirstRain) ? backCloudTemp.x - frontCloudTemp.x : frontCloudTemp.x - backCloudTemp.x;
             distance = Mathf.Abs(distance);
             temp.x = backCloudTemp.x - distance;
             frontCloudTemp = temp;

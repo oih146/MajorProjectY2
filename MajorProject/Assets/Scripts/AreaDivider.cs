@@ -5,6 +5,7 @@ using UnityEngine;
 public class AreaDivider : MonoBehaviour {
 
     public bool m_AlreadyPassed = false;
+    public bool m_PlayerIn;
 	// Use this for initialization
 	void Start () {
 		
@@ -19,7 +20,19 @@ public class AreaDivider : MonoBehaviour {
     {
         if(hit.tag == "Player")
         {
+            m_PlayerIn = true;
+        }
+    }
 
+    void OnTriggerExit(Collider hit)
+    {
+        if (hit.tag == "Player" && m_PlayerIn == true)
+        {
+            if (PlayerMovement.m_speed > 0)
+                m_AlreadyPassed = true;
+            else
+                m_AlreadyPassed = false;
+            MapCreator.instance.NewMapPosition(m_AlreadyPassed);
         }
     }
 }

@@ -29,6 +29,7 @@ public class PlayerStat : CharacterStatSheet {
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
             else
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
+            m_LightSlider.value = m_GoodEvil;
         }
     }
     public float m_OrderChaos;
@@ -54,10 +55,13 @@ public class PlayerStat : CharacterStatSheet {
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
             else
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
+            m_LawSlider.value = m_OrderChaos;
 
         }
     }
     public GameObject m_notificationBox;
+    public UnityEngine.UI.Slider m_LightSlider;
+    public UnityEngine.UI.Slider m_LawSlider; 
     public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
@@ -87,6 +91,10 @@ public class PlayerStat : CharacterStatSheet {
     // Use this for initialization
     void Start () {
         m_spellsAvaliable = m_maxSpellsPerDay;
+        m_LawSlider.maxValue = (int)LawNOrder.Lawful;
+        m_LawSlider.value = Law;
+        m_LightSlider.maxValue = (int)GoodNEvil.Paladin;
+        m_LightSlider.value = Light;
 	}
 	
 	// Update is called once per frame
