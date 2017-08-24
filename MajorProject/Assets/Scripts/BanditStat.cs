@@ -4,7 +4,21 @@ using UnityEngine;
 
 public class BanditStat : EnemyBase {
 
+    public int m_maxIP;
+    public int IncapacitationPoints
+    {
+        get
+        {
+            return m_incapacitationPoints;
+        }
 
+        set
+        {
+            m_incapacitationPoints += value;
+            if (m_incapacitationPoints > m_maxIP)
+                m_surrender = true;
+        }
+    }
 
 	// Use this for initialization
 	void Start () {

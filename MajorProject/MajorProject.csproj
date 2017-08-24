@@ -218,6 +218,7 @@
     <Compile Include="Assets\Scripts\AreaDivider.cs" />
     <Compile Include="Assets\Scripts\BanditMoveScript.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />
+    <Compile Include="Assets\Scripts\BaseClasses\ArmorBase.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Background.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\CharacterStatSheet.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\EnemyBase.cs" />

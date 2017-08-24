@@ -8,6 +8,7 @@ public class CombatSliderScript : MonoBehaviour {
     float m_timeSinceStart;
     public float m_defaultSpeed;
     public float m_timeDivider = 1;
+    public float m_chargeTimeReduction = 0;
     public float m_speed = 0;
     float stopCatcher;
     float m_time;
@@ -36,7 +37,7 @@ public class CombatSliderScript : MonoBehaviour {
 	void Update () {
         if (m_combatActive)
         {
-            m_time += Time.deltaTime / m_timeDivider;
+            m_time = Time.time / (m_timeDivider + m_chargeTimeReduction);
             float timeSinceLerp = m_time - m_timeSinceStart;
             float percentageComplete = timeSinceLerp / m_speed;
 
@@ -65,5 +66,10 @@ public class CombatSliderScript : MonoBehaviour {
     public void SlowDown(int howMuch)
     {
         m_timeDivider += howMuch;
+    }
+
+    public void ChargeTimeReduction(float chargeTimeReduct)
+    {
+        m_chargeTimeReduction = chargeTimeReduct;
     }
 }
