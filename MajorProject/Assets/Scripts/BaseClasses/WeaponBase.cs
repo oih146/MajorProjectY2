@@ -20,7 +20,8 @@ public enum AttackStrength
 {
     Light,
     Normal,
-    Heavy
+    Heavy,
+    Magic
 }
 
 public class WeaponBase : MonoBehaviour {
@@ -32,7 +33,7 @@ public class WeaponBase : MonoBehaviour {
     public bool m_multipleHits;
     public int m_howManyHits;
     public bool m_attackFinished;
-    public bool m_Offensive;
+    public bool m_defensive;
     [System.Serializable]
     public struct WeaponEffect
     {
@@ -59,13 +60,14 @@ public class WeaponBase : MonoBehaviour {
         {
             if (weapEffects[i].effectType == eEffects.BurnChance && attackingPlayer.ChanceOfBurning())
             {
-                attackingPlayer.m_effectsToApply[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
-                attackingPlayer.m_effectTime[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
+                attackingPlayer.GetEffectArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
+                attackingPlayer.GetEffectTimeArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
+                attackingPlayer.m_burning = true;
             }
             else
             {
-                attackingPlayer.m_effectsToApply[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
-                attackingPlayer.m_effectTime[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
+                attackingPlayer.GetEffectArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
+                attackingPlayer.GetEffectTimeArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
             }
 
         }

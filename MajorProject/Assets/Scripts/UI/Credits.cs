@@ -8,7 +8,6 @@ public class Credits : MonoBehaviour {
     public Text[] workers;
     float timer = 0.1f;
     public float speed = 0.5f;
-    float speedInc = 0.025f;
 
     // Update is called once per frame
     void Update()

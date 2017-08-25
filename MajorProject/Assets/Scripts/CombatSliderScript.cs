@@ -37,7 +37,7 @@ public class CombatSliderScript : MonoBehaviour {
 	void Update () {
         if (m_combatActive)
         {
-            m_time = Time.time / (m_timeDivider + m_chargeTimeReduction);
+            m_time += Time.deltaTime / (m_timeDivider + m_chargeTimeReduction);
             float timeSinceLerp = m_time - m_timeSinceStart;
             float percentageComplete = timeSinceLerp / m_speed;
 

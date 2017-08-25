@@ -247,6 +247,8 @@
     <Compile Include="Assets\Scripts\Quitter.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
+    <Compile Include="Assets\Scripts\TestingScripts\MaskHolder.cs" />
+    <Compile Include="Assets\Scripts\TestingScripts\ResponseMaskDecider.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
     <Compile Include="Assets\Scripts\UI\Button.cs" />

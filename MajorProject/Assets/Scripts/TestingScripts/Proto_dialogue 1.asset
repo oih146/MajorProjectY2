@@ -383,7 +383,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SendMessage(SetMask, evil, Testing); Delay ({{end}})
         type: 0
         typeString: 
       conversationID: 1
@@ -575,7 +575,7 @@ MonoBehaviour:
     - id: 4
       fields:
       - title: Title
-        value: New Dialogue Entry
+        value: Test
         type: 0
         typeString: 
       - title: Pictures
@@ -632,7 +632,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["Law"] == 50;
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -641,8 +641,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 306
-        y: 184
+        x: 300
+        y: 180
         width: 160
         height: 30
     - id: 5
@@ -1523,7 +1523,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 280
+        x: 279
         y: 320
         width: 160
         height: 30
@@ -1757,48 +1757,48 @@ MonoBehaviour:
       - title: Title
         value: New Dialogue Entry
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Pictures
         value: '[]'
         type: 3
-        typeString: 
+        typeString: CustomFieldType_Files
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 1
         type: 5
-        typeString: 
+        typeString: CustomFieldType_Actor
       - title: Conversant
         value: 2
         type: 5
-        typeString: 
+        typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Greatly! Most knights are just armored thugs. A paladin draws their
           strength from the power of the gods!
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Parenthetical
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Audio Files
         value: '[]'
         type: 3
-        typeString: 
+        typeString: CustomFieldType_Files
       - title: Video File
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0

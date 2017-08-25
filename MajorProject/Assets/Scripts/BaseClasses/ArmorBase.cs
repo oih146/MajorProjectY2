@@ -25,7 +25,7 @@ public class ArmorBase : MonoBehaviour {
         else if (m_currentDurability > m_breakStages[2])
             return m_stageDamageReduction[1];
         else
-            return m_stageDamageReduction[3];
+            return m_stageDamageReduction[2];
     }
 
     public void TookAHit()

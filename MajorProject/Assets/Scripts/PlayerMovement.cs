@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         float move = Input.GetAxis("Horizontal");
-        if (move != 0)
+        if (move != 0 && rigid.isKinematic == false)
         {
             m_amMoving = true;
         }
@@ -35,5 +35,6 @@ public class PlayerMovement : MonoBehaviour {
     {
         rigid.isKinematic = !status;
         enabled = status;
+        m_amMoving = status;
     }
 }

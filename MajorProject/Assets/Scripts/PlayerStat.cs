@@ -90,6 +90,7 @@ public class PlayerStat : CharacterStatSheet {
 
     // Use this for initialization
     void Start () {
+        Starts();
         m_spellsAvaliable = m_maxSpellsPerDay;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
         m_LawSlider.value = Law;
