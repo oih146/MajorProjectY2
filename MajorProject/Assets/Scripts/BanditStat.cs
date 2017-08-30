@@ -24,6 +24,7 @@ public class BanditStat : EnemyBase {
     void Start()
     {
         Starts();
+        m_maxIP += GetStatistics().GetWillPower() * 10;
         m_renderer = GetComponent<SpriteRenderer>();
     }
 

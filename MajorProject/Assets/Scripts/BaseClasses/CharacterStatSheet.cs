@@ -42,6 +42,30 @@ public class CharacterStatSheet : MonoBehaviour {
         }
     }
     public ArmorBase m_armor;
+    private int m_baseDamage;
+    public int BaseDamage
+    {
+        get
+        {
+            return m_baseDamage;
+        }
+        set
+        {
+            m_baseDamage = value;
+        }
+    }
+    private float m_criticalChance;
+    public float CriticalChance
+    {
+        get
+        {
+            return m_criticalChance;
+        }
+        set
+        {
+            m_criticalChance = value;
+        }
+    }
     //LEAVE THIS BLANK
     public WeaponBase m_ActiveWeapon;
     public WeaponBase m_weapon;
@@ -71,7 +95,8 @@ public class CharacterStatSheet : MonoBehaviour {
     // Use this for initialization
     void Start() {
         m_combatStatistics = GetComponent<CombatStats>();
-        Health = 100;  
+        Health = 100;
+        GenerateStatistics();
         ResetEffects();
     }
 	
@@ -103,6 +128,13 @@ public class CharacterStatSheet : MonoBehaviour {
         Update();
     }
 
+    public void GenerateStatistics()
+    {
+        GetCombatBar().GetComponent<CombatSliderScript>().DecreaseBaseSliderSpeed(GetStatistics().GetSpeed());
+        BaseDamage = GetStatistics().GetStrength();
+        CriticalChance = GetStatistics().GetDexterity();
+    }
+
     public void ResetEffects()
     {
         for(int i = 0; i < m_effectsToApply.Length; i++)
@@ -128,7 +160,7 @@ public class CharacterStatSheet : MonoBehaviour {
         damageToTake += AdditionalDamage();
         //Critical Hit Chance
         if(attackerCombatStats != null)
-            damageToTake *= (Random.Range(0, 100) <= (attackerCombatStats.m_dexterity * attackerCombatStats.m_dexterityPercentage)) ? 2 : 1;
+            damageToTake *= (Random.Range(0, 100) <= CriticalChance) ? 2 : 1;
         damageToTake -= m_armor.GetDamageReduction();
         m_armor.TookAHit();
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());

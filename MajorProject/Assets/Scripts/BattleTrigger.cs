@@ -35,13 +35,11 @@ public class BattleTrigger : MonoBehaviour {
             gameObject.GetComponent<BoxCollider>().enabled = false;
             if (hit.transform.parent != null)
             {
-                hit.GetComponentInParent<Rigidbody>().isKinematic = true;
-                hit.GetComponentInParent<PlayerMovement>().enabled = false;
+                hit.GetComponentInParent<PlayerMovement>().SetMovement(false);
             }
             else
             {
-                hit.GetComponent<Rigidbody>().isKinematic = true;
-                hit.GetComponent<PlayerMovement>().enabled = false;
+                hit.GetComponent<PlayerMovement>().SetMovement(false);
             }
             battleStarter.BattleActive = true;
             Debug.Log("BATTLE!");

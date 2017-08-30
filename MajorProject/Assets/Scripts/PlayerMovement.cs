@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    public static bool m_amMoving; 
+    public static bool m_amMoving;
     public float maxSpeed = 10f;
     public static float m_speed;
     Rigidbody rigid;
@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour {
     public void SetMovement(bool status)
     {
         rigid.isKinematic = !status;
-        enabled = status;
         m_amMoving = status;
+        enabled = status;
     }
 }

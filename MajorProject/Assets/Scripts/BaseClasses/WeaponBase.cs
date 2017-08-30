@@ -18,22 +18,34 @@ public enum eEffects
 
 public enum AttackStrength
 {
-    Light,
-    Normal,
-    Heavy,
-    Magic
+    Light = 3,
+    Normal = 5,
+    Heavy = 8,
+    Magic = 10
+}
+
+public enum AttackType
+{
+    SingleOne,
+    MultipleOne,
+    MultipleAll,
+    SingleAll,
+    HealSelect,
+    HealOne,
+    HealAll
 }
 
 public class WeaponBase : MonoBehaviour {
     
     public float m_attackDamage;
-    public bool m_attackAll;
+    public AttackStrength m_strength;
     //public float m_LawOrderShift;
     public Motion m_animToPlay;
-    public bool m_multipleHits;
+    public Animation m_animationForPlay;
+    [Range(1, 10)]
     public int m_howManyHits;
     public bool m_attackFinished;
-    public bool m_defensive;
+    public AttackType m_attackType = AttackType.SingleOne;
     [System.Serializable]
     public struct WeaponEffect
     {
@@ -45,7 +57,7 @@ public class WeaponBase : MonoBehaviour {
     public WeaponEffect[] weapEffects;
 
     public Motion GetAnimationToPlay()
-    {
+    { 
         return m_animToPlay;
     }
 
@@ -71,5 +83,10 @@ public class WeaponBase : MonoBehaviour {
             }
 
         }
+    }
+
+    public bool DoesAttackAll()
+    {
+        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll) ? true : false;
     }
 }

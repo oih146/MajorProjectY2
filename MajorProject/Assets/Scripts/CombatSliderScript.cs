@@ -12,7 +12,10 @@ public class CombatSliderScript : MonoBehaviour {
     public float m_speed = 0;
     float stopCatcher;
     float m_time;
+    //public float timer;
+    //public float timer2;
     public bool m_combatActive = false;
+    public bool slow = false;
     public bool CombatActive
     {
         get
@@ -37,11 +40,21 @@ public class CombatSliderScript : MonoBehaviour {
 	void Update () {
         if (m_combatActive)
         {
-            m_time += Time.deltaTime / (m_timeDivider + m_chargeTimeReduction);
+            m_time += Time.deltaTime / m_timeDivider;
             float timeSinceLerp = m_time - m_timeSinceStart;
             float percentageComplete = timeSinceLerp / m_speed;
 
             m_combatSlider.value = Mathf.Lerp(0, m_combatSlider.maxValue, percentageComplete);
+            //timer += Time.deltaTime;
+            //if (percentageComplete >= 0.73 && slow != true)
+            //{
+            //    SlowDown(12);
+            //    slow = true;
+            //}
+            //if (slow != true)
+            //    timer2 += Time.deltaTime;
+            //if (percentageComplete >= 1f)
+            //    m_combatActive = false;
         }
     }
 
@@ -60,16 +73,30 @@ public class CombatSliderScript : MonoBehaviour {
         m_timeSinceStart = Time.time;
         m_combatSlider.value = 0;
         m_speed = m_defaultSpeed;
+        CalculateSpeed();
         m_timeDivider = 1;
     }
 
-    public void SlowDown(int howMuch)
+    public void SlowDown(float howMuch)
     {
-        m_timeDivider += howMuch;
+        howMuch *= (0.27f * 2);
+        m_timeDivider = howMuch;
     }
 
     public void ChargeTimeReduction(float chargeTimeReduct)
     {
         m_chargeTimeReduction = chargeTimeReduct;
+    }
+
+    public void DecreaseBaseSliderSpeed(float addition)
+    {
+        m_defaultSpeed -= addition;
+        m_speed = m_defaultSpeed;
+        CalculateSpeed();
+    }
+    
+    void CalculateSpeed()
+    {
+        m_speed /= 0.73f;
     }
 }

@@ -72,6 +72,11 @@ public class PlayerStat : CharacterStatSheet {
         {
             return m_maxSpellsPerDay;
         }
+
+        set
+        {
+            m_maxSpellsPerDay = value;
+        }
     }
     public int m_spellsAvaliable;
     public int SpellAvaliable
@@ -91,7 +96,9 @@ public class PlayerStat : CharacterStatSheet {
     // Use this for initialization
     void Start () {
         Starts();
-        m_spellsAvaliable = m_maxSpellsPerDay;
+
+        GenerateWillPower();
+        m_spellsAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
         m_LawSlider.value = Law;
         m_LightSlider.maxValue = (int)GoodNEvil.Paladin;
@@ -107,6 +114,11 @@ public class PlayerStat : CharacterStatSheet {
     {
         ConversationEvents.OnConversationStart += CheckSpellsPerDay;
         ConversationEvents.OnConversationEnd += SetSpellsPerDay;
+    }
+
+    public void GenerateWillPower()
+    {
+        MaxSpells += GetStatistics().GetWillPower() / 2;
     }
 
     void OnDisable()

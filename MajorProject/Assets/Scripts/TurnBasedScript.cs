@@ -3,21 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using PixelCrushers.DialogueSystem;
+
 public class TurnBasedScript : MonoBehaviour {
 
     //Event called at the end of active player's turn
     public delegate void OnTurnEndEvent();
     public static event OnTurnEndEvent OnTurnEnd;
 
-    public delegate void ChosenAttack();
-    public static ChosenAttack AttackToPlay;
-
     public BattleMenuScript battleMenu;
 
     public PointerBounce turnPointer;
     bool m_cancelAttack;
     bool m_moveOn;
+    bool m_attackDone;
     public bool m_playerTurn;
+    public bool m_WhenAttackingTurn; /*When Attacking, whose turn is it? */
     public bool PlayerTurn
     {
         get
@@ -63,6 +63,9 @@ public class TurnBasedScript : MonoBehaviour {
     RaycastHit hitInfo;
     public GameObject healthBarSlider;
     public bool animationPlaying;
+
+    public IEnumerator co;
+
     // Use this for initialization
     void Start () {
         OnTurnEnd += PlayerDied;
@@ -353,7 +356,7 @@ public class TurnBasedScript : MonoBehaviour {
             //Debug.Log("Melee " + m_attackingCharacter.gameObject.name.ToString());
             m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_weapon;
             m_decidingCharacter.m_attackStrength = (AttackStrength)meleeType;
-            m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((1 + meleeType) * 5) / 10);
+            m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(meleeType);
             m_decidingCharacter.m_decidedAttack = true;
             m_playerChoosing = false;
             SetPlayerButtons(false);
@@ -364,8 +367,8 @@ public class TurnBasedScript : MonoBehaviour {
 
     public void MagicButtonPressed(int magicSpell)
     {
-        if ((m_decidingCharacter.m_spells[magicSpell].m_attackAll == false && m_decidingCharacter.m_playerToAttack != null) ||
-            m_decidingCharacter.m_spells[magicSpell].m_attackAll == true)
+        if ((!m_decidingCharacter.m_spells[magicSpell].DoesAttackAll() && m_decidingCharacter.m_playerToAttack != null) ||
+            m_decidingCharacter.m_spells[magicSpell].DoesAttackAll())
         {
             bool magicAvaliable = false;
             for (int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
@@ -387,11 +390,13 @@ public class TurnBasedScript : MonoBehaviour {
                     if (WE.effectType == eEffects.InteruptHealthMod)
                     {
                         effectActive = true;
-                        m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((int)m_decidingCharacter.Health - 50) / 10);
+                        m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((m_decidingCharacter.Health - 50) / 10) -
+                            (m_decidingCharacter.GetStatistics().GetWillPower() * m_decidingCharacter.GetStatistics().GetWillPowerCastTimeDecrease()));
                     }
                 }
                 if (effectActive == false)
-                    m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown((1 + (int)AttackStrength.Magic) * 5 / 10);
+                    m_decidingCharacter.GetCombatBar().GetComponent<CombatSliderScript>().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_strength -
+                        (m_decidingCharacter.GetStatistics().GetWillPower() * m_decidingCharacter.GetStatistics().GetWillPowerCastTimeDecrease()));
                 m_decidingCharacter.m_decidedAttack = true;
                 //Play Animation 
                 //Debug.Log("Magic " + m_attackingCharacter.gameObject.name.ToString());
@@ -418,8 +423,8 @@ public class TurnBasedScript : MonoBehaviour {
         bool playerTurnBuffer = PlayerTurn;
         StartCoroutine(Attacking(characterAttacking));
         CharacterStatSheet attacker = characterAttacking;
-        yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
         yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_attackFinished);
+        yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
         attacker.m_ActiveWeapon.m_attackFinished = false;
 
         SetCombatBarMovement(true);
@@ -454,7 +459,7 @@ public class TurnBasedScript : MonoBehaviour {
     {
         CharacterStatSheet attacker = characterAttacking;
         CharacterStatSheet attackerBuffer = characterAttacking.m_playerToAttack;
-        bool playerTurnBuffer = PlayerTurn;
+        m_WhenAttackingTurn = PlayerTurn;
         Debug.Log(characterAttacking.name + " is attacking ");
         yield return new WaitUntil(() => attacker.m_attacking);
         animationPlaying = false;
@@ -463,175 +468,209 @@ public class TurnBasedScript : MonoBehaviour {
 
         attacker.GetCombatBar().value = 0;
         Debug.Log("Attacking");
-        //Is move Offensive
-        if (!attacker.m_ActiveWeapon.m_defensive)
+        #region CommentedCode
+        /*Is move Offensive
+        //if (!attacker.m_ActiveWeapon.m_defensive)
+        //{
+        //    //Weapon attacks all enemies
+        //    if (attacker.m_ActiveWeapon.m_attackAll == false)
+        //    {
+        //        //Check if doesn't have multiple hits
+        //        if (!attacker.m_ActiveWeapon.m_multipleHits)
+        //        {
+        //            //Attack on person for single hit
+        //            attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+        //                attacker.GetStatistics(),
+        //                (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+        //            attackerBuffer.ReCheckHealth();
+        //            if (attackerBuffer.DeathCheck())
+        //            {
+        //                if (m_WhenAttackingTurn == true)
+        //                {
+        //                    enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //                    if (enemyObjects.Length == 0)
+        //                    {
+        //                        Debug.Log("Battle Over, You Win");
+        //                        BattleOver = true;
+        //                        WonBattleQ = true;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //                    Debug.Log("Battle Over, You Lose");
+        //                    BattleOver = true;
+        //                    WonBattleQ = false;
+        //                }
+        //            }
+        //        }
+        //        else
+        //        {
+        //            //Attack one person for multiple hits
+        //            for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits - 1; i++)
+        //            {
+        //                yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
+        //                attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        //                yield return new WaitUntil(() => attacker.m_attacking);
+        //                attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+        //                    attacker.GetStatistics(),
+        //                (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+        //                attackerBuffer.ReCheckHealth();
+        //                if (attackerBuffer.DeathCheck())
+        //                {
+        //                    if (m_WhenAttackingTurn == true)
+        //                    {
+        //                        enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //                        if (enemyObjects.Length == 0)
+        //                        {
+        //                            Debug.Log("Battle Over, You Win");
+        //                            BattleOver = true;
+        //                            WonBattleQ = true;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //                        Debug.Log("Battle Over, You Lose");
+        //                        BattleOver = true;
+        //                        WonBattleQ = false;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //    //Weapon Attacks all
+        //    else
+        //    {
+        //        //does weapon have multiple hits
+        //        if (!attacker.m_ActiveWeapon.m_multipleHits)
+        //        {
+        //            //Weapon attacks all enemies with single hit
+        //            foreach (CharacterStatSheet charSS in GetDefendingTeam())
+        //            {
+        //                charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+        //                    attacker.GetStatistics(),
+        //                    (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+        //                charSS.ReCheckHealth();
+        //                if (charSS.DeathCheck())
+        //                {
+        //                    if (m_WhenAttackingTurn == true)
+        //                    {
+        //                        enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //                    }
+        //                    else
+        //                    {
+        //                        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //                        Debug.Log("Battle Over, You Lose");
+        //                        BattleOver = true;
+        //                        WonBattleQ = false;
+        //                    }
+        //                    if (enemyObjects.Length == 0)
+        //                    {
+        //                        Debug.Log("Battle Over, You Win");
+        //                        BattleOver = true;
+        //                        WonBattleQ = true;
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        //weapon has multiple hits
+        //        else
+        //        {
+        //            //Weapon attacks all with multiple hits
+        //            for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
+        //            {
+        //                foreach (CharacterStatSheet charSS in GetDefendingTeam())
+        //                {
+        //                    yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
+        //                    attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        //                    yield return new WaitUntil(() => attacker.m_attacking);
+        //                    charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+        //                        attacker.GetStatistics(),
+        //                        (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+        //                    charSS.ReCheckHealth();
+        //                    if (charSS.DeathCheck())
+        //                    {
+        //                        if (m_WhenAttackingTurn == true)
+        //                        {
+        //                            enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //                        }
+        //                        else
+        //                        {
+        //                            friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //                            Debug.Log("Battle Over, You Lose");
+        //                            BattleOver = true;
+        //                            WonBattleQ = false;
+        //                        }
+        //                        if (enemyObjects.Length == 0)
+        //                        {
+        //                            Debug.Log("Battle Over, You Win");
+        //                            BattleOver = true;
+        //                            WonBattleQ = true;
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
+        ////Weapon is defensive
+        //else
+        //{
+        //    //Weapon heals user 
+        //    if (!attacker.m_ActiveWeapon.m_attackAll)
+        //    {
+        //        attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
+        //        attacker.ReCheckHealth();
+        //    }
+        //    else
+        //    {
+        //        //weapon heals all
+        //        foreach (CharacterStatSheet charSS in GetAttackingTeam())
+        //        {
+        //            yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
+        //            attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        //            yield return new WaitUntil(() => attacker.m_attacking);
+        //            charSS.HealSelf(attacker.m_ActiveWeapon.GetAttack());
+        //            charSS.ReCheckHealth();
+        //        }
+        //    }
+        }*/
+        #endregion
+        m_attackDone = false;
+        switch (attacker.m_ActiveWeapon.m_attackType)
         {
-            //Weapon attacks all enemies
-            if (attacker.m_ActiveWeapon.m_attackAll == false)
-            {
-                //Check if doesn't have multiple hits
-                if (!attacker.m_ActiveWeapon.m_multipleHits)
-                {
-                    //Attack on person for single hit
-                    attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
-                        attacker.GetStatistics(),
-                        (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
-                    attackerBuffer.ReCheckHealth();
-                    if (attackerBuffer.DeathCheck())
-                    {
-                        if (playerTurnBuffer == true)
-                        {
-                            enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                            if (enemyObjects.Length == 0)
-                            {
-                                Debug.Log("Battle Over, You Win");
-                                BattleOver = true;
-                                WonBattleQ = true;
-                            }
-                        }
-                        else
-                        {
-                            friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                            Debug.Log("Battle Over, You Lose");
-                            BattleOver = true;
-                            WonBattleQ = false;
-                        }
-                    }
-                }
-                else
-                {
-                    //Attack one person for multiple hits
-                    for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits - 1; i++)
-                    {
-                        yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
-                        attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-                        yield return new WaitUntil(() => attacker.m_attacking);
-                        attackerBuffer.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
-                            attacker.GetStatistics(),
-                        (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
-                        attackerBuffer.ReCheckHealth();
-                        if (attackerBuffer.DeathCheck())
-                        {
-                            if (playerTurnBuffer == true)
-                            {
-                                enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                                if (enemyObjects.Length == 0)
-                                {
-                                    Debug.Log("Battle Over, You Win");
-                                    BattleOver = true;
-                                    WonBattleQ = true;
-                                }
-                            }
-                            else
-                            {
-                                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                                Debug.Log("Battle Over, You Lose");
-                                BattleOver = true;
-                                WonBattleQ = false;
-                            }
-                        }
-                    }
-                }
-            }
-            //Weapon Attacks all
-            else
-            {
-                //does weapon have multiple hits
-                if (!attacker.m_ActiveWeapon.m_multipleHits)
-                {
-                    //Weapon attacks all enemies with single hit
-                    foreach (CharacterStatSheet charSS in GetDefendingTeam())
-                    {
-                        charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
-                            attacker.GetStatistics(),
-                            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
-                        charSS.ReCheckHealth();
-                        if (charSS.DeathCheck())
-                        {
-                            if (playerTurnBuffer == true)
-                            {
-                                enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                            }
-                            else
-                            {
-                                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                                Debug.Log("Battle Over, You Lose");
-                                BattleOver = true;
-                                WonBattleQ = false;
-                            }
-                            if (enemyObjects.Length == 0)
-                            {
-                                Debug.Log("Battle Over, You Win");
-                                BattleOver = true;
-                                WonBattleQ = true;
-                            }
-                        }
-                    }
-                }
-                //weapon has multiple hits
-                else
-                {
-                    //Weapon attacks all with multiple hits
-                    for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
-                    {
-                        foreach (CharacterStatSheet charSS in GetDefendingTeam())
-                        {
-                            yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
-                            attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-                            yield return new WaitUntil(() => attacker.m_attacking);
-                            charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
-                                attacker.GetStatistics(),
-                                (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
-                            charSS.ReCheckHealth();
-                            if (charSS.DeathCheck())
-                            {
-                                if (playerTurnBuffer == true)
-                                {
-                                    enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                                }
-                                else
-                                {
-                                    friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                                    Debug.Log("Battle Over, You Lose");
-                                    BattleOver = true;
-                                    WonBattleQ = false;
-                                }
-                                if (enemyObjects.Length == 0)
-                                {
-                                    Debug.Log("Battle Over, You Win");
-                                    BattleOver = true;
-                                    WonBattleQ = true;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                //Attack One person once
+            case AttackType.SingleOne:
+                //co = StartCoroutine(NormalAttack(attacker, attackerBuffer));
+                co = NormalAttack(attacker, attackerBuffer);
+                break;
+                //Attack one person multiple times
+            case AttackType.MultipleOne:
+                //co = StartCoroutine(MultipleSingle(attacker, attackerBuffer));
+                co = MultipleSingle(attacker, attackerBuffer);
+                break;
+                //Attack all multiple times
+            case AttackType.MultipleAll:
+                //co = StartCoroutine(MultipleAll(attacker, attackerBuffer));
+                co = MultipleAll(attacker, attackerBuffer);
+                break;
+                //Attack all once
+            case AttackType.SingleAll:
+                //co = StartCoroutine(AllSingle(attacker, attackerBuffer));
+                co = AllSingle(attacker, attackerBuffer);
+                break;
+            case AttackType.HealOne:
+                co = HealOne(attacker);
+                break;
+            default:
+                //co = StartCoroutine(NormalAttack(attacker, attackerBuffer));
+                co = NormalAttack(attacker, attackerBuffer);
+                break;
         }
-        //Weapon is defensive
-        else
-        {
-            //Weapon heals user 
-            if (!attacker.m_ActiveWeapon.m_attackAll)
-            {
-                attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
-                attacker.ReCheckHealth();
-            }
-            else
-            {
-                //weapon heals all
-                foreach (CharacterStatSheet charSS in GetAttackingTeam())
-                {
-                    yield return new WaitForSeconds(attacker.GetAnimatorStateInfo().length);
-                    attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-                    yield return new WaitUntil(() => attacker.m_attacking);
-                    charSS.HealSelf(attacker.m_ActiveWeapon.GetAttack());
-                    charSS.ReCheckHealth();
-                }
-            }
-        }
+        StartCoroutine(co);
         Debug.Log("Attack Hit");
-
+        yield return new WaitUntil(() => m_attackDone);
         attacker.m_ActiveWeapon.m_attackFinished = true;
     }
 
@@ -779,18 +818,33 @@ public class TurnBasedScript : MonoBehaviour {
             }
             else
             {
-                attackStrength = 0;
+                attackStrength = 10;
                 enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_spells[spellIndex];
             }
         }
         else
         {
             attackStrength = Random.Range(0, 3);
+            switch(attackStrength)
+            {
+                case 0:
+                    attackStrength = 3;
+                    break;
+                case 1:
+                    attackStrength = 5;
+                    break;
+                case 2:
+                    attackStrength = 8;
+                    break;
+                default:
+                    attackStrength = 3;
+                    break;
+            }
             //using melee
             enemyObjects[enemyIndex].m_ActiveWeapon = enemyObjects[enemyIndex].m_weapon;
         }
         //decide enemy attackStrength
-        enemyObjects[enemyIndex].GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(((1 + attackStrength) * 5) / 10);
+        enemyObjects[enemyIndex].GetCombatBar().GetComponent<CombatSliderScript>().SlowDown(attackStrength);
         enemyObjects[enemyIndex].m_attackStrength = (AttackStrength)attackStrength;
         m_playerChoosing = false;
         enemyObjects[enemyIndex].m_decidedAttack = true;
@@ -889,5 +943,175 @@ public class TurnBasedScript : MonoBehaviour {
             BattleOver = true;
             WonBattleQ = false;
         }
+    }
+
+    //Normal Attack, hits single person for one hit
+    public IEnumerator NormalAttack(CharacterStatSheet attacker, CharacterStatSheet defender)
+    {
+        //Attack on person for single hit
+        defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+            attacker.GetStatistics(),
+            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+        defender.ReCheckHealth();
+        if (defender.DeathCheck())
+        {
+            if (m_WhenAttackingTurn == true)
+            {
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Win");
+                    BattleOver = true;
+                    WonBattleQ = true;
+                    WonBattleQ = false;
+                }
+            }
+            else
+            {
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                Debug.Log("Battle Over, You Lose");
+                BattleOver = true;
+                WonBattleQ = false;
+                WonBattleQ = false;
+            }
+        }
+        m_attackDone = true;
+        yield return null;
+
+    }
+
+    //Multiple hits on single person
+    IEnumerator MultipleSingle(CharacterStatSheet attacker, CharacterStatSheet defender)
+    {
+        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits - 1; i++)
+        {
+            attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+            yield return new WaitUntil(() => attacker.m_attacking);
+            defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+                attacker.GetStatistics(),
+            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+            defender.ReCheckHealth();
+            if (defender.DeathCheck())
+            {
+                if (m_WhenAttackingTurn == true)
+                {
+                    enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                    if (enemyObjects.Length == 0)
+                    {
+                        Debug.Log("Battle Over, You Win");
+                        BattleOver = true;
+                        WonBattleQ = true;
+                        WonBattleQ = false;
+
+                    }
+                    m_attackDone = true;
+                    StopCoroutine(co);
+                }
+                else
+                {
+                    friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                    WonBattleQ = false;
+                    m_attackDone = true;
+                    StopCoroutine(co);
+                }
+            }
+            yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        }
+        m_attackDone = true;
+    }
+
+    //Multiple hits on all
+    IEnumerator MultipleAll(CharacterStatSheet attacker, CharacterStatSheet defender)
+    {
+        //Weapon attacks all with multiple hits
+        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits - 1; i++)
+        {
+            foreach (CharacterStatSheet charSS in GetDefendingTeam())
+            {
+                attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+                yield return new WaitUntil(() => attacker.m_attacking);
+                charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+                    attacker.GetStatistics(),
+                    (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+                charSS.ReCheckHealth();
+                if (charSS.DeathCheck())
+                {
+                    if (m_WhenAttackingTurn == true)
+                    {
+                        enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                        if (enemyObjects.Length == 0)
+                        {
+                            Debug.Log("Battle Over, You Win");
+                            BattleOver = true;
+                            WonBattleQ = true;
+                            m_attackDone = true;
+                            StopCoroutine(MultipleAll(attacker, defender));
+                        }
+                    }
+                    else
+                    {
+                        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                        Debug.Log("Battle Over, You Lose");
+                        BattleOver = true;
+                        WonBattleQ = false;
+                        m_attackDone = true;
+                        StopCoroutine(MultipleAll(attacker, defender));
+                    }
+                }
+                yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+            }
+        }
+        m_attackDone = true;
+    }
+
+    //hit all for single hit
+    IEnumerator AllSingle(CharacterStatSheet attacker, CharacterStatSheet defender)
+    {
+        //Weapon attacks all enemies with single hit
+        foreach (CharacterStatSheet charSS in GetDefendingTeam())
+        {
+            charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5),
+                attacker.GetStatistics(),
+                (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1);
+            charSS.ReCheckHealth();
+            if (charSS.DeathCheck())
+            {
+                if (m_WhenAttackingTurn == true)
+                {
+                    enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                    if (enemyObjects.Length == 0)
+                    {
+
+                        Debug.Log("Battle Over, You Win");
+                        BattleOver = true;
+                        WonBattleQ = true;
+                        m_attackDone = true;
+                        StopCoroutine(AllSingle(attacker, defender));
+                    }
+                }
+                else
+                {
+                    friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                    m_attackDone = true;
+                    StopCoroutine(AllSingle(attacker, defender));
+                }
+            }
+        }
+        m_attackDone = true;
+        yield return null;
+    }
+
+    IEnumerator HealOne(CharacterStatSheet attacker)
+    {
+        attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
+        attacker.ReCheckHealth();
+        m_attackDone = true;
+        yield return null;
     }
 }
