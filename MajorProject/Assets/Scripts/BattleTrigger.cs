@@ -44,10 +44,10 @@ public class BattleTrigger : MonoBehaviour {
             battleStarter.BattleActive = true;
             Debug.Log("BATTLE!");
             int takeFromChidCount = FindNotBandits();
-            CharacterStatSheet[] buffer = new CharacterStatSheet[gameObject.transform.childCount - takeFromChidCount];
+            EnemyBase[] buffer = new EnemyBase[gameObject.transform.childCount - takeFromChidCount];
             for(int i = 0; i < gameObject.transform.childCount - takeFromChidCount; i++)
             {
-                buffer[i] = gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<CharacterStatSheet>();
+                buffer[i] = gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<EnemyBase>();
             }
             CharacterStatSheet[] buffer2;
             if (hit.transform.parent == null)
@@ -66,6 +66,7 @@ public class BattleTrigger : MonoBehaviour {
                 buffer2[t] = charSS;
                 t++;
             }
+            battleStarter.enabled = true;
             battleStarter.StartBattle(buffer2, buffer);
         }
     }

@@ -27,18 +27,24 @@ public class CombatStats : MonoBehaviour {
     //Increases Base Damage
     public int GetStrength()
     {
-        return m_strength * (int)m_strengthPercentage;
+        if(m_strength != 0)
+            return m_strength * (int)m_strengthPercentage;
+        return 0;
     }
 
     //Decreases Charge bar time (overall)
     public float GetSpeed()
     {
-        return m_speed * m_speedPercentage;
+        if(m_speed != 0)
+            return m_speed * m_speedPercentage;
+        return 0;
     }
 
     public float GetDexterity()
     {
-        return m_dexterity * m_dexterityPercentage;
+        if (m_dexterity != 0)
+            return m_dexterity * m_dexterityPercentage;
+        return 0;
     }
 
     public int GetWillPower()
@@ -48,11 +54,15 @@ public class CombatStats : MonoBehaviour {
 
     public float GetWillPowerCastTimeDecrease()
     {
-        return m_willpowerSpellCastTimeDecrease;
+        if(m_willpower > 0)
+            return m_willpower * m_willpowerSpellCastTimeDecrease;
+        return 0;
     }
 
     public int GetWillPowerIPIncrease()
     {
-        return m_willpowerIPincrease;
+        if (m_willpower > 0)
+            return m_willpower * m_willpowerIPincrease;
+        return 0;
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CombatSliderScript : MonoBehaviour {
 
-    public UnityEngine.UI.Slider m_combatSlider;
+    public Slider m_combatSlider;
+    public Image m_sliderPortraitRoot2;
     float m_timeSinceStart;
     public float m_defaultSpeed;
     public float m_timeDivider = 1;
@@ -98,5 +100,11 @@ public class CombatSliderScript : MonoBehaviour {
     void CalculateSpeed()
     {
         m_speed /= 0.73f;
+    }
+
+    public void SetPortraitBackgroundColor(Color color)
+    {
+        m_sliderPortraitRoot2.color = color;
+        m_sliderPortraitRoot2.gameObject.transform.GetChild(0).GetComponent<Image>().color = color;
     }
 }

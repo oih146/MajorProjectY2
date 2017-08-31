@@ -47,6 +47,7 @@ public class MagicAttack : WeaponBase {
     {
         return Is == To;
     }
+
     public bool CanUseSpell(PlayerStat player)
     {
         DoWithFuncs funcToDo = dowithFunc[(int)m_doWith];

@@ -18,11 +18,12 @@ public class ArmorBase : MonoBehaviour {
 		
 	}
 
-    public int GetDamageReduction()
+    public int GetDamageReduction(int tempArmour)
     {
-        if (m_currentDurability > m_breakStages[1])
+        int temp = m_currentDurability + tempArmour;
+        if (temp > m_breakStages[1])
             return m_stageDamageReduction[0];
-        else if (m_currentDurability > m_breakStages[2])
+        else if (temp > m_breakStages[2])
             return m_stageDamageReduction[1];
         else
             return m_stageDamageReduction[2];

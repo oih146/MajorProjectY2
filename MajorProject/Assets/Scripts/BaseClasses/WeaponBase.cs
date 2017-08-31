@@ -4,16 +4,23 @@ using UnityEngine;
 
 public enum eEffects
 {
-    DamageReduction = 0,                //+-
-    BonusIncapacitationPoints,      //+
-    BonusDamage,                    //+
-    BonusToEvil,                    //+
+    BonusIncapacitationPoints = 0,  //+
     BurnChance,                     //+
     BurnDamage,
     AdditionBurnChance,
+    TakeBonusInterupt,
+    NumOfEffects
+}
+
+public enum eAbilities
+{
+    DamageReduction = 0,            //+-
+    CounterStance,
+    BonusDamage,                    //+
+    BonusToEvil,                    //+
     InteruptModifier,
     InteruptHealthMod,
-    NumOfEffects
+    NumOfAbilities
 }
 
 public enum AttackStrength
@@ -54,7 +61,16 @@ public class WeaponBase : MonoBehaviour {
         public int effectDamage;
     }
 
+    [System.Serializable]
+    public struct WeaponAbility
+    {
+        public eAbilities abilityType;
+        public int abilityTime;
+        public int abilityDamage;
+    }
+
     public WeaponEffect[] weapEffects;
+    public WeaponAbility[] weapAbility;
 
     public Motion GetAnimationToPlay()
     { 
@@ -66,22 +82,24 @@ public class WeaponBase : MonoBehaviour {
         return m_attackDamage;
     }
 
-    public void ApplyEffects(CharacterStatSheet attackingPlayer)
+    public void ApplyEffects(CharacterStatSheet userOfWeap, CharacterStatSheet attackingPlayer)
     {
         for(int i = 0; i < weapEffects.Length; i++)
         {
             if (weapEffects[i].effectType == eEffects.BurnChance && attackingPlayer.ChanceOfBurning())
             {
-                attackingPlayer.GetEffectArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
-                attackingPlayer.GetEffectTimeArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
+                attackingPlayer.AddEffect(weapEffects[i]);
                 attackingPlayer.m_burning = true;
             }
             else
             {
-                attackingPlayer.GetEffectArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectDamage;
-                attackingPlayer.GetEffectTimeArray()[(int)weapEffects[i].effectType] = weapEffects[i].effectTime;
+                attackingPlayer.AddEffect(weapEffects[i]);
             }
+        }
 
+        for(int i = 0; i < weapAbility.Length; i++)
+        {
+            userOfWeap.AddAbility(weapAbility[i]);
         }
     }
 
