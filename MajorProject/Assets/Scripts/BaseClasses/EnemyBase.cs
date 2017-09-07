@@ -12,7 +12,6 @@ public class EnemyBase : CharacterStatSheet {
     public bool m_surrender;                //Has the enemy surrendered
     public int m_baseCapIP;                 //Base IP Limit, without willpower added. Added to m_maxIP with willpower for total IP limit
 
-
     //Static Variables
     //----------------------------------
     public static float IPonHit;
@@ -61,12 +60,12 @@ public class EnemyBase : CharacterStatSheet {
     //Override Functions
     //-------------------------------------------------------------------------
     //Applies IP when Enemies take damage
-    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, bool interrupt = true)
+    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attackStrength, bool interrupt = true)
     {
         //Regardless of how much damage is done, IP is gained
         IncapacitationPoints += IPonHit;
 
-        return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, interrupt);
+        return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);
     }
 
     //Adds vulnerableToFire bool, for wolves

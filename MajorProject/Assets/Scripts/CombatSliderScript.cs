@@ -18,7 +18,8 @@ public class CombatSliderScript : MonoBehaviour {
     //public float timer2;
     public BumpUp m_bumpScript;
     public bool m_combatActive = false;
-    public bool slow = false;
+    private bool m_tempSliderSpeedIncrease;
+    private float m_tempSpeedDecreaseValue;
     public bool CombatActive
     {
         get
@@ -32,11 +33,17 @@ public class CombatSliderScript : MonoBehaviour {
             m_combatActive = value;
         }
     }
+
+    void Awake()
+    {
+        m_combatSlider = GetComponent<Slider>();
+    }
+
     // Use this for initialization
     void Start () {
-        m_combatSlider = GetComponent<UnityEngine.UI.Slider>();
+
         m_combatSlider.value = 0;
-        Restart();
+        //Restart();
 	}
 	
 	// Update is called once per frame
@@ -78,6 +85,8 @@ public class CombatSliderScript : MonoBehaviour {
         m_combatSlider.value = 0;
         m_speed = m_defaultSpeed;
         CalculateSpeed();
+        if (m_tempSliderSpeedIncrease)
+            TemporarySliderSpeedDecrease();
         m_timeDivider = 1;
     }
 
@@ -97,6 +106,19 @@ public class CombatSliderScript : MonoBehaviour {
         m_defaultSpeed -= addition;
         m_speed = m_defaultSpeed;
         CalculateSpeed();
+    }
+
+    public void TemporarySliderSpeedDecrease()
+    {
+        m_tempSliderSpeedIncrease = false;
+        m_speed += 2;
+    }
+
+    public void SetTemporarySpeedDecrease(float amount)
+    {
+        if(m_tempSpeedDecreaseValue < amount)
+            m_tempSpeedDecreaseValue = amount;
+        m_tempSliderSpeedIncrease = true;
     }
     
     void CalculateSpeed()

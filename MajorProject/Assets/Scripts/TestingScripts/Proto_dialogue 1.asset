@@ -383,8 +383,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SendMessage(SetMask, light, Testing);SendMessage(SetMask, evil, Testing);
-          Delay ({{end}})
+        value: 
         type: 0
         typeString: 
       conversationID: 1
@@ -486,7 +485,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: Variable["Light"] == 50;
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -495,8 +494,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 510
-        y: 186
+        x: 520
+        y: 182
         width: 160
         height: 30
     - id: 3
@@ -633,7 +632,7 @@ MonoBehaviour:
         destinationDialogueID: 5
         isConnector: 0
         priority: 2
-      conditionsString: Variable["Law"] == 50;
+      conditionsString: 
       userScript: 
       onExecute:
         m_PersistentCalls:

@@ -900,7 +900,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 97315277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.93, y: 0, z: 0}
+  m_LocalPosition: {x: -18.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 513746120}
@@ -2771,8 +2771,8 @@ RectTransform:
   m_Father: {fileID: 2018795704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 468, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -2947,7 +2947,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1019151865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -96.6, y: -3.2, z: -0.17}
+  m_LocalPosition: {x: -47.74, y: -3.2, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1338734718}
@@ -4233,6 +4233,7 @@ GameObject:
   - component: {fileID: 409104561}
   - component: {fileID: 409104560}
   - component: {fileID: 409104562}
+  - component: {fileID: 409104563}
   m_Layer: 0
   m_Name: CombatBarSlider
   m_TagString: Untagged
@@ -4320,15 +4321,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0062a43b4ccc2e4439c20b716a784c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_combatSlider: {fileID: 0}
+  m_combatSlider: {fileID: 409104560}
   m_sliderPortraitRoot2: {fileID: 1794818640}
   m_defaultSpeed: 9.8
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
-  m_bumpScript: {fileID: 0}
+  m_bumpScript: {fileID: 409104563}
   m_combatActive: 0
   slow: 0
+--- !u!114 &409104563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 409104559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b41b65839b3be4ba43aef21d54c73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bumpUp: 0
+  m_switchCatcher: 0
+  m_goingUp: 0
+  m_timesUp: 2
+  m_upAmount: 10
+  m_speed: 0.3
 --- !u!1 &413486502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5915,7 +5933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &589074606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10573,10 +10591,10 @@ MonoBehaviour:
   - effectType: 3
     effectTime: 2
     effectDamage: 10
-  - effectType: 1
+  - effectType: 3
     effectTime: 1
     effectDamage: 0
-  - effectType: 2
+  - effectType: 4
     effectTime: 3
     effectDamage: 2
   weapAbility: []
@@ -11635,6 +11653,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 1
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 1818781033}
   m_combatBar: {fileID: 1330488208}
   FadeDeath: 0
@@ -13458,6 +13477,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 5
   m_burnTimer: 5
+  m_disarmed: 0
   m_healthBar: {fileID: 250342312}
   m_combatBar: {fileID: 258891928}
   FadeDeath: 0
@@ -13526,6 +13546,7 @@ GameObject:
   - component: {fileID: 1330488207}
   - component: {fileID: 1330488206}
   - component: {fileID: 1330488208}
+  - component: {fileID: 1330488209}
   m_Layer: 0
   m_Name: CombatBarSlider
   m_TagString: Untagged
@@ -13613,15 +13634,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0062a43b4ccc2e4439c20b716a784c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_combatSlider: {fileID: 0}
+  m_combatSlider: {fileID: 1330488206}
   m_sliderPortraitRoot2: {fileID: 1132924784}
   m_defaultSpeed: 10.1
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
-  m_bumpScript: {fileID: 0}
+  m_bumpScript: {fileID: 1330488209}
   m_combatActive: 0
   slow: 0
+--- !u!114 &1330488209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1330488205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b41b65839b3be4ba43aef21d54c73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bumpUp: 0
+  m_switchCatcher: 0
+  m_goingUp: 0
+  m_timesUp: 2
+  m_upAmount: 10
+  m_speed: 0.3
 --- !u!1 &1333714423
 GameObject:
   m_ObjectHideFlags: 0
@@ -14004,6 +14042,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 1
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 689140778}
   m_combatBar: {fileID: 409104562}
   FadeDeath: 0
@@ -21332,7 +21371,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2043005571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -98.4, y: -3.4, z: -0.1}
+  m_LocalPosition: {x: -49.54, y: -3.4, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 802363724}
@@ -22015,6 +22054,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 0
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 0}
   m_combatBar: {fileID: 0}
   FadeDeath: 0
