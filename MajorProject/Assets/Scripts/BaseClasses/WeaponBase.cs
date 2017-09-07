@@ -5,6 +5,8 @@ using UnityEngine;
 public enum eEffects
 {
     BonusIncapacitationPoints = 0,  //+
+    BonusIncapPointsOnDeath,
+    Disarmed,
     BurnChance,                     //+
     BurnDamage,
     AdditionBurnChance,
@@ -15,7 +17,9 @@ public enum eEffects
 public enum eAbilities
 {
     DamageReduction = 0,            //+-
+    SpeedReduction,
     CounterStance,
+    Invulnerability,
     BonusDamage,                    //+
     BonusToEvil,                    //+
     InteruptModifier,
@@ -39,7 +43,9 @@ public enum AttackType
     SingleAll,
     HealSelect,
     HealOne,
-    HealAll
+    HealAll,
+    Flee,
+    MassAttack
 }
 
 public class WeaponBase : MonoBehaviour {
@@ -90,8 +96,12 @@ public class WeaponBase : MonoBehaviour {
             {
                 attackingPlayer.AddEffect(weapEffects[i]);
                 attackingPlayer.m_burning = true;
+                attackingPlayer.m_burnTimer = weapEffects[i].effectTime;
             }
-            else
+            else if(weapEffects[i].effectType == eEffects.Disarmed)
+            {
+                attackingPlayer.m_disarmed = true;
+            } else
             {
                 attackingPlayer.AddEffect(weapEffects[i]);
             }
@@ -100,6 +110,8 @@ public class WeaponBase : MonoBehaviour {
         for(int i = 0; i < weapAbility.Length; i++)
         {
             userOfWeap.AddAbility(weapAbility[i]);
+            if (weapAbility[i].abilityType == eAbilities.SpeedReduction)
+                userOfWeap.GetCombatBar().SetTemporarySpeedDecrease(weapAbility[i].abilityDamage);
         }
     }
 

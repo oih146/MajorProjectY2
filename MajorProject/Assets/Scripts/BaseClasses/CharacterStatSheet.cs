@@ -94,8 +94,9 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_burning = false;              //Is this character currently on fire
     public float m_burnTime;                    //How long intervals are in character burning (in seconds), may change
     public float m_burnTimer;                   //Timer for how long till character burns again, may change
+    public bool m_disarmed;
 
-        //UI
+    //UI
     public UnityEngine.UI.Slider m_healthBar;   //Health bar attached to this character
     public CombatSliderScript m_combatBar;   //This character's combat bar that is shown during combat
 
@@ -133,7 +134,7 @@ public class CharacterStatSheet : MonoBehaviour {
                     TurnBasedScript.CallOnOutsideDeath();
                     m_burning = false;
                 }
-                m_burnTimer = m_burnTime;
+                //m_burnTimer = m_burnTime;
             }
         }
 	}
@@ -192,11 +193,11 @@ public class CharacterStatSheet : MonoBehaviour {
     //If the defending character has a counterattack ability
     public float TakeDamage(float damageToTake)
     {
-        return TakeDamage(damageToTake, null, 1, false);
+        return TakeDamage(damageToTake, null, 1, AttackStrength.Light, false);
     }
 
     //Take damage, virtual to allow inheriting classes to override
-    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, bool interrupt = true)
+    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attacktype, bool interrupt = true)
     {
         //Critical Hit Chance
         if (attackerCombatStats != null)
@@ -204,7 +205,8 @@ public class CharacterStatSheet : MonoBehaviour {
             damageToTake += attackerCombatStats.GetStrength();
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 2 : 1;
         }
-        damageToTake -= m_armor.GetDamageReduction(((int)m_abilityTime[(int)eAbilities.DamageReduction] > 0) ? (int)m_abilityToApply[(int)eAbilities.DamageReduction] : 0);
+        if(attacktype != AttackStrength.Magic)
+            damageToTake -= m_armor.GetDamageReduction(((int)m_abilityTime[(int)eAbilities.DamageReduction] > 0) ? (int)m_abilityToApply[(int)eAbilities.DamageReduction] : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
         //Would be adding to health

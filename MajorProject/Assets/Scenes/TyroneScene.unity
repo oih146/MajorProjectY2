@@ -900,70 +900,12 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 97315277}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -21.93, y: 0, z: 0}
+  m_LocalPosition: {x: -18.3, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 513746120}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &99777882
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 99777883}
-  - component: {fileID: 99777884}
-  m_Layer: 0
-  m_Name: Soul Rip
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &99777883
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 99777882}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &99777884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 99777882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 100
-  m_strength: 10
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 0
-  weapEffects: []
-  weapAbility:
-  - abilityType: 0
-    abilityTime: 0
-    abilityDamage: 0
-  m_AttackName: 
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 0
-  alignmentRange: 0
 --- !u!1 &106697228
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,67 +2385,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 230467589}
---- !u!1 &231566285
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 231566286}
-  - component: {fileID: 231566287}
-  m_Layer: 0
-  m_Name: Riposte
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &231566286
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 231566285}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &231566287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 231566285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 0
-  m_strength: 3
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 1
-  weapEffects: []
-  weapAbility:
-  - abilityType: 1
-    abilityTime: 1
-    abilityDamage: 15
-  - abilityType: 0
-    abilityTime: 1
-    abilityDamage: 5
-  m_AttackName: Riposte
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 1
-  alignmentRange: 101
 --- !u!1 &232898260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3066,7 +2947,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1019151865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -96.6, y: -3.2, z: -0.17}
+  m_LocalPosition: {x: -47.74, y: -3.2, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1338734718}
@@ -3970,45 +3851,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &365866031
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 365866032}
-  m_Layer: 0
-  m_Name: Abilities
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &365866032
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 365866031}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -96.50242, y: -5.1813602, z: 14.778408}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 962115996}
-  - {fileID: 1596797617}
-  - {fileID: 1857051116}
-  - {fileID: 2045704309}
-  - {fileID: 231566286}
-  - {fileID: 1656386248}
-  - {fileID: 691527638}
-  - {fileID: 1069120982}
-  - {fileID: 1609960913}
-  - {fileID: 1848950363}
-  - {fileID: 99777883}
-  m_Father: {fileID: 0}
-  m_RootOrder: 20
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &381990463
 Prefab:
   m_ObjectHideFlags: 0
@@ -4391,6 +4233,7 @@ GameObject:
   - component: {fileID: 409104561}
   - component: {fileID: 409104560}
   - component: {fileID: 409104562}
+  - component: {fileID: 409104563}
   m_Layer: 0
   m_Name: CombatBarSlider
   m_TagString: Untagged
@@ -4478,15 +4321,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0062a43b4ccc2e4439c20b716a784c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_combatSlider: {fileID: 0}
+  m_combatSlider: {fileID: 409104560}
   m_sliderPortraitRoot2: {fileID: 1794818640}
   m_defaultSpeed: 9.8
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
-  m_bumpScript: {fileID: 0}
+  m_bumpScript: {fileID: 409104563}
   m_combatActive: 0
   slow: 0
+--- !u!114 &409104563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 409104559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b41b65839b3be4ba43aef21d54c73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bumpUp: 0
+  m_switchCatcher: 0
+  m_goingUp: 0
+  m_timesUp: 2
+  m_upAmount: 10
+  m_speed: 0.3
 --- !u!1 &413486502
 GameObject:
   m_ObjectHideFlags: 0
@@ -6073,7 +5933,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &589074606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6901,67 +6761,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &691527637
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 691527638}
-  - component: {fileID: 691527639}
-  m_Layer: 0
-  m_Name: Smite
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &691527638
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 691527637}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &691527639
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 691527637}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 75
-  m_strength: 10
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 3
-  weapEffects:
-  - effectType: 0
-    effectTime: 0
-    effectDamage: 30
-  weapAbility:
-  - abilityType: 3
-    abilityTime: 0
-    abilityDamage: 25
-  m_AttackName: Smite
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 0
-  alignmentRange: 40
 --- !u!1 &702604978
 GameObject:
   m_ObjectHideFlags: 0
@@ -9849,61 +9648,6 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
---- !u!1 &962115995
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 962115996}
-  - component: {fileID: 962115997}
-  m_Layer: 0
-  m_Name: Disarm
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &962115996
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 962115995}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &962115997
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 962115995}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 0
-  m_strength: 5
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 1
-  m_attackType: 0
-  weapEffects: []
-  weapAbility: []
-  m_AttackName: Disarm
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 0
-  alignmentRange: 50
 --- !u!1 &974256332
 GameObject:
   m_ObjectHideFlags: 0
@@ -10808,73 +10552,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1056630282}
---- !u!1 &1069120981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1069120982}
-  - component: {fileID: 1069120983}
-  m_Layer: 0
-  m_Name: Divine flame
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1069120982
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1069120981}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1069120983
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1069120981}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 50
-  m_strength: 10
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 3
-  weapEffects:
-  - effectType: 1
-    effectTime: 0
-    effectDamage: 50
-  - effectType: 2
-    effectTime: 10
-    effectDamage: 5
-  - effectType: 3
-    effectTime: 0
-    effectDamage: 0
-  - effectType: 0
-    effectTime: 0
-    effectDamage: 15
-  weapAbility: []
-  m_AttackName: Divine flame
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 1
-  alignmentRange: 101
 --- !u!1 &1072561624
 GameObject:
   m_ObjectHideFlags: 0
@@ -10910,7 +10587,16 @@ MonoBehaviour:
   m_howManyHits: 0
   m_attackFinished: 0
   m_attackType: 0
-  weapEffects: []
+  weapEffects:
+  - effectType: 3
+    effectTime: 2
+    effectDamage: 10
+  - effectType: 3
+    effectTime: 1
+    effectDamage: 0
+  - effectType: 4
+    effectTime: 3
+    effectDamage: 2
   weapAbility: []
 --- !u!4 &1072561626
 Transform:
@@ -11967,6 +11653,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 1
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 1818781033}
   m_combatBar: {fileID: 1330488208}
   FadeDeath: 0
@@ -13790,6 +13477,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 5
   m_burnTimer: 5
+  m_disarmed: 0
   m_healthBar: {fileID: 250342312}
   m_combatBar: {fileID: 258891928}
   FadeDeath: 0
@@ -13858,6 +13546,7 @@ GameObject:
   - component: {fileID: 1330488207}
   - component: {fileID: 1330488206}
   - component: {fileID: 1330488208}
+  - component: {fileID: 1330488209}
   m_Layer: 0
   m_Name: CombatBarSlider
   m_TagString: Untagged
@@ -13945,15 +13634,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0062a43b4ccc2e4439c20b716a784c94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_combatSlider: {fileID: 0}
+  m_combatSlider: {fileID: 1330488206}
   m_sliderPortraitRoot2: {fileID: 1132924784}
   m_defaultSpeed: 10.1
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
-  m_bumpScript: {fileID: 0}
+  m_bumpScript: {fileID: 1330488209}
   m_combatActive: 0
   slow: 0
+--- !u!114 &1330488209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1330488205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9b41b65839b3be4ba43aef21d54c73a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_bumpUp: 0
+  m_switchCatcher: 0
+  m_goingUp: 0
+  m_timesUp: 2
+  m_upAmount: 10
+  m_speed: 0.3
 --- !u!1 &1333714423
 GameObject:
   m_ObjectHideFlags: 0
@@ -14336,6 +14042,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 1
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 689140778}
   m_combatBar: {fileID: 409104562}
   FadeDeath: 0
@@ -17083,64 +16790,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1595099697}
---- !u!1 &1596797616
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1596797617}
-  - component: {fileID: 1596797618}
-  m_Layer: 0
-  m_Name: Pommel strike
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1596797617
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1596797616}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1596797618
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1596797616}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 10
-  m_strength: 3
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 0
-  weapEffects:
-  - effectType: 0
-    effectTime: 0
-    effectDamage: 40
-  weapAbility: []
-  m_AttackName: Pommel Strike
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 1
-  alignmentRange: 101
 --- !u!1 &1600902969
 GameObject:
   m_ObjectHideFlags: 0
@@ -17175,64 +16824,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &1609960912
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1609960913}
-  - component: {fileID: 1609960914}
-  m_Layer: 0
-  m_Name: Fear the shadows
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1609960913
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1609960912}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1609960914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1609960912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 75
-  m_strength: 10
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 1
-  m_attackFinished: 0
-  m_attackType: 3
-  weapEffects:
-  - effectType: 0
-    effectTime: 0
-    effectDamage: 40
-  weapAbility: []
-  m_AttackName: Fear the Shadows
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 1
-  alignmentRange: 50
 --- !u!1001 &1614103185
 Prefab:
   m_ObjectHideFlags: 0
@@ -18096,67 +17687,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1631871481}
---- !u!1 &1656386247
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1656386248}
-  - component: {fileID: 1656386249}
-  m_Layer: 0
-  m_Name: Punish the unworthy
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1656386248
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1656386247}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1656386249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1656386247}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 0
-  m_strength: 8
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 0
-  m_attackFinished: 0
-  m_attackType: 1
-  weapEffects:
-  - effectType: 0
-    effectTime: 4
-    effectDamage: 20
-  weapAbility:
-  - abilityType: 2
-    abilityTime: 4
-    abilityDamage: 20
-  m_AttackName: Punish the unworthy
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 1
-  m_doWith: 1
-  alignmentRange: 60
 --- !u!1 &1659245124
 GameObject:
   m_ObjectHideFlags: 0
@@ -19866,61 +19396,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1844583754}
---- !u!1 &1848950362
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1848950363}
-  - component: {fileID: 1848950364}
-  m_Layer: 0
-  m_Name: Lay on hands
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1848950363
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1848950362}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1848950364
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1848950362}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 25
-  m_strength: 10
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 0
-  m_attackFinished: 0
-  m_attackType: 5
-  weapEffects: []
-  weapAbility: []
-  m_AttackName: 
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 1
-  m_doWith: 0
-  alignmentRange: 40
 --- !u!1 &1853182539
 GameObject:
   m_ObjectHideFlags: 0
@@ -20141,61 +19616,6 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1854111867}
---- !u!1 &1857051115
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 1857051116}
-  - component: {fileID: 1857051117}
-  m_Layer: 0
-  m_Name: Savage
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1857051116
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1857051115}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1857051117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1857051115}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 25
-  m_strength: 5
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 3
-  m_attackFinished: 0
-  m_attackType: 1
-  weapEffects: []
-  weapAbility: []
-  m_AttackName: Savage
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 0
-  m_doWith: 1
-  alignmentRange: 60
 --- !u!1001 &1857163712
 Prefab:
   m_ObjectHideFlags: 0
@@ -21951,7 +21371,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2043005571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -98.4, y: -3.4, z: -0.1}
+  m_LocalPosition: {x: -49.54, y: -3.4, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 802363724}
@@ -21974,64 +21394,6 @@ MonoBehaviour:
   m_moving: 0
   target: {fileID: 283066841}
   offset: 3.01
---- !u!1 &2045704308
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 2045704309}
-  - component: {fileID: 2045704310}
-  m_Layer: 0
-  m_Name: Divine shield
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2045704309
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2045704308}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 365866032}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2045704310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2045704308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0487cf07c75529d408240bbefd3576ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_attackDamage: 0
-  m_strength: 8
-  m_animToPlay: {fileID: 0}
-  m_animationForPlay: {fileID: 0}
-  m_howManyHits: 0
-  m_attackFinished: 0
-  m_attackType: 0
-  weapEffects: []
-  weapAbility:
-  - abilityType: 0
-    abilityTime: 0
-    abilityDamage: 0
-  m_AttackName: 
-  m_CooldownTimeChecker: 0
-  m_actualCooldown: 0
-  m_magicAlignment: 1
-  m_doWith: 0
-  alignmentRange: 50
 --- !u!1 &2058351500
 GameObject:
   m_ObjectHideFlags: 0
@@ -22692,6 +22054,7 @@ MonoBehaviour:
   m_burning: 0
   m_burnTime: 0
   m_burnTimer: 0
+  m_disarmed: 0
   m_healthBar: {fileID: 0}
   m_combatBar: {fileID: 0}
   FadeDeath: 0
