@@ -14,6 +14,12 @@ public class BattleMenuScript : MonoBehaviour {
     public GameObject SpellChargeRoot;
     public Image[] spellCharges = new Image[PlayerStat.m_maxSpellsPerDay];
     public GameObject CombatBar;
+    public static BattleMenuScript Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
 
 	// Use this for initialization
 	void Start () {

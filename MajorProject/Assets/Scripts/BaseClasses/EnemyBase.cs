@@ -35,9 +35,9 @@ public class EnemyBase : CharacterStatSheet {
             {
                 Debug.Log(gameObject.name + " Surrendered");
                 m_surrender = true;
-                TurnBasedScript.CallOnPlayerSurrender();
-                GetCombatBar().GetComponent<CombatSliderScript>().m_combatActive = false;
-                GetCombatBar().value = 0;
+                TurnBasedScript.CallOnPlayerSurrender(this);
+                GetCombatBar().m_combatActive = false;
+                GetCombatBar().m_combatSlider.value = 0;
             }
         }
     }

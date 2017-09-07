@@ -11,11 +11,11 @@ public class LeapFrogScript : MonoBehaviour {
     public bool m_FirstRain;
     public bool m_DoesMove;
     public float m_MoveSpeed;
-
+    float m_distanceBetween;
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -57,20 +57,20 @@ public class LeapFrogScript : MonoBehaviour {
             Vector3 backCloudTemp = ((!m_FirstRain) ? m_rainHolders[0].transform.position : m_rainHolders[1].transform.position);
             Vector3 frontCloudTemp = ((m_FirstRain) ? m_rainHolders[0].transform.position : m_rainHolders[1].transform.position);
             Vector3 temp = backCloudTemp;
-            float distance = (m_FirstRain) ? backCloudTemp.x - frontCloudTemp.x : frontCloudTemp.x - backCloudTemp.x;
+            float distance = backCloudTemp.x - frontCloudTemp.x;
             distance = Mathf.Abs(distance);
             temp.x = backCloudTemp.x - distance;
             frontCloudTemp = temp;
             m_FirstRain = !m_FirstRain;
             if (!m_FirstRain)
             {
-                m_rainHolders[0].transform.position = backCloudTemp;
-                m_rainHolders[1].transform.position = frontCloudTemp;
+                m_rainHolders[0].transform.position = frontCloudTemp;
+                m_rainHolders[1].transform.position = backCloudTemp;
             }
             else
             {
-                m_rainHolders[0].transform.position = frontCloudTemp;
-                m_rainHolders[1].transform.position = backCloudTemp;
+                m_rainHolders[0].transform.position = backCloudTemp;
+                m_rainHolders[1].transform.position = frontCloudTemp;
             }
         }
     }

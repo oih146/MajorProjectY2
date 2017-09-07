@@ -7,14 +7,19 @@ public class ResponseMaskDecider : MonoBehaviour {
     public static int m_idCaller;
     public int personalId;
 
-    void Awake()
+    void OnEnable()
     {
         personalId = m_idCaller;
-        m_idCaller++;
-        if(gameObject.GetComponent<UnityEngine.UI.Button>().interactable == false)
+        UnityEngine.UI.Image sprite = gameObject.GetComponent<UnityEngine.UI.Image>();
+        if (gameObject.GetComponentInParent<UnityEngine.UI.Button>().interactable == false)
         {
-            gameObject.GetComponent<UnityEngine.UI.Image>().sprite = MaskHolder.GetMask(personalId);
+
+            m_idCaller++;
+            sprite.sprite = MaskHolder.GetMask(personalId);
+            sprite.color = new Color(1, 1, 1, 0.5f);
         }
+        else
+            sprite.color = new Color(1, 1, 1, 0);
     }
 
 	// Use this for initialization

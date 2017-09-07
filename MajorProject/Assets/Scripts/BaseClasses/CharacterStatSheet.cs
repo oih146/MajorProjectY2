@@ -97,7 +97,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
         //UI
     public UnityEngine.UI.Slider m_healthBar;   //Health bar attached to this character
-    public UnityEngine.UI.Slider m_combatBar;   //This character's combat bar that is shown during combat
+    public CombatSliderScript m_combatBar;   //This character's combat bar that is shown during combat
 
         //Effect and Abilities (relevent enums decide where variables are allocated)
     private float[] m_effectTime = new float[(int)eEffects.NumOfEffects];           //Effects time
@@ -153,7 +153,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Creates statistics for attributes 
     public void GenerateStatistics()
     {
-        GetCombatBar().GetComponent<CombatSliderScript>().DecreaseBaseSliderSpeed(GetStatistics().GetSpeed());
+        GetCombatBar().DecreaseBaseSliderSpeed(GetStatistics().GetSpeed());
         BaseDamage = GetStatistics().GetStrength();
         CriticalChance = GetStatistics().GetDexterity();
     }
@@ -213,8 +213,8 @@ public class CharacterStatSheet : MonoBehaviour {
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
         m_health -= damageToTake;
         //Combat bar interrupt
-        if(m_combatBar.value > 0.73 && interrupt)
-            m_combatBar.GetComponent<CombatSliderScript>().TakeFromTimer(damageToTake / (m_InteruptMultiplier * bonusInterupt));
+        if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
+            m_combatBar.TakeFromTimer(damageToTake / (m_InteruptMultiplier * bonusInterupt));
         if (m_abilityTime[(int)eAbilities.CounterStance] > 0)
             return m_abilityToApply[(int)eAbilities.CounterStance];
         return 0;
@@ -255,7 +255,7 @@ public class CharacterStatSheet : MonoBehaviour {
         return m_healthBar;
     }
 
-    public UnityEngine.UI.Slider GetCombatBar()
+    public CombatSliderScript GetCombatBar()
     {
         return m_combatBar;
     }

@@ -6,12 +6,12 @@ using PixelCrushers.DialogueSystem;
 public class PlayerStat : CharacterStatSheet {
 
     public AlignmentLines m_alignmentLines;
-    public float m_GoodEvil;
+    public float m_light;
     public float Light
     {
         get
         {
-            return m_GoodEvil;
+            return m_light;
         }
 
         set
@@ -20,24 +20,24 @@ public class PlayerStat : CharacterStatSheet {
             buff.SetActive(true);
             buff.transform.localPosition = new Vector3(-300, 0, 1);
             if (value < 0)
-                m_GoodEvil = 0;
+                m_light = 0;
             else if (value > 100)
-                m_GoodEvil = 100;
+                m_light = 100;
             else
-                m_GoodEvil = value;
+                m_light = value;
             if(value > 0)
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
             else
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
-            m_LightSlider.value = m_GoodEvil;
+            m_LightSlider.value = m_light;
         }
     }
-    public float m_OrderChaos;
+    public float m_law;
     public float Law
     {
         get
         {
-            return m_OrderChaos;
+            return m_law;
         }
 
         set
@@ -46,16 +46,16 @@ public class PlayerStat : CharacterStatSheet {
             buff.SetActive(true);
             buff.transform.localPosition = new Vector3(-300, -15, 1);
             if (value < 0)
-                m_OrderChaos = 0;
+                m_law = 0;
             else if (value > 100)
-                m_OrderChaos = 100;
+                m_law = 100;
             else
-                m_OrderChaos = value;
+                m_law = value;
             if (value > 0)
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
             else
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
-            m_LawSlider.value = m_OrderChaos;
+            m_LawSlider.value = m_law;
 
         }
     }
@@ -65,7 +65,7 @@ public class PlayerStat : CharacterStatSheet {
     public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
-    public static int m_maxSpellsPerDay = 2;
+    public static int m_maxSpellsPerDay = 1;
     public int MaxSpells
     {
         get
@@ -73,7 +73,7 @@ public class PlayerStat : CharacterStatSheet {
             return m_maxSpellsPerDay;
         }
 
-        set
+        private set
         {
             m_maxSpellsPerDay = value;
         }
@@ -96,7 +96,7 @@ public class PlayerStat : CharacterStatSheet {
     // Use this for initialization
     void Start () {
         Starts();
-
+        //AddToOrderChaos(5);
         GenerateWillPower();
         m_spellsAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
@@ -119,6 +119,20 @@ public class PlayerStat : CharacterStatSheet {
     public void GenerateWillPower()
     {
         MaxSpells += GetStatistics().GetWillPower() / 2;
+        if (MaxSpells > 6)
+            MaxSpells = 6;
+        SetSpellCharges(true);
+    }
+
+    public void SetSpellCharges(bool status)
+    {
+        int spellmax = MaxSpells;
+        GameObject spellChargeRoot = BattleMenuScript.Instance.SpellChargeRoot;
+        for (int i = 0; i < spellChargeRoot.transform.childCount; i++, spellmax--)
+        {
+            if (spellmax > 0)
+                spellChargeRoot.transform.GetChild(i).gameObject.SetActive(status);
+        }
     }
 
     void OnDisable()

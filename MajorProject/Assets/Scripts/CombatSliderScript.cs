@@ -16,6 +16,7 @@ public class CombatSliderScript : MonoBehaviour {
     float m_time;
     //public float timer;
     //public float timer2;
+    public BumpUp m_bumpScript;
     public bool m_combatActive = false;
     public bool slow = false;
     public bool CombatActive
@@ -67,6 +68,7 @@ public class CombatSliderScript : MonoBehaviour {
         float percentageComplete = timeSinceLerp / m_speed;
 
         m_combatSlider.value = Mathf.Lerp(0, m_combatSlider.maxValue, percentageComplete);
+        m_bumpScript.StartBump();
     }
 
     public void Restart()

@@ -5,18 +5,22 @@ using UnityEngine.UI;
 
 public class MaskHolder : MonoBehaviour {
 
-    public Sprite evilMask;
-    public Sprite goodMask;
-    public static Sprite good;
-    public static Sprite evil;
+    //To Set Mask in Dialouge manager (Squence)
+    //Set based on entryID
+    //SendMessage(functionName(SetMask), parameter(evil or chaos), gameObjectThatScriptIsOne(Testing));
+
+    public Sprite m_chaosMask;
+    public Sprite m_evilMask;
+    public static Sprite m_evil;
+    public static Sprite m_chaos;
     public static int childnum;
     public static Dictionary<int, string> masks = new Dictionary<int, string>();
 
     void Start()
     {
         childnum = 0;
-        good = goodMask;
-        evil = evilMask;
+        m_evil = m_evilMask;
+        m_chaos = m_chaosMask;
     }
 
     public void RecountChildren()
@@ -27,22 +31,25 @@ public class MaskHolder : MonoBehaviour {
     public void SetMask(string alignment)
     {
         alignment = alignment.ToLower();
-        masks.Add(0, alignment);
+        masks.Add(childnum, alignment);
         childnum++;
     }
 
     public static Sprite GetMask(int key)
     {
+        //template UI increments
+        //minus to equalize
+        //key--;
         string alignment;
         masks.TryGetValue(key, out alignment);
-        if(alignment == "evil")
+        if(alignment == "law")
         {
-            return evil;
+            return m_chaos;
         }
         else if(alignment == "light")
         {
-            return good;
+            return m_evil;
         }
-        return good;
+        return m_evil;
     }
 }
