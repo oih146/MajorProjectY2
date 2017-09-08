@@ -11,12 +11,7 @@ public enum eEffects
     BurnDamage,
     AdditionBurnChance,
     TakeBonusInterupt,
-    NumOfEffects
-}
-
-public enum eAbilities
-{
-    DamageReduction = 0,            //+-
+    DamageReduction,            //+-
     SpeedReduction,
     CounterStance,
     Invulnerability,
@@ -24,7 +19,7 @@ public enum eAbilities
     BonusToEvil,                    //+
     InteruptModifier,
     InteruptHealthMod,
-    NumOfAbilities
+    NumOfEffects
 }
 
 public enum AttackStrength
@@ -45,7 +40,8 @@ public enum AttackType
     HealOne,
     HealAll,
     Flee,
-    MassAttack
+    MassAttack,
+    BuffDebuff
 }
 
 public class WeaponBase : MonoBehaviour {
@@ -67,16 +63,9 @@ public class WeaponBase : MonoBehaviour {
         public int effectDamage;
     }
 
-    [System.Serializable]
-    public struct WeaponAbility
-    {
-        public eAbilities abilityType;
-        public int abilityTime;
-        public int abilityDamage;
-    }
 
     public WeaponEffect[] weapEffects;
-    public WeaponAbility[] weapAbility;
+    public WeaponEffect[] weapAbility;
 
     public Motion GetAnimationToPlay()
     { 
@@ -109,14 +98,12 @@ public class WeaponBase : MonoBehaviour {
 
         for(int i = 0; i < weapAbility.Length; i++)
         {
-            userOfWeap.AddAbility(weapAbility[i]);
-            if (weapAbility[i].abilityType == eAbilities.SpeedReduction)
-                userOfWeap.GetCombatBar().SetTemporarySpeedDecrease(weapAbility[i].abilityDamage);
+            userOfWeap.AddEffect(weapAbility[i]);
         }
     }
 
     public bool DoesAttackAll()
     {
-        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll) ? true : false;
+        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll) ? true : false;
     }
 }

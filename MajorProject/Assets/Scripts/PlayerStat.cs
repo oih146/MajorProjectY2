@@ -59,10 +59,8 @@ public class PlayerStat : CharacterStatSheet {
 
         }
     }
-    public GameObject m_notificationBox;
     public UnityEngine.UI.Slider m_LightSlider;
     public UnityEngine.UI.Slider m_LawSlider; 
-    public Canvas m_playerCanvas;
     public float m_charisma;
     public bool m_inBattle;
     public static int m_maxSpellsPerDay = 1;
@@ -174,10 +172,5 @@ public class PlayerStat : CharacterStatSheet {
     public void AddToGoodEvil(float amountToAdd)
     {
         Light += amountToAdd;
-    }
-
-    public Canvas GetPersonalCanvas()
-    {
-        return m_playerCanvas;
     }
 }

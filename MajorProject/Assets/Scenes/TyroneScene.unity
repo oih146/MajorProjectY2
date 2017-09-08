@@ -1177,7 +1177,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 119269263}
   m_OnClick:
     m_PersistentCalls:
@@ -2771,8 +2771,8 @@ RectTransform:
   m_Father: {fileID: 2018795704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 468, y: 0}
   m_Pivot: {x: 0, y: 1}
@@ -2947,7 +2947,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1019151865}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -47.74, y: -3.2, z: -0.17}
+  m_LocalPosition: {x: -43.4, y: -3.2, z: -0.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1338734718}
@@ -4009,7 +4009,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 383095443}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -29.9, y: 0, z: 0}
+  m_LocalPosition: {x: -40.19, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 360445036}
@@ -4323,13 +4323,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_combatSlider: {fileID: 409104560}
   m_sliderPortraitRoot2: {fileID: 1794818640}
-  m_defaultSpeed: 9.8
+  m_defaultSpeed: 5
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
   m_bumpScript: {fileID: 409104563}
   m_combatActive: 0
-  slow: 0
 --- !u!114 &409104563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5933,7 +5932,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &589074606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5981,7 +5980,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 589074605}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -40.9, y: -4.79, z: 0}
+  m_LocalPosition: {x: -51.62, y: -4.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -6965,6 +6964,7 @@ MonoBehaviour:
   m_IPOnHit: 2.5
   m_IPOnDeath: 5
   battleMenu: {fileID: 1024700874}
+  magicCanBePressed: []
   turnPointer: {fileID: 1975861255}
   m_playerTurn: 1
   m_WhenAttackingTurn: 0
@@ -10580,7 +10580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0e2760051b7b4399f0700dbc08316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attackDamage: 35
+  m_attackDamage: 2
   m_strength: 0
   m_animToPlay: {fileID: 7400000, guid: b0297c161b51d3d47ac68c5b42ee5aeb, type: 2}
   m_animationForPlay: {fileID: 0}
@@ -10588,15 +10588,12 @@ MonoBehaviour:
   m_attackFinished: 0
   m_attackType: 0
   weapEffects:
-  - effectType: 3
-    effectTime: 2
-    effectDamage: 10
-  - effectType: 3
-    effectTime: 1
+  - effectType: 2
+    effectTime: 5
     effectDamage: 0
-  - effectType: 4
-    effectTime: 3
-    effectDamage: 2
+  - effectType: 8
+    effectTime: 5
+    effectDamage: 3
   weapAbility: []
 --- !u!4 &1072561626
 Transform:
@@ -11654,11 +11651,14 @@ MonoBehaviour:
   m_burnTime: 1
   m_burnTimer: 0
   m_disarmed: 0
+  m_playerCanvas: {fileID: 192164135}
   m_healthBar: {fileID: 1818781033}
   m_combatBar: {fileID: 1330488208}
+  m_notificationBox: {fileID: 1207582128280942, guid: ec64520a777a5104791e76d417d30407,
+    type: 2}
   FadeDeath: 0
   m_renderer: {fileID: 0}
-  m_fadeSpeed: 2.5
+  m_fadeSpeed: 2
   isCrippled: 0
   m_vulnerableToFire: 0
   m_incapacitationPoints: 0
@@ -12097,7 +12097,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.36078432, g: 0.35686275, b: 0.35686275, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -12109,7 +12109,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1195680653}
   m_OnClick:
     m_PersistentCalls:
@@ -13478,19 +13478,19 @@ MonoBehaviour:
   m_burnTime: 5
   m_burnTimer: 5
   m_disarmed: 0
+  m_playerCanvas: {fileID: 1024700872}
   m_healthBar: {fileID: 250342312}
   m_combatBar: {fileID: 258891928}
+  m_notificationBox: {fileID: 1207582128280942, guid: ec64520a777a5104791e76d417d30407,
+    type: 2}
   FadeDeath: 0
   m_renderer: {fileID: 0}
   m_fadeSpeed: 0
   m_alignmentLines: {fileID: 1338734722}
   m_light: 100
   m_law: 50
-  m_notificationBox: {fileID: 1207582128280942, guid: ec64520a777a5104791e76d417d30407,
-    type: 2}
   m_LightSlider: {fileID: 917456398}
   m_LawSlider: {fileID: 1495082990}
-  m_playerCanvas: {fileID: 1024700872}
   m_charisma: 0
   m_inBattle: 0
   m_spellsAvaliable: 0
@@ -13636,13 +13636,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_combatSlider: {fileID: 1330488206}
   m_sliderPortraitRoot2: {fileID: 1132924784}
-  m_defaultSpeed: 10.1
+  m_defaultSpeed: 5
   m_timeDivider: 1
   m_chargeTimeReduction: 0
   m_speed: 0
   m_bumpScript: {fileID: 1330488209}
   m_combatActive: 0
-  slow: 0
 --- !u!114 &1330488209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14043,11 +14042,14 @@ MonoBehaviour:
   m_burnTime: 1
   m_burnTimer: 0
   m_disarmed: 0
+  m_playerCanvas: {fileID: 1953656623}
   m_healthBar: {fileID: 689140778}
   m_combatBar: {fileID: 409104562}
+  m_notificationBox: {fileID: 1207582128280942, guid: ec64520a777a5104791e76d417d30407,
+    type: 2}
   FadeDeath: 0
   m_renderer: {fileID: 0}
-  m_fadeSpeed: 2.5
+  m_fadeSpeed: 2
   isCrippled: 0
   m_vulnerableToFire: 0
   m_incapacitationPoints: 0
@@ -15059,7 +15061,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.36078432, g: 0.35686275, b: 0.35686275, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -15071,7 +15073,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1431885250}
   m_OnClick:
     m_PersistentCalls:
@@ -15859,7 +15861,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 0.5019608}
+    m_DisabledColor: {r: 0.36078432, g: 0.35686275, b: 0.35686275, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -15871,7 +15873,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1533358226}
   m_OnClick:
     m_PersistentCalls:
@@ -16352,7 +16354,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1556608142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -55.8, y: 0, z: 0.08}
+  m_LocalPosition: {x: -65.56, y: 0, z: 0.08}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 360445036}
@@ -17636,7 +17638,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1631871484}
   m_OnClick:
     m_PersistentCalls:
@@ -18731,7 +18733,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1775173010}
   m_OnClick:
     m_PersistentCalls:
@@ -21371,7 +21373,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2043005571}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -49.54, y: -3.4, z: -0.1}
+  m_LocalPosition: {x: -45.2, y: -3.4, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 802363724}
@@ -22055,8 +22057,10 @@ MonoBehaviour:
   m_burnTime: 0
   m_burnTimer: 0
   m_disarmed: 0
+  m_playerCanvas: {fileID: 0}
   m_healthBar: {fileID: 0}
   m_combatBar: {fileID: 0}
+  m_notificationBox: {fileID: 0}
   FadeDeath: 0
   m_renderer: {fileID: 2120773206}
   m_fadeSpeed: 2.5
@@ -22331,7 +22335,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 2146287262}
   m_OnClick:
     m_PersistentCalls:

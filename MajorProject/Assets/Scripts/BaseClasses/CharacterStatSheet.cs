@@ -97,14 +97,14 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_disarmed;
 
     //UI
+    public Canvas m_playerCanvas;
     public UnityEngine.UI.Slider m_healthBar;   //Health bar attached to this character
     public CombatSliderScript m_combatBar;   //This character's combat bar that is shown during combat
+    public GameObject m_notificationBox;
 
-        //Effect and Abilities (relevent enums decide where variables are allocated)
+    //Effect and Abilities (relevent enums decide where variables are allocated)
     private float[] m_effectTime = new float[(int)eEffects.NumOfEffects];           //Effects time
     private float[] m_effectsToApply = new float[(int)eEffects.NumOfEffects];       //Effects strength (damage)
-    private float[] m_abilityTime = new float[(int)eAbilities.NumOfAbilities];      //Ability's time
-    private float[] m_abilityToApply = new float[(int)eAbilities.NumOfAbilities];   //Ability's strength (damage)
 
     //Death Variables
     //-----------------------------------------
@@ -125,7 +125,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (m_burning)
         {
             m_burnTimer -= Time.deltaTime;
-            if (m_burnTimer <= 0)
+            if (m_burnTimer % 1.0f == 0.0f)
             {
                 Health -= 1 + m_effectsToApply[(int)eEffects.BurnDamage];
                 ReCheckHealth();
@@ -179,21 +179,12 @@ public class CharacterStatSheet : MonoBehaviour {
         return m_effectTime;
     }
 
-    public float[] GetAbilityArray()
-    {
-        return m_abilityToApply;
-    }
-
-    public float[] GetAbilityTimeArray()
-    {
-        return m_abilityTime;
-    }
-
     //Used by attacker
     //If the defending character has a counterattack ability
-    public float TakeDamage(float damageToTake)
+    public float CounterTakeDamage(float damageToTake)
     {
-        return TakeDamage(damageToTake, null, 1, AttackStrength.Light, false);
+        Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
+        return Health - damageToTake;
     }
 
     //Take damage, virtual to allow inheriting classes to override
@@ -206,7 +197,7 @@ public class CharacterStatSheet : MonoBehaviour {
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 2 : 1;
         }
         if(attacktype != AttackStrength.Magic)
-            damageToTake -= m_armor.GetDamageReduction(((int)m_abilityTime[(int)eAbilities.DamageReduction] > 0) ? (int)m_abilityToApply[(int)eAbilities.DamageReduction] : 0);
+            damageToTake -= m_armor.GetDamageReduction(((int)m_effectTime[(int)eEffects.DamageReduction] > 0) ? (int)m_effectsToApply[(int)eEffects.DamageReduction] : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
         //Would be adding to health
@@ -217,8 +208,8 @@ public class CharacterStatSheet : MonoBehaviour {
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
             m_combatBar.TakeFromTimer(damageToTake / (m_InteruptMultiplier * bonusInterupt));
-        if (m_abilityTime[(int)eAbilities.CounterStance] > 0)
-            return m_abilityToApply[(int)eAbilities.CounterStance];
+        if (m_effectTime[(int)eEffects.CounterStance] > 0)
+            return m_effectsToApply[(int)eEffects.CounterStance];
         return 0;
     }
 
@@ -233,8 +224,8 @@ public class CharacterStatSheet : MonoBehaviour {
     public float AdditionalDamage()
     {
         float temp = 0;
-        temp += (m_isEvil && m_effectTime[(int)eAbilities.BonusToEvil] > 0) ? m_effectsToApply[(int)eAbilities.BonusToEvil] : 0;
-        temp += (m_effectTime[(int)eAbilities.BonusDamage] > 0) ? m_effectsToApply[(int)eAbilities.BonusDamage] : 0;
+        temp += (m_isEvil && m_effectTime[(int)eEffects.BonusToEvil] > 0) ? m_effectsToApply[(int)eEffects.BonusToEvil] : 0;
+        temp += (m_effectTime[(int)eEffects.BonusDamage] > 0) ? m_effectsToApply[(int)eEffects.BonusDamage] : 0;
         return temp;
     }
 
@@ -322,13 +313,6 @@ public class CharacterStatSheet : MonoBehaviour {
         m_effectTime[(int)effect.effectType] = effect.effectTime;
     }
 
-    //Simplifier for adding Abilities
-    public void AddAbility(WeaponBase.WeaponAbility ability)
-    {
-        m_abilityToApply[(int)ability.abilityType] = ability.abilityDamage;
-        m_abilityTime[(int)ability.abilityType] = ability.abilityTime;
-    }
-
     //Called at the end of every turn during combat, updates effects
     public void UpdateEffects()
     {
@@ -340,6 +324,8 @@ public class CharacterStatSheet : MonoBehaviour {
                 m_effectTime[i]--;
             }
         }
+        if (m_effectTime[(int)eEffects.SpeedReduction] > 0)
+            GetCombatBar().SetTemporarySpeedDecrease(m_effectsToApply[(int)eEffects.SpeedReduction]);
 
     }
 
@@ -354,5 +340,10 @@ public class CharacterStatSheet : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public Canvas GetPersonalCanvas()
+    {
+        return m_playerCanvas;
     }
 }
