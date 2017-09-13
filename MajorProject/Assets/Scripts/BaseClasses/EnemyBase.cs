@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class EnemyBase : CharacterStatSheet {
 
+    public override float Health
+    {
+        get
+        {
+            return base.Health;
+        }
+
+        set
+        {
+            base.Health = value;
+            if (Health <= 0)
+                StartFadeDeath();
+        }
+    }
     //Public Variables
     //----------------------------------
     public bool isCrippled;
     public bool m_vulnerableToFire;         // Mostly for wolves, may move
     public float m_incapacitationPoints;    //How many incap point enemy has
-    public bool m_surrender;                //Has the enemy surrendered
     public int m_baseCapIP;                 //Base IP Limit, without willpower added. Added to m_maxIP with willpower for total IP limit
 
     //Static Variables
@@ -54,6 +67,7 @@ public class EnemyBase : CharacterStatSheet {
         Starts();
         m_maxIP += GetStatistics().GetWillPowerIPIncrease();
         m_renderer = GetComponent<SpriteRenderer>();
+        //fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
     }
 
     // Update is called once per frame

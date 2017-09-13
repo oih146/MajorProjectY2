@@ -48,12 +48,12 @@ public class MagicAttack : WeaponBase {
         return Is == To;
     }
 
-    public bool CanUseSpell(PlayerStat player)
+    public bool CanUseSpell(int law, int light)
     {
         DoWithFuncs funcToDo = dowithFunc[(int)m_doWith];
         if (m_magicAlignment == Aliginment.Law)
-            return funcToDo((int)player.Law, alignmentRange);
+            return funcToDo((int)law, alignmentRange);
         else
-            return funcToDo((int)player.Light, alignmentRange);
+            return funcToDo((int)light, alignmentRange);
     }
 }

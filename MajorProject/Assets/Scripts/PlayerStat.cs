@@ -6,8 +6,8 @@ using PixelCrushers.DialogueSystem;
 public class PlayerStat : CharacterStatSheet {
 
     public AlignmentLines m_alignmentLines;
-    public float m_light;
-    public float Light
+    public int m_light;
+    public int Light
     {
         get
         {
@@ -32,8 +32,8 @@ public class PlayerStat : CharacterStatSheet {
             m_LightSlider.value = m_light;
         }
     }
-    public float m_law;
-    public float Law
+    public int m_law;
+    public int Law
     {
         get
         {
@@ -147,10 +147,10 @@ public class PlayerStat : CharacterStatSheet {
     void SetAlignment()
     {
         if(DialogueLua.GetVariable("Law").AsFloat != 0)
-            AddToOrderChaos(DialogueLua.GetVariable("Law").AsFloat);
+            AddToOrderChaos(DialogueLua.GetVariable("Law").AsInt);
         DialogueLua.SetVariable("Law", 0);
         if(DialogueLua.GetVariable("Light").AsFloat != 0)
-            AddToGoodEvil(DialogueLua.GetVariable("Light").AsFloat);
+            AddToGoodEvil(DialogueLua.GetVariable("Light").AsInt);
         DialogueLua.SetVariable("Light", 0);
     }
 
@@ -164,12 +164,12 @@ public class PlayerStat : CharacterStatSheet {
         SpellAvaliable = DialogueLua.GetVariable("SP").AsInt;
     }
 
-    public void AddToOrderChaos(float amountToAdd)
+    public void AddToOrderChaos(int amountToAdd)
     {
         Law += amountToAdd;
     }
 
-    public void AddToGoodEvil(float amountToAdd)
+    public void AddToGoodEvil(int amountToAdd)
     {
         Light += amountToAdd;
     }

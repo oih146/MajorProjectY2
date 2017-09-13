@@ -64,4 +64,9 @@ public class BumpUp : MonoBehaviour {
         m_goingUp = true;
         m_bumpUp = true;
     }
+
+    public void StopBump()
+    {
+        m_bumpUp = false;
+    }
 }
