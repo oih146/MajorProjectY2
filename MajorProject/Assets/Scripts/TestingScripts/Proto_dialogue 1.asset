@@ -9948,7 +9948,7 @@ MonoBehaviour:
         destinationDialogueID: 26
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["graveDug"] == false
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -10023,7 +10023,7 @@ MonoBehaviour:
         destinationDialogueID: 25
         isConnector: 0
         priority: 2
-      conditionsString: 
+      conditionsString: Variable["graveDug"] == true
       userScript: 'Variable["Law"] = Variable["Law"] + 1
 
         Variable["Light"] = Variable["Light"] + 1'
