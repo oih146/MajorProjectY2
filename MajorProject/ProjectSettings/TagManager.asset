@@ -14,7 +14,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Character
   - 
   - 
   - 
@@ -41,4 +41,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Mesh
+    uniqueID: 3990483821
+    locked: 0
+  - name: Bones
+    uniqueID: 3170456093
+    locked: 0
+  - name: Controls
+    uniqueID: 2682759839
     locked: 0
