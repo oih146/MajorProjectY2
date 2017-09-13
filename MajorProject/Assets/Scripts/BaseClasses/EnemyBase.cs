@@ -18,7 +18,7 @@ public class EnemyBase : CharacterStatSheet {
 
     //Private Variables
     //----------------------------------
-    private int m_maxIP;
+    private int m_maxIP = 50;
 
     public float IncapacitationPoints
     {
@@ -33,10 +33,17 @@ public class EnemyBase : CharacterStatSheet {
             if (m_incapacitationPoints > m_maxIP && !m_surrender)
             {
                 Debug.Log(gameObject.name + " Surrendered");
+                Vector3 temp = gameObject.transform.position;
+                temp.y += 4;
+                temp.x += 2;
+                GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
+                obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
                 m_surrender = true;
-                TurnBasedScript.CallOnPlayerSurrender(this);
                 GetCombatBar().m_combatActive = false;
+                GetCombatBar().enabled = false;
                 GetCombatBar().m_combatSlider.value = 0;
+                TurnBasedScript.CallOnPlayerSurrender(this);
+
             }
         }
     }
@@ -63,6 +70,7 @@ public class EnemyBase : CharacterStatSheet {
     public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attackStrength, bool interrupt = true)
     {
         //Regardless of how much damage is done, IP is gained
+        Debug.Log("IP Gained");
         IncapacitationPoints += IPonHit;
 
         return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);

@@ -26,9 +26,9 @@ public class TurnBasedScript : MonoBehaviour {
 
     public BattleMenuScript battleMenu;
 
+    public List<Button> magicCanBePressed;
+
     public PointerBounce turnPointer;
-    bool m_cancelAttack;
-    bool m_moveOn;
     bool m_attackDone;
     public bool m_playerTurn;
     public bool m_WhenAttackingTurn; /*When Attacking, whose turn is it? */
@@ -68,6 +68,8 @@ public class TurnBasedScript : MonoBehaviour {
     public static bool m_playerChoosing;
     public bool BattleOver = false;
     public bool WonBattleQ;
+    private bool DidFlee = false;
+    bool isAllDisarmed = false;
     private int m_playerCount;
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
     public EnemyBase[] enemyObjects = new EnemyBase[0];
@@ -127,7 +129,7 @@ public class TurnBasedScript : MonoBehaviour {
                     if (friendlyObjects[i].GetCombatBar().m_combatSlider.value > 0.73 && friendlyObjects[i].m_decidedAttack == false)
                     {
                         //SetTurnPointer(true);
-                        turnPointer.gameObject.SetActive(true);
+                        //turnPointer.gameObject.SetActive(true);
                         PlayerTurn = true;
                         m_attackingCharacter = null;
                         SetCombatBarMovement(false);
@@ -165,7 +167,11 @@ public class TurnBasedScript : MonoBehaviour {
                             EnemyDecideTarget(i);
                         }
                         else
+                        {
                             enemyObjects[i].m_decidedAttack = true;
+                            enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
+                            enemyObjects[i].GetCombatBar().SlowDown((int)AttackStrength.Heavy);
+                        }
                         return;
                     }
 
@@ -180,7 +186,11 @@ public class TurnBasedScript : MonoBehaviour {
                             Attack(enemyObjects[i]);
                         }
                         else
+                        {
                             enemyObjects[i].m_disarmed = false;
+                            enemyObjects[i].GetCombatBar().Restart();
+                            enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
+                        }
                         return;
 
                     }
@@ -233,13 +243,16 @@ public class TurnBasedScript : MonoBehaviour {
         //SetFleeButton(status);
         SetMagicButton(status);
         //SetEndTurnButton(status);
-        SetSpellRoot(status);
+        //SetSpellRoot(status);
         //SetSpellCharges(status);
     }
 
     void SetAttackButton(bool newActive)
     {
-        battleMenu.AttackButton.gameObject.SetActive(newActive);
+        foreach(Button button in battleMenu.AttackButton.GetComponentsInChildren<Button>())
+        {
+            button.interactable = newActive;
+        }
     }
 
     //void SetFleeButton(bool newActive)
@@ -249,7 +262,10 @@ public class TurnBasedScript : MonoBehaviour {
 
     void SetMagicButton(bool newActive)
     {
-        battleMenu.MagicButtonRoot.gameObject.SetActive(newActive);
+        foreach(Button button in magicCanBePressed)
+        {
+            button.interactable = newActive;
+        }
     }
 
     void SetSpellRoot(bool newActive)
@@ -351,7 +367,7 @@ public class TurnBasedScript : MonoBehaviour {
         foreach (EnemyBase eb in enemyObjects)
         {
             if(eb.m_surrender != true)
-            eb.GetCombatBar().CombatActive = status;
+                eb.GetCombatBar().CombatActive = status;
         }
     }
 
@@ -419,9 +435,9 @@ public class TurnBasedScript : MonoBehaviour {
                 m_decidingCharacter.m_attackStrength = 0;
                 m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_spells[magicSpell];
                 bool effectActive = false;
-                foreach(WeaponBase.WeaponAbility WA in m_decidingCharacter.m_spells[magicSpell].weapAbility)
+                foreach(WeaponBase.WeaponEffect WE in m_decidingCharacter.m_spells[magicSpell].weapAbility)
                 {
-                    if (WA.abilityType == eAbilities.InteruptHealthMod)
+                    if (WE.effectType == eEffects.InteruptHealthMod)
                     {
                         effectActive = true;
                         m_decidingCharacter.GetCombatBar().SlowDown(((m_decidingCharacter.Health - 50) / 10) -
@@ -458,19 +474,43 @@ public class TurnBasedScript : MonoBehaviour {
     {
         characterAttacking.m_animator.SetFloat("AttackType", (float)characterAttacking.m_attackStrength);
         //characterAttacking.m_animator.Play(characterAttacking.m_ActiveWeapon.GetAnimationToPlay().name);
-        turnPointer.gameObject.SetActive(false);
+        //turnPointer.gameObject.SetActive(false);
         bool playerTurnBuffer = PlayerTurn;
         StartCoroutine(Attacking(characterAttacking));
         CharacterStatSheet attacker = characterAttacking;
         yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_attackFinished);
         attacker.m_ActiveWeapon.m_attackFinished = false;
+        isAllDisarmed = false;
+        foreach (WeaponBase.WeaponEffect we in attacker.m_ActiveWeapon.weapEffects)
+        {
+            if(we.effectType == eEffects.Disarmed)
+            {
+                isAllDisarmed = true;
+                foreach(CharacterStatSheet charSS in GetDefendingTeam())
+                {
+                    if(charSS.m_disarmed == false)
+                    {
+                        isAllDisarmed = false;
+                        break;   
+                    }
+                }
+            }
+        }
+        if (isAllDisarmed)
+        {
+            Debug.Log("Battle Over, You Win");
+            BattleOver = true;
+            WonBattleQ = true;
+        }
+        attacker.GetCombatBar().m_combatSlider.value = 0;
         attacker.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
         //SetTurnPointer(false);
         if (BattleOver == true)
             StopAllCoroutines();
         SetCombatBarMovement(true);
-        attacker.GetCombatBar().Restart();
+
         attacker.UpdateEffects();
+        attacker.GetCombatBar().Restart();
         if (attacker.DeathCheck())
         {
             if (playerTurnBuffer == false)
@@ -706,7 +746,6 @@ public class TurnBasedScript : MonoBehaviour {
         }
         StartCoroutine(co);
         attacker.m_ActiveWeapon.ApplyEffects(attacker, attackerBuffer);
-        attacker.GetCombatBar().m_combatSlider.value = 0;
         Debug.Log("Attack Hit");
         yield return new WaitUntil(() => m_attackDone);
         switch (attacker.m_ActiveWeapon.m_attackType)
@@ -791,6 +830,8 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatUI(true);
         m_playerMoving = false;
         m_playerChoosing = false;
+        DidFlee = false;
+        magicCanBePressed.Clear();
         
         foreach (CharacterStatSheet charSS in friendlyPlayers)
         {
@@ -807,6 +848,8 @@ public class TurnBasedScript : MonoBehaviour {
             //Setup CombatBar
             charSS.GetCombatBar().m_combatSlider.value = 0;
             charSS.GetCombatBar().gameObject.SetActive(true);
+            charSS.GetCombatBar().Restart();
+            charSS.GetCombatBar().CombatActive = true;
 
             charSS.m_decidedAttack = false;
         }
@@ -827,6 +870,8 @@ public class TurnBasedScript : MonoBehaviour {
             //Setup CombatBar
             echarSS.GetCombatBar().m_combatSlider.value = 0;
             echarSS.GetCombatBar().gameObject.SetActive(true);
+            echarSS.GetCombatBar().Restart();
+            echarSS.GetCombatBar().CombatActive = true;
 
             echarSS.m_decidedAttack = false;
         }
@@ -849,7 +894,8 @@ public class TurnBasedScript : MonoBehaviour {
             if(t < spellNum)
                 if (friendlyPlayers[0].m_spells[t].CanUseSpell((PlayerStat)friendlyPlayers[0]))
                 {
-                    battleMenu.magicButtons[t].interactable = true;
+                    //battleMenu.magicButtons[t].interactable = true;
+                    magicCanBePressed.Add(battleMenu.magicButtons[t]);
                 }
                 else
                     battleMenu.magicButtons[t].interactable = false;
@@ -1058,7 +1104,7 @@ public class TurnBasedScript : MonoBehaviour {
         turnPointer.gameObject.SetActive(false);
         foreach (CharacterStatSheet charSS in friendlyObjects)
         {
-            charSS.GetHealthBar().gameObject.SetActive(false);
+            //charSS.GetHealthBar().gameObject.SetActive(false);
             charSS.GetCombatBar().gameObject.SetActive(false);
             charSS.m_animator.Stop();
         }
@@ -1066,8 +1112,11 @@ public class TurnBasedScript : MonoBehaviour {
         //Straight Characters given
         foreach (CharacterStatSheet charSS in enemyObjects)
         {
+            charSS.GetCombatBar().gameObject.SetActive(false);
             charSS.GetHealthBar().gameObject.SetActive(false);
             charSS.m_animator.Stop();
+            if (DidFlee == true || isAllDisarmed)
+                charSS.StartFadeDeath();
         }
         SetCombatUI(false);
         //if (!didWin)
@@ -1130,11 +1179,12 @@ public class TurnBasedScript : MonoBehaviour {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.m_attacking);
-        if (!(attacker.GetAbilityTimeArray()[(int)eAbilities.Invulnerability] > 0))
+        if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
-            attacker.TakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5 + attacker.AdditionalDamage()),
+            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5 + attacker.AdditionalDamage()),
                 attacker.GetStatistics(),
-                (attacker.GetEffectTimeArray()[(int)eAbilities.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eAbilities.InteruptModifier] : 1,
+                ((attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1) * 
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
             defender.ReCheckHealth();
         }
@@ -1172,11 +1222,12 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.m_attacking);
-            if (!(attacker.GetAbilityTimeArray()[(int)eAbilities.Invulnerability] > 0))
+            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.TakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
-            (attacker.GetEffectTimeArray()[(int)eAbilities.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eAbilities.InteruptModifier] : 1,
+            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 defender.ReCheckHealth();
             }
@@ -1197,42 +1248,16 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
                 yield return new WaitUntil(() => attacker.m_attacking);
-                if (!(attacker.GetAbilityTimeArray()[(int)eAbilities.Invulnerability] > 0))
+                if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
                 {
-                    attacker.TakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
-                    (attacker.GetEffectTimeArray()[(int)eAbilities.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eAbilities.InteruptModifier] : 1,
+                    (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                     defender.ReCheckHealth();
                 }
                 yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
-                /*if (charSS.DeathCheck())
-                //{
-                //    if (m_WhenAttackingTurn == true)
-                //    {
-                //        enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                //        if (enemyObjects.Length == 0)
-                //        {
-                //            Debug.Log("Battle Over, You Win");
-                //            //yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
-                //            BattleOver = true;
-                //            WonBattleQ = true;
-                //            m_attackDone = true;
-                //            StopCoroutine(MultipleAll(attacker, defender));
-                //        }
-                //    }
-                //    else
-                //    {
-                //        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                //        Debug.Log("Battle Over, You Lose");
-                //        //yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
-                //        BattleOver = true;
-                //        WonBattleQ = false;
-                //        m_attackDone = true;
-                //        StopCoroutine(MultipleAll(attacker, defender));
-                //    }
-                //}*/
-                //yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
             }
         }
         m_attackDone = true;
@@ -1246,11 +1271,12 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.m_attacking);
-            if (!(attacker.GetAbilityTimeArray()[(int)eAbilities.Invulnerability] > 0))
+            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.TakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
-            (attacker.GetEffectTimeArray()[(int)eAbilities.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eAbilities.InteruptModifier] : 1,
+            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 defender.ReCheckHealth();
             }
@@ -1268,11 +1294,12 @@ public class TurnBasedScript : MonoBehaviour {
         //Weapon attacks all enemies with single hit
         foreach (CharacterStatSheet charSS in GetDefendingTeam())
         {
-            if (!(attacker.GetAbilityTimeArray()[(int)eAbilities.Invulnerability] > 0))
+            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.TakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
-            (attacker.GetEffectTimeArray()[(int)eAbilities.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eAbilities.InteruptModifier] : 1,
+            (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 charSS.ReCheckHealth();
             }
@@ -1282,14 +1309,48 @@ public class TurnBasedScript : MonoBehaviour {
         m_attackDone = true;
     }
 
-    IEnumerator LeechAttack(CharacterStatSheet attacker, CharacterStatSheet defender)
+    IEnumerator LatchingAttack(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
-
+        for(int i = 0; i < 1; i++)
+        {
+            attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+            yield return new WaitUntil(() => attacker.m_attacking);
+            //Weapon attacks all enemies with single hit
+            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+            {
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                    attacker.GetStatistics(),
+                (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
+                    attacker.m_ActiveWeapon.m_strength));
+                    defender.ReCheckHealth();
+                if(defender.Health <= 0)
+                {
+                    bool foundNextEnemy = false;
+                    for (int t = 0; t < GetDefendingTeam().Length; t++)
+                    {
+                        int index = Random.Range(0, GetDefendingTeam().Length);
+                        if (GetDefendingTeam()[index].Health > 0 && !foundNextEnemy)
+                        {
+                            i--;
+                            foundNextEnemy = true;
+                            defender = GetDefendingTeam()[index];
+                        }
+                    }
+                }
+            }
+            yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        }
+        m_attackDone = true;
     }
 
     IEnumerator Flee(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
-
+        attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        BattleOver = true;
+        WonBattleQ = true;
+        m_attackDone = true;
     }
 
     IEnumerator HealOne(CharacterStatSheet attacker)

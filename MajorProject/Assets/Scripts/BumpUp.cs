@@ -32,10 +32,10 @@ public class BumpUp : MonoBehaviour {
             transform.position = vec;
             if (percentageComplete >= 1)
             {
-                if (m_goingUp == m_switchCatcher)
+                if (m_goingUp == true)
                 {
                     m_timeSinceStart = Time.time;
-                    m_goingUp = !m_switchCatcher;
+                    m_goingUp = false;
                 }
                 else
                 {
@@ -45,7 +45,7 @@ public class BumpUp : MonoBehaviour {
                     {
                         m_upCatcher++;
                         m_timeSinceStart = Time.time;
-                        m_goingUp = m_switchCatcher;
+                        m_goingUp = true;
                     }
                 }
             }
@@ -54,13 +54,14 @@ public class BumpUp : MonoBehaviour {
 
     public void StartBump()
     {
+        m_upCatcher = 0;
         m_initPosY = transform.position.y;
         if (m_switchCatcher == true)
             m_toYPos = m_initPosY + m_upAmount;
         else
             m_toYPos = m_initPosY - m_upAmount;
         m_timeSinceStart = Time.time;
-        m_goingUp = m_switchCatcher;
+        m_goingUp = true;
         m_bumpUp = true;
     }
 }

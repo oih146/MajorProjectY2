@@ -68,6 +68,7 @@ public class BattleTrigger : MonoBehaviour {
             }
             battleStarter.enabled = true;
             battleStarter.StartBattle(buffer2, buffer);
+            enabled = false;
         }
     }
 }
