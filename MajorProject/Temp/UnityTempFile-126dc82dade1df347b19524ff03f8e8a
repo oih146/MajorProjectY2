@@ -1,0 +1,259 @@
+-debug
+-target:library
+-nowarn:0169
+-langversion:4
+-out:Temp/Assembly-CSharp.dll
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/PlaymodeTestsRunner/UnityEngine.PlaymodeTestsRunner.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll"
+-r:"Assets/Dialogue System/DLLs/DialogueSystem.dll"
+-r:"Assets/Dialogue System/DLLs/LuaInterpreter.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll"
+-r:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Xcode.dll"
+-r:"C:/Program Files/Unity/Editor/Data/PlaybackEngines/iOSSupport/UnityEditor.iOS.Extensions.Common.dll"
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_4_OR_NEWER
+-define:UNITY_5_5_OR_NEWER
+-define:UNITY_5_5_1
+-define:UNITY_5_5
+-define:UNITY_5
+-define:UNITY_ANALYTICS
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_GENERICS
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_SPRITERENDERER_FLIPPING
+-define:ENABLE_SPRITES
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_UNET
+-define:ENABLE_LZMA
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES_COLLAB
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_EDITOR_METRICS_CACHING
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:INCLUDE_PUBNUB
+-define:ENABLE_PLAYMODE_TESTS_RUNNER
+-define:ENABLE_SCRIPTING_NEW_CSHARP_COMPILER
+-define:UNITY_STANDALONE_WIN
+-define:UNITY_STANDALONE
+-define:ENABLE_SUBSTANCE
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_UNITYWEBREQUEST
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_CRASH_REPORTING
+-define:ENABLE_EVENT_QUEUE
+-define:ENABLE_CLUSTERINPUT
+-define:ENABLE_VIDEO
+-define:ENABLE_VR
+-define:ENABLE_WEBSOCKET_HOST
+-define:ENABLE_MONO
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_WIN
+-define:UNITY_TEAM_LICENSE
+-define:ENABLE_VSTU
+-define:UNITY_PRO_LICENSE
+"Assets/Dialogue System/Examples/Feature Demo/FeatureDemo.cs"
+"Assets/Dialogue System/Examples/Feature Demo/Multiple Database Example/AddRemoveDatabaseTrigger.cs"
+"Assets/Dialogue System/Examples/Lua Example/LuaExample.cs"
+"Assets/Dialogue System/Examples/Tutorial Example/Pickups/Pickup.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Chat Mapper/ChatMapperTools.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Sequencer Commands/SequencerCommandAudioWaitOnce.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Sequencer Commands/SequencerCommandLoadLevel.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Sequencer Commands/SequencerCommandSetTimeout.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Bark UI/UnityUIBarkUI.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/Animated Portraits/AnimatedPortrait.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/Animated Portraits/UseAnimatedPortraits.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/OverrideUnityUIDialogueControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIAlertControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIBarkSubtitleDialogueUI.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIDialogueControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIDialogueUI.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIQTEControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIResponseButton.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIResponseMenuControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUIRoot.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUISubtitleControls.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUITextFieldUI.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Dialogue UI/UnityUITimer.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/LocalizeUIText.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UnityUIColorText.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UnityUIContinueButtonFastForward.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UnityUIIgnorePauseCodes.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UnityUIScrollbarEnabler.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UnityUITypewriterEffect.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Effects/UpdateLocalizedUITexts.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestGroupTemplate.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestLogWindow.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestTemplate.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestTemplateAlternateDescriptions.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestTitle.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestTrackTemplate.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Quest Log Window/UnityUIQuestTracker.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Selector/UnityUISelectorDisplay.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Selector/UnityUISelectorElements.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Selector/UsableUnityUI.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Tools/UIButtonKeyTrigger.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Tools/UIShowHideController.cs"
+"Assets/Dialogue System/Scripts/Supplemental/UI/Tools/UITools.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/AlwaysFaceCamera.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/ConversationLogger.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/DialogueSystemEvents.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/DieOnTakeDamage.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/ExtraDatabases.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/From Unity3D Community/SmoothCameraWithBumper.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/IncrementOnDestroy.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/LocalizeTextMesh.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/LuaNetworkCommands.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/NavigateOnMouseClick.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/PauseGameOnConversation.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/PersistentDestructible.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/ProximitySelector.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/QuestLogWindowHotkey.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/QuestStateDispatcher.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/QuestStateIndicator.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/QuestStateListener.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/QuestTracker.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/RangeTrigger.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/SelectionDelegates.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/Selector.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/SelectorFollowTarget.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/SimpleController.cs"
+"Assets/Dialogue System/Scripts/Supplemental/Utility/Usable.cs"
+"Assets/Dialogue System/Scripts/Templates/Aurora/TemplateNWScript.cs"
+"Assets/Dialogue System/Scripts/Templates/PersistentDataTemplate.cs"
+"Assets/Dialogue System/Scripts/Templates/SequencerCommandTemplate.cs"
+"Assets/Dialogue System/Scripts/Templates/TemplateBarkUI.cs"
+"Assets/Dialogue System/Scripts/Templates/TemplateCustomLua.cs"
+"Assets/Dialogue System/Scripts/Templates/TemplateDialogueUI.cs"
+"Assets/Dialogue System/Scripts/Templates/TemplateQuestLogWindow.cs"
+"Assets/Dialogue System/Scripts/Templates/TemplateTextFieldUI.cs"
+Assets/Puppet2D/Scripts/Puppet2D_AngleLimitNode.cs
+Assets/Puppet2D/Scripts/Puppet2D_BakeAnimation.cs
+Assets/Puppet2D/Scripts/Puppet2D_Bakedmesh.cs
+Assets/Puppet2D/Scripts/Puppet2D_EditSkinWeights.cs
+Assets/Puppet2D/Scripts/Puppet2D_FFDLineDisplay.cs
+Assets/Puppet2D/Scripts/Puppet2D_FFDStoreData.cs
+Assets/Puppet2D/Scripts/Puppet2D_GlobalControl.cs
+Assets/Puppet2D/Scripts/Puppet2D_Guides.cs
+Assets/Puppet2D/Scripts/Puppet2D_HiddenBone.cs
+Assets/Puppet2D/Scripts/Puppet2D_IKHandle.cs
+Assets/Puppet2D/Scripts/Puppet2D_ParentControl.cs
+Assets/Puppet2D/Scripts/Puppet2D_SkinnedVertices.cs
+Assets/Puppet2D/Scripts/Puppet2D_SortingLayer.cs
+Assets/Puppet2D/Scripts/Puppet2D_SplineControl.cs
+Assets/Puppet2D/Scripts/Puppet2D_VertHandler.cs
+Assets/Puppet2D/Scripts/Puppet2d_AnimatorController.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/DelaunayTriangle.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/AdvancingFront.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/AdvancingFrontNode.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweep.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepBasin.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepConstraint.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepContext.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepDebugContext.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepEdgeEvent.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/DTSweepPointComparator.cs
+Assets/Puppet2D/Scripts/Triangulation/Delaunay/Sweep/PointOnEdgeException.cs
+Assets/Puppet2D/Scripts/Triangulation/ITriangulatable.cs
+Assets/Puppet2D/Scripts/Triangulation/Orientation.cs
+Assets/Puppet2D/Scripts/Triangulation/P2T.cs
+Assets/Puppet2D/Scripts/Triangulation/Polygon/Contour.cs
+Assets/Puppet2D/Scripts/Triangulation/Polygon/Polygon.cs
+Assets/Puppet2D/Scripts/Triangulation/Polygon/PolygonPoint.cs
+Assets/Puppet2D/Scripts/Triangulation/Polygon/PolygonSet.cs
+Assets/Puppet2D/Scripts/Triangulation/Polygon/PolygonUtil.cs
+Assets/Puppet2D/Scripts/Triangulation/Sets/ConstrainedPointSet.cs
+Assets/Puppet2D/Scripts/Triangulation/Sets/PointSet.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationAlgorithm.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationConstraint.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationContext.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationDebugContext.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationMode.cs
+Assets/Puppet2D/Scripts/Triangulation/TriangulationPoint.cs
+Assets/Puppet2D/Scripts/Triangulation/Util/PointGenerator.cs
+Assets/Puppet2D/Scripts/Triangulation/Util/PolygonGenerator.cs
+Assets/Puppet2D/Scripts/Triangulation/Util/TriangulationUtil.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/FixedArray3.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/FixedBitArray3.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/MathUtil.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/Point2D.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/Point2DList.cs
+Assets/Puppet2D/Scripts/Triangulation/Utility/Rect2D.cs
+Assets/Scripts/AlignmentLines.cs
+Assets/Scripts/AreaDivider.cs
+Assets/Scripts/BanditMoveScript.cs
+Assets/Scripts/BanditStat.cs
+Assets/Scripts/BaseClasses/ArmorBase.cs
+Assets/Scripts/BaseClasses/Background.cs
+Assets/Scripts/BaseClasses/CharacterStatSheet.cs
+Assets/Scripts/BaseClasses/EnemyBase.cs
+Assets/Scripts/BaseClasses/MidConversationEvent.cs
+Assets/Scripts/BaseClasses/WeaponBase.cs
+Assets/Scripts/BattleMenuScript.cs
+Assets/Scripts/BattleTrigger.cs
+Assets/Scripts/BumpUp.cs
+Assets/Scripts/CloudMover.cs
+Assets/Scripts/CombatSliderScript.cs
+Assets/Scripts/CombatStats.cs
+Assets/Scripts/ConversationEvents.cs
+Assets/Scripts/Dialogue/DialogueManager.cs
+Assets/Scripts/EndPrototype.cs
+Assets/Scripts/FadeBlack.cs
+Assets/Scripts/FollowTarget.cs
+Assets/Scripts/LeapFrogScript.cs
+Assets/Scripts/MagicAttack.cs
+Assets/Scripts/MapCreator.cs
+Assets/Scripts/MenuFunctions.cs
+Assets/Scripts/MerchantDeath.cs
+Assets/Scripts/Notification.cs
+Assets/Scripts/ParallaxBackground.cs
+Assets/Scripts/PlayerMovement.cs
+Assets/Scripts/PlayerStat.cs
+Assets/Scripts/PointerBounce.cs
+Assets/Scripts/Quitter.cs
+Assets/Scripts/SwordScript.cs
+Assets/Scripts/TestingScripts/DialogueTest.cs
+Assets/Scripts/TestingScripts/MaskHolder.cs
+Assets/Scripts/TestingScripts/ResponseMaskDecider.cs
+Assets/Scripts/TextScrawl.cs
+Assets/Scripts/TurnBasedScript.cs
+Assets/Scripts/UI/Button.cs
+Assets/Scripts/UI/Credits.cs
+Assets/Scripts/UI/MainMenu.cs
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Runtime.Serialization.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\System.Xml.Linq.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\UnityScript.Lang.dll"
+-r:"C:\Program Files\Unity\Editor\Data\MonoBleedingEdge\lib\mono\unity\Boo.Lang.dll"
+-sdk:unity
