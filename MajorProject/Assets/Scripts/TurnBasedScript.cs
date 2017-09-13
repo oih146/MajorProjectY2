@@ -187,7 +187,9 @@ public class TurnBasedScript : MonoBehaviour {
                         }
                         else
                         {
-                            enemyObjects[i].m_disarmed = false;
+                            enemyObjects[i].UpdateEffects();
+                            if(enemyObjects[i].GetEffectTimeArray()[(int)eEffects.Disarmed] <= 0)
+                                enemyObjects[i].m_disarmed = false;
                             enemyObjects[i].GetCombatBar().Restart();
                             enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
                         }
@@ -440,7 +442,7 @@ public class TurnBasedScript : MonoBehaviour {
                     if (WE.effectType == eEffects.InteruptHealthMod)
                     {
                         effectActive = true;
-                        m_decidingCharacter.GetCombatBar().SlowDown(((m_decidingCharacter.Health - 50) / 10) -
+                        m_decidingCharacter.GetCombatBar().SlowDown(((m_decidingCharacter.m_playerToAttack.Health - 50) / 10) -
                             m_decidingCharacter.GetStatistics().GetWillPowerCastTimeDecrease());
                         break;
                     }
@@ -737,8 +739,16 @@ public class TurnBasedScript : MonoBehaviour {
                 co = HealOne(attacker);
                 break;
             case AttackType.Flee:
+                co = Flee(attacker, attackerBuffer);
                 break;
             case AttackType.MassAttack:
+                co = MassHit(attacker, attackerBuffer);
+                break;
+            case AttackType.Branching:
+                co = LatchingAttack(attacker, attackerBuffer);
+                break;
+            case AttackType.Drain:
+                co = DrainHealth(attacker, attackerBuffer);
                 break;
             default:
                 co = NormalAttack(attacker, attackerBuffer);
@@ -766,7 +776,11 @@ public class TurnBasedScript : MonoBehaviour {
             case AttackType.SingleAll:
                 CheckAllPlayers(GetDefendingTeam());
                 break;
+            case AttackType.Branching:
+                CheckAllPlayers(GetDefendingTeam());
+                break;
             default:
+                CheckOnPlayer(attackerBuffer);
                 break;
         }
         attacker.m_ActiveWeapon.m_attackFinished = true;
@@ -892,7 +906,7 @@ public class TurnBasedScript : MonoBehaviour {
         for (int t = 0; t < battleMenu.magicButtons.Length; t++)
         {
             if(t < spellNum)
-                if (friendlyPlayers[0].m_spells[t].CanUseSpell((PlayerStat)friendlyPlayers[0]))
+                if (friendlyPlayers[0].m_spells[t].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
                 {
                     //battleMenu.magicButtons[t].interactable = true;
                     magicCanBePressed.Add(battleMenu.magicButtons[t]);
@@ -1187,6 +1201,7 @@ public class TurnBasedScript : MonoBehaviour {
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
             defender.ReCheckHealth();
+            attacker.ReCheckHealth();
         }
         //if (defender.DeathCheck())
         //{
@@ -1230,6 +1245,7 @@ public class TurnBasedScript : MonoBehaviour {
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 defender.ReCheckHealth();
+                attacker.ReCheckHealth();
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1256,6 +1272,7 @@ public class TurnBasedScript : MonoBehaviour {
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                     defender.ReCheckHealth();
+                    attacker.ReCheckHealth();
                 }
                 yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
             }
@@ -1279,6 +1296,7 @@ public class TurnBasedScript : MonoBehaviour {
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 defender.ReCheckHealth();
+                attacker.ReCheckHealth();
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1302,6 +1320,7 @@ public class TurnBasedScript : MonoBehaviour {
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                 attacker.m_ActiveWeapon.m_strength));
                 charSS.ReCheckHealth();
+                attacker.ReCheckHealth();
             }
         }
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
@@ -1318,23 +1337,26 @@ public class TurnBasedScript : MonoBehaviour {
             //Weapon attacks all enemies with single hit
             if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
+                if (!defender.m_surrender)
                     attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                 (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1 *
                     ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
                     attacker.m_ActiveWeapon.m_strength));
-                    defender.ReCheckHealth();
-                if(defender.Health <= 0)
+                else
+                    defender.Health = 0;
+                defender.ReCheckHealth();
+                attacker.ReCheckHealth();
+                if (defender.Health <= 0)
                 {
                     bool foundNextEnemy = false;
                     for (int t = 0; t < GetDefendingTeam().Length; t++)
                     {
-                        int index = Random.Range(0, GetDefendingTeam().Length);
-                        if (GetDefendingTeam()[index].Health > 0 && !foundNextEnemy)
+                        if (GetDefendingTeam()[t].Health > 0 && !foundNextEnemy)
                         {
                             i--;
                             foundNextEnemy = true;
-                            defender = GetDefendingTeam()[index];
+                            defender = GetDefendingTeam()[t];
                         }
                     }
                 }
@@ -1349,7 +1371,28 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         BattleOver = true;
+        DidFlee = true;
         WonBattleQ = true;
+        m_attackDone = true;
+    }
+
+    IEnumerator DrainHealth(CharacterStatSheet attacker, CharacterStatSheet defender)
+    {
+        //Attack on person for single hit
+        attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        yield return new WaitUntil(() => attacker.m_attacking);
+        if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+        {
+            defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5 + attacker.AdditionalDamage()),
+                attacker.GetStatistics(),
+                ((attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1) *
+                    ((defender.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0) ? attacker.GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] : 1),
+                attacker.m_ActiveWeapon.m_strength);
+            defender.ReCheckHealth();
+            attacker.HealSelf(25.0f);
+            attacker.ReCheckHealth();
+        }
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         m_attackDone = true;
     }
 
