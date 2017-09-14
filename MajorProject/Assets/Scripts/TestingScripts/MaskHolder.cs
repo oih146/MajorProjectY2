@@ -7,7 +7,7 @@ public class MaskHolder : MonoBehaviour {
 
     //To Set Mask in Dialouge manager (Squence)
     //Set based on entryID
-    //SendMessage(functionName(SetMask), parameter(evil or chaos), gameObjectThatScriptIsOne(Testing));
+    //SendMessage(functionName(SetMask), parameter(evil or chaos), gameObjectThatScriptIsOn(Testing));
 
     public Sprite m_chaosMask;
     public Sprite m_evilMask;
