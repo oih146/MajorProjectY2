@@ -169,6 +169,7 @@ public class TurnBasedScript : MonoBehaviour {
                         else
                         {
                             enemyObjects[i].m_decidedAttack = true;
+                            enemyObjects[i].GetEffectTimeArray()[(int)eEffects.Disarmed]--;
                             enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
                             enemyObjects[i].GetCombatBar().SlowDown((int)AttackStrength.Heavy);
                         }
@@ -191,6 +192,7 @@ public class TurnBasedScript : MonoBehaviour {
                             if(enemyObjects[i].GetEffectTimeArray()[(int)eEffects.Disarmed] <= 0)
                                 enemyObjects[i].m_disarmed = false;
                             enemyObjects[i].GetCombatBar().Restart();
+                            enemyObjects[i].m_decidedAttack = false;
                             enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
                         }
                         return;
@@ -437,7 +439,23 @@ public class TurnBasedScript : MonoBehaviour {
             if (effectActive == false)
                 m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_strength);
             m_decidingCharacter.m_decidedAttack = true;
-            m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)m_decidingCharacter.m_ActiveWeapon.m_strength]);
+            //m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)m_decidingCharacter.m_ActiveWeapon.m_strength]);
+            switch (m_decidingCharacter.m_ActiveWeapon.m_strength)
+            {
+                case AttackStrength.Light:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+                case AttackStrength.Normal:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Medium]);
+                    break;
+                case AttackStrength.Heavy:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
+                    break;
+                default:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+            }
+
 
             m_playerChoosing = false;
             SetPlayerButtons(false);
@@ -783,6 +801,9 @@ public class TurnBasedScript : MonoBehaviour {
             case AttackType.Drain:
                 co = DrainHealth(attacker, attackerBuffer);
                 break;
+            case AttackType.BuffDebuff:
+                co = BuffDebuff(attacker);
+                break;
             default:
                 co = NormalAttack(attacker, attackerBuffer);
                 break;
@@ -810,6 +831,8 @@ public class TurnBasedScript : MonoBehaviour {
                 break;
             case AttackType.Branching:
                 CheckAllPlayers(GetDefendingTeam());
+                break;
+            case AttackType.BuffDebuff:
                 break;
             default:
                 CheckOnPlayer(attackerBuffer);
@@ -934,19 +957,37 @@ public class TurnBasedScript : MonoBehaviour {
             battleMenu.spellCharges[i].gameObject.SetActive(true);
         }
         int spellNum = friendlyPlayers[0].m_spells.Length;
+        int abilityNum = friendlyPlayers[0].m_abilities.Length;
         //Disable Inactive Spell Buttons
         for (int t = 0; t < battleMenu.magicButtons.Length; t++)
         {
-            if(t < spellNum)
-                if (friendlyPlayers[0].m_spells[t].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
-                {
-                    //battleMenu.magicButtons[t].interactable = true;
-                    magicCanBePressed.Add(battleMenu.magicButtons[t]);
-                }
+            if(t < 6)
+            {
+                if (t < abilityNum)
+                    if (friendlyPlayers[0].m_abilities[t].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
+                    {
+                        //battleMenu.magicButtons[t].interactable = true;
+                        magicCanBePressed.Add(battleMenu.magicButtons[t]);
+                    }
+                    else
+                        battleMenu.magicButtons[t].interactable = false;
                 else
                     battleMenu.magicButtons[t].interactable = false;
+            }
             else
-                battleMenu.magicButtons[t].interactable = false;
+            {
+                if (t - 6 < spellNum)
+                    if (friendlyPlayers[0].m_spells[t - 6].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
+                    {
+                        //battleMenu.magicButtons[t].interactable = true;
+                        magicCanBePressed.Add(battleMenu.magicButtons[t]);
+                    }
+                    else
+                        battleMenu.magicButtons[t].interactable = false;
+                else
+                    battleMenu.magicButtons[t].interactable = false;
+            }
+
         }
 
         //Meant to reposition ally health bar, follow script throws off placement
@@ -1003,6 +1044,11 @@ public class TurnBasedScript : MonoBehaviour {
     void EnemyDecideTarget(int enemyIndex)
     {
         EnemyBase enemyDeciding = enemyObjects[enemyIndex];
+        //if(enemyDeciding.GetEffectTimeArray()[(int)eEffects.Disarmed] > 0)
+        //{
+        //    enemyDeciding.GetEffectTimeArray()[(int)eEffects.Disarmed]--;
+        //    return;
+        //}
         int playerToAttack = Random.Range(0, friendlyObjects.Length - 1);
         while (friendlyObjects[playerToAttack] == null)
         {
@@ -1231,9 +1277,9 @@ public class TurnBasedScript : MonoBehaviour {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.m_attacking);
-        if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+        if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
-            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5 + attacker.AdditionalDamage()),
+            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
                 attacker.GetStatistics(),
                 ((attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1),
                 attacker.m_ActiveWeapon.m_strength));
@@ -1274,9 +1320,9 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.m_attacking);
-            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+            if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1300,9 +1346,9 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
                 yield return new WaitUntil(() => attacker.m_attacking);
-                if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+                if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
                 {
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                     (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1323,9 +1369,9 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.m_attacking);
-            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+            if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1346,9 +1392,9 @@ public class TurnBasedScript : MonoBehaviour {
         //Weapon attacks all enemies with single hit
         foreach (CharacterStatSheet charSS in GetDefendingTeam())
         {
-            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+            if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1368,10 +1414,10 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.m_attacking);
             //Weapon attacks all enemies with single hit
-            if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+            if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 if (!defender.m_surrender)
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5) + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                 (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                     attacker.m_ActiveWeapon.m_strength));
@@ -1413,9 +1459,9 @@ public class TurnBasedScript : MonoBehaviour {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.m_attacking);
-        if (!(attacker.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
+        if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
-            defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength * 5 + attacker.AdditionalDamage()),
+            defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
                 attacker.GetStatistics(),
                 ((attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1),
                 attacker.m_ActiveWeapon.m_strength);
@@ -1429,9 +1475,20 @@ public class TurnBasedScript : MonoBehaviour {
 
     IEnumerator HealOne(CharacterStatSheet attacker)
     {
+        attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
         attacker.ReCheckHealth();
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         m_attackDone = true;
-        yield return null;
+    }
+
+    IEnumerator BuffDebuff(CharacterStatSheet attacker)
+    {
+        attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+
+        yield return new WaitUntil(() => attacker.m_attacking);
+
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        m_attackDone = true;
     }
 }

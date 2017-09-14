@@ -17,8 +17,8 @@ public class BumpUp : MonoBehaviour {
     float m_toYPos;
 	// Use this for initialization
 	void Start () {
-
-	}
+        m_initPosY = transform.position.y;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -55,7 +55,6 @@ public class BumpUp : MonoBehaviour {
     public void StartBump()
     {
         m_upCatcher = 0;
-        m_initPosY = transform.position.y;
         if (m_switchCatcher == true)
             m_toYPos = m_initPosY + m_upAmount;
         else

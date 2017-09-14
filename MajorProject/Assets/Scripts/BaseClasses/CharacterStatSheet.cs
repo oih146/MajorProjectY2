@@ -197,7 +197,7 @@ public class CharacterStatSheet : MonoBehaviour {
         m_health -= damageToTake;
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
-            m_combatBar.TakeFromTimer(damageToTake / ((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)));
+            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 100);
         if (m_effectTime[(int)eEffects.CounterStance] > 0)
             return m_effectsToApply[(int)eEffects.CounterStance];
         return 0;
