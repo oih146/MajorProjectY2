@@ -6292,7 +6292,7 @@ MonoBehaviour:
       isGroup: 0
       nodeColor: 
       delaySimStatus: 0
-      falseConditionAction: 
+      falseConditionAction: Block
       conditionPriority: 2
       outgoingLinks:
       - originConversationID: 5
@@ -6319,48 +6319,48 @@ MonoBehaviour:
       - title: Title
         value: New Dialogue Entry
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Pictures
         value: '[]'
         type: 3
-        typeString: 
+        typeString: CustomFieldType_Files
       - title: Description
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Actor
         value: 5
         type: 5
-        typeString: 
+        typeString: CustomFieldType_Actor
       - title: Conversant
         value: 1
         type: 5
-        typeString: 
+        typeString: CustomFieldType_Actor
       - title: Menu Text
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Dialogue Text
         value: Greetings travelers, pray, if you have a moment, please lend a hand
           friend?
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Parenthetical
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Audio Files
         value: '[]'
         type: 3
-        typeString: 
+        typeString: CustomFieldType_Files
       - title: Video File
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 5
       isRoot: 0
       isGroup: 0
@@ -6459,7 +6459,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 831
-        y: 194
+        y: 195
         width: 160
         height: 30
     - id: 3
@@ -6563,8 +6563,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: Please help us, for all we know those bandits might still be around,
-          you look strong, I'm sure with your help it will be done swiftly!
+        value: Please help us, for all we know those bandits might still be around!
         type: 0
         typeString: 
       - title: Parenthetical
@@ -6594,7 +6593,7 @@ MonoBehaviour:
       - originConversationID: 5
         originDialogueID: 4
         destinationConversationID: 5
-        destinationDialogueID: 5
+        destinationDialogueID: 16
         isConnector: 0
         priority: 2
       conditionsString: 
@@ -6637,7 +6636,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Dialogue Text
-        value: We should make time for this. They have no one else!
+        value: Surely we can make time for this. They have no one else!
         type: 0
         typeString: 
       - title: Parenthetical
@@ -6692,7 +6691,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 831
-        y: 344
+        y: 387
         width: 160
         height: 30
     - id: 6
@@ -6765,7 +6764,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 592
-        y: 402
+        y: 445
         width: 160
         height: 30
     - id: 7
@@ -6839,7 +6838,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 831
-        y: 394
+        y: 437
         width: 160
         height: 30
     - id: 8
@@ -6912,7 +6911,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1050
-        y: 396
+        y: 439
         width: 160
         height: 30
     - id: 9
@@ -6991,7 +6990,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 592
-        y: 452
+        y: 495
         width: 160
         height: 30
     - id: 10
@@ -7065,7 +7064,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 386
-        y: 519
+        y: 562
         width: 160
         height: 30
     - id: 11
@@ -7134,7 +7133,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 584
-        y: 519
+        y: 562
         width: 160
         height: 30
     - id: 12
@@ -7207,7 +7206,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 386
-        y: 569
+        y: 612
         width: 160
         height: 30
     - id: 13
@@ -7274,7 +7273,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 386
-        y: 619
+        y: 662
         width: 160
         height: 30
     - id: 14
@@ -7342,7 +7341,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 831
-        y: 444
+        y: 487
         width: 160
         height: 30
     - id: 15
@@ -7409,7 +7408,80 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1050
-        y: 446
+        y: 489
+        width: 160
+        height: 30
+    - id: 16
+      fields:
+      - title: Title
+        value: New Dialogue Entry
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Pictures
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 5
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 1
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: You look strong, I'm sure with your help it will be done swiftly!
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Parenthetical
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Audio Files
+        value: '[]'
+        type: 3
+        typeString: CustomFieldType_Files
+      - title: Video File
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      conversationID: 5
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 5
+        originDialogueID: 16
+        destinationConversationID: 5
+        destinationDialogueID: 5
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+        m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine, Version=0.0.0.0, Culture=neutral,
+          PublicKeyToken=null
+      canvasRect:
+        serializedVersion: 2
+        x: 829
+        y: 340
         width: 160
         height: 30
   - id: 6
