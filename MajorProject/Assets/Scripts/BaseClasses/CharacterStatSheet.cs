@@ -84,6 +84,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public AttackStrength m_attackStrength;     //Strength of attack, decides how slow attack will be to charge
     public bool m_knowMagic;                    //Does this character know magic
     public MagicAttack[] m_spells;              //Magic known by this character
+    public MagicAttack[] m_abilities;
     public bool m_isDead = false;               //Is this character dead, mostly for combat
     public Animator m_animator;                 //Animator, holds animations
 
@@ -94,6 +95,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_burning = false;              //Is this character currently on fire
     public float m_burnTime;                    //How long intervals are in character burning (in seconds), may change
     public float m_burnTimer;                   //Timer for how long till character burns again, may change
+    public int m_burnTimes;                     //Amount of times this character has been burned
     public bool m_disarmed;
     public bool m_surrender;                //Has this player surrendered
 
@@ -124,21 +126,7 @@ public class CharacterStatSheet : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update() {
-        if (m_burning)
-        {
-            m_burnTimer -= Time.deltaTime;
-            if (m_burnTimer % 1.0f == 0.0f)
-            {
-                Health -= 1 + m_effectsToApply[(int)eEffects.BurnDamage];
-                ReCheckHealth();
-                if(DeathCheck())
-                {
-                    TurnBasedScript.CallOnOutsideDeath();
-                    m_burning = false;
-                }
-                //m_burnTimer = m_burnTime;
-            }
-        }
+
 	}
 
     //To allow Start to be run by inheriting classes
@@ -209,7 +197,7 @@ public class CharacterStatSheet : MonoBehaviour {
         m_health -= damageToTake;
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
-            m_combatBar.TakeFromTimer(damageToTake / (m_InteruptMultiplier * bonusInterupt));
+            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 100);
         if (m_effectTime[(int)eEffects.CounterStance] > 0)
             return m_effectsToApply[(int)eEffects.CounterStance];
         return 0;
@@ -330,16 +318,17 @@ public class CharacterStatSheet : MonoBehaviour {
         }
         if (m_effectTime[(int)eEffects.SpeedReduction] > 0)
             GetCombatBar().SetTemporarySpeedDecrease(m_effectsToApply[(int)eEffects.SpeedReduction]);
+        if (m_burning && m_effectTime[(int)eEffects.BurnDamage] > 0)
+            m_health -= m_effectsToApply[(int)eEffects.BurnDamage];
 
     }
 
     //Calculate if character takes burning damage or not
     public virtual bool ChanceOfBurning()
     {
-        float chanceofBurning = 50;
         if (m_effectTime[(int)eEffects.AdditionBurnChance] > 0)
-            chanceofBurning += 50;
-        if (Random.Range(0, 100) <= chanceofBurning)
+            m_effectTime[(int)eEffects.BurnChance] += 50;
+        if (Random.Range(0, 100) <= m_effectTime[(int)eEffects.BurnChance])
         {
             return true;
         }

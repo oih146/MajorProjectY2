@@ -268,6 +268,34 @@ MonoBehaviour:
       value: Dug grave
       type: 0
       typeString: 
+  - id: 9
+    fields:
+    - title: Name
+      value: Days
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: How many days the game has gone through
+      type: 0
+      typeString: CustomFieldType_Text
+  - id: 10
+    fields:
+    - title: Name
+      value: Hours
+      type: 0
+      typeString: CustomFieldType_Text
+    - title: Initial Value
+      value: 0
+      type: 1
+      typeString: CustomFieldType_Number
+    - title: Description
+      value: How many hours the game has gone through
+      type: 0
+      typeString: CustomFieldType_Text
   conversations:
   - id: 1
     fields:
@@ -687,7 +715,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Hours"] = Variable["Hours"] + 2;
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -695,8 +723,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 297
-        y: 179
+        x: 298
+        y: 178
         width: 160
         height: 30
     - id: 5
@@ -8986,7 +9014,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1018.8607
+        x: 1017.8607
         y: 380.53162
         width: 160
         height: 30
@@ -10619,7 +10647,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 256.86072
-        y: 515.5316
+        y: 516.5626
         width: 160
         height: 30
     - id: 32

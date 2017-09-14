@@ -111,6 +111,8 @@ public class WeaponBase : MonoBehaviour {
 
     public bool DoesAttackAll()
     {
-        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll) ? true : false;
+        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| 
+            m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll || 
+            m_attackType == AttackType.BuffDebuff) ? true : false;
     }
 }

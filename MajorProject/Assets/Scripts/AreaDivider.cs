@@ -21,6 +21,7 @@ public class AreaDivider : MonoBehaviour {
         if(hit.tag == "Player")
         {
             m_PlayerIn = true;
+            GameTime.AddHours(15);
         }
     }
 

@@ -114,6 +114,12 @@ public class PlayerStat : CharacterStatSheet {
         ConversationEvents.OnConversationEnd += SetSpellsPerDay;
     }
 
+    void OnDisable()
+    {
+        ConversationEvents.OnConversationStart -= CheckSpellsPerDay;
+        ConversationEvents.OnConversationEnd -= SetSpellsPerDay;
+    }
+
     public void GenerateWillPower()
     {
         MaxSpells += GetStatistics().GetWillPower() / 2;
@@ -131,12 +137,6 @@ public class PlayerStat : CharacterStatSheet {
             if (spellmax > 0)
                 spellChargeRoot.transform.GetChild(i).gameObject.SetActive(status);
         }
-    }
-
-    void OnDisable()
-    {
-        ConversationEvents.OnConversationStart -= CheckSpellsPerDay;
-        ConversationEvents.OnConversationEnd -= SetSpellsPerDay;
     }
 
     public void CheckPlayerStats()

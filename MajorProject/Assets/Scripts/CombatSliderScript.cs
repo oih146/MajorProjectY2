@@ -20,6 +20,7 @@ public class CombatSliderScript : MonoBehaviour {
     public bool m_combatActive = false;
     private bool m_tempSliderSpeedIncrease;
     private float m_tempSpeedDecreaseValue;
+    //public bool take = false;
     public bool CombatActive
     {
         get
@@ -66,6 +67,13 @@ public class CombatSliderScript : MonoBehaviour {
             //if (percentageComplete >= 1f)
             //    m_combatActive = false;
         }
+
+        //if(take)
+        //{
+        //    TakeFromTimer(1);
+        //    take = !take;
+        //    CombatActive = false;
+        //}
     }
 
     public void TakeFromTimer(float taking)

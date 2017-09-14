@@ -85,7 +85,7 @@ public class EnemyBase : CharacterStatSheet {
     {
         //Regardless of how much damage is done, IP is gained
         Debug.Log("IP Gained");
-        IncapacitationPoints += IPonHit;
+        IncapacitationPoints += IPonHit + (GetEffectTimeArray()[(int)eEffects.BonusIncapacitationPoints] > 0 ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints] : 0);
 
         return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);
     }
