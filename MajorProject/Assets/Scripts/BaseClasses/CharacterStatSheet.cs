@@ -31,7 +31,7 @@ public class CharacterStatSheet : MonoBehaviour {
         }
     }
     private float m_health = m_maxHealth;
-    public float Health
+    public virtual float Health
     {
         get
         {
@@ -95,6 +95,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public float m_burnTime;                    //How long intervals are in character burning (in seconds), may change
     public float m_burnTimer;                   //Timer for how long till character burns again, may change
     public bool m_disarmed;
+    public bool m_surrender;                //Has this player surrendered
 
     //UI
     public Canvas m_playerCanvas;
@@ -111,9 +112,10 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool FadeDeath = false;              //For character death, does this character fade out in death
     public SpriteRenderer m_renderer;           //Sprite render, used to fade death
     public float m_fadeSpeed;                   //Speed at which character fades when dying
-
+    protected Lerping fadeDeathLerping;
     // Use this for initialization
     void Start() {
+        fadeDeathLerping = gameObject.AddComponent<Lerping>();
         m_combatStatistics = GetComponent<CombatStats>();
         Health = 100;
         GenerateStatistics();
@@ -181,10 +183,10 @@ public class CharacterStatSheet : MonoBehaviour {
 
     //Used by attacker
     //If the defending character has a counterattack ability
-    public float CounterTakeDamage(float damageToTake)
+    public void CounterTakeDamage(float damageToTake)
     {
         Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
-        return Health - damageToTake;
+        Health -= damageToTake;
     }
 
     //Take damage, virtual to allow inheriting classes to override
@@ -237,7 +239,7 @@ public class CharacterStatSheet : MonoBehaviour {
             m_isDead = true;
             //play death anim
             m_animator.Stop();
-            StartFadeDeath();
+            //StartFadeDeath();
             return true;
         }
         return false;
@@ -290,6 +292,8 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public void StartFadeDeath()
     {
+
+        fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
         FadeDeath = true;
     }
 
@@ -297,7 +301,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public void FadingDeath()
     {
         Color buffCol = m_renderer.color;
-        buffCol.a = Mathf.Lerp(m_renderer.color.a, 0, m_fadeSpeed * Time.deltaTime);
+        buffCol.a = fadeDeathLerping.Lerp();
         m_renderer.color = buffCol;
         if (m_renderer.color.a < 0.001f)
         {

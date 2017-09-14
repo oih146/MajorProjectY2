@@ -41,7 +41,9 @@ public enum AttackType
     HealAll,
     Flee,
     MassAttack,
-    BuffDebuff
+    BuffDebuff,
+    Branching,
+    Drain
 }
 
 public class WeaponBase : MonoBehaviour {
@@ -90,6 +92,11 @@ public class WeaponBase : MonoBehaviour {
             else if(weapEffects[i].effectType == eEffects.Disarmed)
             {
                 attackingPlayer.m_disarmed = true;
+                if(attackingPlayer.m_decidedAttack)
+                {
+                    weapEffects[i].effectTime++;
+                    attackingPlayer.AddEffect(weapEffects[i]);
+                }
             } else
             {
                 attackingPlayer.AddEffect(weapEffects[i]);

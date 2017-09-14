@@ -2661,7 +2661,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &254613389
 Transform:
   m_ObjectHideFlags: 0
@@ -2880,7 +2880,7 @@ MonoBehaviour:
   m_goingUp: 0
   m_timesUp: 2
   m_upAmount: 10
-  m_speed: 0.3
+  m_speed: 0.15
 --- !u!1 &279154902
 GameObject:
   m_ObjectHideFlags: 0
@@ -3041,12 +3041,12 @@ MonoBehaviour:
   m_Script: {fileID: 1980459831, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4345,7 +4345,7 @@ MonoBehaviour:
   m_goingUp: 0
   m_timesUp: 2
   m_upAmount: 10
-  m_speed: 0.3
+  m_speed: 0.15
 --- !u!1 &413486502
 GameObject:
   m_ObjectHideFlags: 0
@@ -8673,7 +8673,7 @@ MonoBehaviour:
       showPCSubtitlesDuringLine: 0
       allowPCSubtitleReminders: 0
       skipPCSubtitleAfterResponseMenu: 0
-      subtitleCharsPerSecond: 30
+      subtitleCharsPerSecond: 25
       minSubtitleSeconds: 4
       continueButton: 0
       richTextEmphases: 1
@@ -10111,7 +10111,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &993440102
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -10720,21 +10720,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4b0e2760051b7b4399f0700dbc08316, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_attackDamage: 2
+  m_attackDamage: 30
   m_strength: 0
   m_animToPlay: {fileID: 7400000, guid: b0297c161b51d3d47ac68c5b42ee5aeb, type: 2}
   m_animationForPlay: {fileID: 0}
   m_howManyHits: 0
   m_attackFinished: 0
   m_attackType: 0
-  weapEffects:
-  - effectType: 2
-    effectTime: 5
-    effectDamage: 0
-  - effectType: 8
-    effectTime: 5
-    effectDamage: 3
-  weapAbility: []
+  weapEffects: []
+  weapAbility:
+  - effectType: 9
+    effectTime: 2
+    effectDamage: 15
 --- !u!4 &1072561626
 Transform:
   m_ObjectHideFlags: 0
@@ -11133,7 +11130,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1423127588}
   m_HandleRect: {fileID: 1423127587}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -11791,6 +11788,7 @@ MonoBehaviour:
   m_burnTime: 1
   m_burnTimer: 0
   m_disarmed: 0
+  m_surrender: 0
   m_playerCanvas: {fileID: 192164135}
   m_healthBar: {fileID: 1818781033}
   m_combatBar: {fileID: 1330488208}
@@ -11802,7 +11800,6 @@ MonoBehaviour:
   isCrippled: 0
   m_vulnerableToFire: 0
   m_incapacitationPoints: 0
-  m_surrender: 0
   m_baseCapIP: 0
 --- !u!95 &1169053353
 Animator:
@@ -13618,6 +13615,7 @@ MonoBehaviour:
   m_burnTime: 5
   m_burnTimer: 5
   m_disarmed: 0
+  m_surrender: 0
   m_playerCanvas: {fileID: 1024700872}
   m_healthBar: {fileID: 250342312}
   m_combatBar: {fileID: 258891928}
@@ -13627,8 +13625,8 @@ MonoBehaviour:
   m_renderer: {fileID: 0}
   m_fadeSpeed: 0
   m_alignmentLines: {fileID: 1338734722}
-  m_light: 100
-  m_law: 50
+  m_light: 0
+  m_law: 0
   m_LightSlider: {fileID: 917456398}
   m_LawSlider: {fileID: 1495082990}
   m_charisma: 0
@@ -13798,7 +13796,7 @@ MonoBehaviour:
   m_goingUp: 0
   m_timesUp: 2
   m_upAmount: 10
-  m_speed: 0.3
+  m_speed: 0.15
 --- !u!1 &1333714423
 GameObject:
   m_ObjectHideFlags: 0
@@ -14182,6 +14180,7 @@ MonoBehaviour:
   m_burnTime: 1
   m_burnTimer: 0
   m_disarmed: 0
+  m_surrender: 0
   m_playerCanvas: {fileID: 1953656623}
   m_healthBar: {fileID: 689140778}
   m_combatBar: {fileID: 409104562}
@@ -14193,7 +14192,6 @@ MonoBehaviour:
   isCrippled: 0
   m_vulnerableToFire: 0
   m_incapacitationPoints: 0
-  m_surrender: 0
   m_baseCapIP: 0
 --- !u!212 &1349507024
 SpriteRenderer:
@@ -22197,6 +22195,7 @@ MonoBehaviour:
   m_burnTime: 0
   m_burnTimer: 0
   m_disarmed: 0
+  m_surrender: 0
   m_playerCanvas: {fileID: 0}
   m_healthBar: {fileID: 0}
   m_combatBar: {fileID: 0}
