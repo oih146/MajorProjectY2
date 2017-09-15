@@ -4,20 +4,6 @@ using UnityEngine;
 
 public class EnemyBase : CharacterStatSheet {
 
-    public override float Health
-    {
-        get
-        {
-            return base.Health;
-        }
-
-        set
-        {
-            base.Health = value;
-            if (Health <= 0)
-                StartFadeDeath();
-        }
-    }
     //Public Variables
     //----------------------------------
     public bool isCrippled;
@@ -51,12 +37,14 @@ public class EnemyBase : CharacterStatSheet {
                 temp.x += 2;
                 GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
                 obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
-                m_surrender = true;
+                Surrendered = true;
                 GetCombatBar().m_combatActive = false;
                 GetCombatBar().enabled = false;
                 GetCombatBar().m_combatSlider.value = 0;
                 TurnBasedScript.CallOnPlayerSurrender(this);
-
+            } else if(m_incapacitationPoints < m_maxIP && m_surrender)
+            {
+                Surrendered = false;
             }
         }
     }
@@ -93,7 +81,8 @@ public class EnemyBase : CharacterStatSheet {
     //Adds vulnerableToFire bool, for wolves
     public override bool ChanceOfBurning()
     {
-        float chanceofBurning = 50;
+        float chanceofBurning = GetEffectArray()[(int)eEffects.BurnChance];
+        chanceofBurning += 50;
         if (GetEffectTimeArray()[(int)eEffects.AdditionBurnChance] > 0 || m_vulnerableToFire)
             chanceofBurning += 50;
         if (Random.Range(0, 100) <= chanceofBurning)
