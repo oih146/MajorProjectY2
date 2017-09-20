@@ -79,33 +79,55 @@ public class WeaponBase : MonoBehaviour {
         return m_attackDamage;
     }
 
+    //Apply effects to only one attacker and one defender
     public void ApplyEffects(CharacterStatSheet userOfWeap, CharacterStatSheet attackingPlayer)
     {
-        for(int i = 0; i < weapEffects.Length; i++)
+        AddAbilities(userOfWeap);
+        AddEffects(attackingPlayer);
+    }
+
+    //Apply Abilites, only used for the attacker
+    public void AddAbilities(CharacterStatSheet attacker)
+    {
+        for (int i = 0; i < weapAbility.Length; i++)
         {
-            if (weapEffects[i].effectType == eEffects.BurnChance && attackingPlayer.ChanceOfBurning())
+            attacker.AddEffect(weapAbility[i]);
+        }
+    }
+
+    //Apply Effects, only used for the defenders
+    public void AddEffects(CharacterStatSheet defender)
+    {
+        for (int i = 0; i < weapEffects.Length; i++)
+        {
+            if (weapEffects[i].effectType == eEffects.BurnChance)
             {
-                attackingPlayer.AddEffect(weapEffects[i]);
-                attackingPlayer.m_burning = true;
-                attackingPlayer.m_burnTimer = weapEffects[i].effectTime;
-            }
-            else if(weapEffects[i].effectType == eEffects.Disarmed)
-            {
-                attackingPlayer.m_disarmed = true;
-                if(attackingPlayer.m_decidedAttack)
+                defender.AddEffect(weapEffects[i]);
+                if (defender.ChanceOfBurning())
                 {
-                    weapEffects[i].effectTime++;
-                    attackingPlayer.AddEffect(weapEffects[i]);
+                    defender.Burning = true;
+                    defender.m_burnTimer = weapEffects[i].effectTime;
                 }
-            } else
+            }
+            else if (weapEffects[i].effectType == eEffects.Disarmed)
             {
-                attackingPlayer.AddEffect(weapEffects[i]);
+                defender.Disarmed = true;
+                defender.AddEffect(weapEffects[i]);
+            }
+            else
+            {
+                defender.AddEffect(weapEffects[i]);
             }
         }
+    }
 
-        for(int i = 0; i < weapAbility.Length; i++)
+    //Apply Effects to Multiple defenders but only one attacker
+    public void ApplyEffects(CharacterStatSheet userOfWeap, CharacterStatSheet[] defenders)
+    {
+        AddAbilities(userOfWeap);
+        foreach(CharacterStatSheet charSS in defenders)
         {
-            userOfWeap.AddEffect(weapAbility[i]);
+            AddEffects(charSS);
         }
     }
 
@@ -113,6 +135,7 @@ public class WeaponBase : MonoBehaviour {
     {
         return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| 
             m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll || 
-            m_attackType == AttackType.BuffDebuff) ? true : false;
+            m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
+            m_attackType == AttackType.HealOne) ? true : false;
     }
 }

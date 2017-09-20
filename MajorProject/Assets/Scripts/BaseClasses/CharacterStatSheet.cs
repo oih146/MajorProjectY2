@@ -41,6 +41,8 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_health = value;
+            if (m_health <= 0)
+                StartFadeDeath();
         }
     }
 
@@ -77,9 +79,11 @@ public class CharacterStatSheet : MonoBehaviour {
     }
     public static int m_InteruptMultiplier;     //Interrupt modifier, how much defender is knocked back while casting, * by bonus interrupt (usually 1)
 
-        //Weapons
+    //Weapons
+    [HideInInspector]
     public WeaponBase m_ActiveWeapon;           //LEAVE THIS BLANK IN INSPECTOR, Holds the weapon or spell to use in combat, changes
     public WeaponBase m_weapon;                 //Holds melee weapon, may change type to Sword
+    [HideInInspector]
     public CharacterStatSheet m_playerToAttack; //Character that will be attacked during combat
     public AttackStrength m_attackStrength;     //Strength of attack, decides how slow attack will be to charge
     public bool m_knowMagic;                    //Does this character know magic
@@ -93,17 +97,60 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_decidedAttack;                //Has this player decided to attack yet
     public bool m_isEvil = false;               //Does this character take bonus holy damage
     public bool m_burning = false;              //Is this character currently on fire
+    public bool Burning
+    {
+        get
+        {
+            return m_burning;
+        }
+
+        set
+        {
+            m_burning = value;
+            m_statusBar.GetBurned().SetActive(value);
+        }
+    }
+    [HideInInspector]
     public float m_burnTime;                    //How long intervals are in character burning (in seconds), may change
+    [HideInInspector]
     public float m_burnTimer;                   //Timer for how long till character burns again, may change
+    [HideInInspector]
     public int m_burnTimes;                     //Amount of times this character has been burned
     public bool m_disarmed;
+    public bool Disarmed
+    {
+        get
+        {
+            return m_disarmed;
+        }
+
+        set
+        {
+            m_disarmed = value;
+            m_statusBar.GetDisarmed().SetActive(value);
+        }
+    }
     public bool m_surrender;                //Has this player surrendered
+    public bool Surrendered
+    {
+        get
+        {
+            return m_surrender;
+        }
+
+        set
+        {
+            m_surrender = value;
+            m_statusBar.GetSurrendered().SetActive(value);
+        }
+    }
 
     //UI
     public Canvas m_playerCanvas;
     public UnityEngine.UI.Slider m_healthBar;   //Health bar attached to this character
     public CombatSliderScript m_combatBar;   //This character's combat bar that is shown during combat
     public GameObject m_notificationBox;
+    public StatusBar m_statusBar;
 
     //Effect and Abilities (relevent enums decide where variables are allocated)
     private float[] m_effectTime = new float[(int)eEffects.NumOfEffects];           //Effects time
@@ -112,6 +159,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Death Variables
     //-----------------------------------------
     public bool FadeDeath = false;              //For character death, does this character fade out in death
+    [HideInInspector]
     public SpriteRenderer m_renderer;           //Sprite render, used to fade death
     public float m_fadeSpeed;                   //Speed at which character fades when dying
     protected Lerping fadeDeathLerping;
@@ -156,7 +204,7 @@ public class CharacterStatSheet : MonoBehaviour {
             m_effectsToApply[i] = 0;
             m_effectTime[i] = 0;
         }
-        m_burning = false;
+        Burning = false;
     }
 
     public float[] GetEffectArray()
@@ -181,7 +229,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attacktype, bool interrupt = true)
     {
         //Critical Hit Chance
-        if (attackerCombatStats != null)
+        if (attackerCombatStats != null && damageToTake > 0)
         {
             damageToTake += attackerCombatStats.GetStrength();
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 2 : 1;
@@ -194,7 +242,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (damageToTake < 0)
             damageToTake = 0;
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
-        m_health -= damageToTake;
+        Health -= damageToTake;
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
             m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 100);
@@ -236,6 +284,11 @@ public class CharacterStatSheet : MonoBehaviour {
     public UnityEngine.UI.Slider GetHealthBar()
     {
         return m_healthBar;
+    }
+
+    public StatusBar GetStatusBar()
+    {
+        return m_statusBar;
     }
 
     public CombatSliderScript GetCombatBar()
@@ -318,17 +371,26 @@ public class CharacterStatSheet : MonoBehaviour {
         }
         if (m_effectTime[(int)eEffects.SpeedReduction] > 0)
             GetCombatBar().SetTemporarySpeedDecrease(m_effectsToApply[(int)eEffects.SpeedReduction]);
-        if (m_burning && m_effectTime[(int)eEffects.BurnDamage] > 0)
-            m_health -= m_effectsToApply[(int)eEffects.BurnDamage];
+        if (Burning && m_effectTime[(int)eEffects.BurnDamage] > 0)
+        {
+            Health -= m_effectsToApply[(int)eEffects.BurnDamage];
+            ReCheckHealth();
+            if (m_effectTime[(int)eEffects.BurnDamage] == 1)
+                Burning = false;
+            if (DeathCheck())
+                TurnBasedScript.CallOnOutsideDeath();
+        }
 
     }
 
     //Calculate if character takes burning damage or not
     public virtual bool ChanceOfBurning()
     {
+        int burnChance = (int)m_effectTime[(int)eEffects.BurnChance];
+        burnChance += 50;
         if (m_effectTime[(int)eEffects.AdditionBurnChance] > 0)
-            m_effectTime[(int)eEffects.BurnChance] += 50;
-        if (Random.Range(0, 100) <= m_effectTime[(int)eEffects.BurnChance])
+            burnChance += 50;
+        if (Random.Range(0, 100) <= burnChance)
         {
             return true;
         }
