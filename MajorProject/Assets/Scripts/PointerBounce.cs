@@ -2,36 +2,55 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PointerBounce : MonoBehaviour {
+public class PointerBounce : BumpUp {
 
-    public float m_bounceSpeed;
-    public float m_bouncePullBack;
-    float m_nextYPos;
-    float initYPos;
-    bool goUp;
+    void OnEnable()
+    { 
+        StartBump();
+    }
 
-	// Use this for initialization
-	void Start () {
-        m_nextYPos = gameObject.transform.localPosition.y + m_bouncePullBack;
-        initYPos = gameObject.transform.localPosition.y; 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (gameObject.transform.localPosition.y < ((goUp) ? m_nextYPos : initYPos) - 0.001f || gameObject.transform.localPosition.y > ((goUp) ? m_nextYPos : initYPos) + 0.001f)
-        {
-            Vector3 buff = gameObject.transform.localPosition;
-            buff.y = Mathf.Lerp(gameObject.transform.localPosition.y, (goUp) ? m_nextYPos : initYPos, m_bounceSpeed * Time.deltaTime);
-            gameObject.transform.localPosition = buff;
-        }
-        else
-            goUp = !goUp;
-	}
-
-    public void FindNextPos(Vector3 position)
+    public override void Bumping()
     {
-        gameObject.transform.position = position;
-        m_nextYPos = gameObject.transform.localPosition.y + m_bouncePullBack;
-        initYPos = gameObject.transform.localPosition.y;
+        if (m_bumpUp)
+        {
+            float timeSinceLerp = Time.time - m_timeSinceStart;
+            float percentageComplete = timeSinceLerp / m_speed;
+
+            Vector3 vec = transform.position;
+            vec.y = Mathf.Lerp((m_goingUp) ? m_initPosY : m_toYPos, (!m_goingUp) ? m_initPosY : m_toYPos, percentageComplete);
+            transform.position = vec;
+            if (percentageComplete >= 1)
+            {
+                if (m_goingUp == true)
+                {
+                    m_timeSinceStart = Time.time;
+                    m_goingUp = false;
+                }
+                else
+                {
+                    if (m_timesUp == m_upCatcher)
+                        m_bumpUp = false;
+                    else
+                    {
+                        m_upCatcher++;
+                        m_timeSinceStart = Time.time;
+                        m_goingUp = true;
+                    }
+                }
+            }
+        }
+    }
+
+    public override void StartBump()
+    {
+        m_upCatcher = 0;
+        if (m_switchCatcher == true)
+            m_toYPos = m_initPosY + m_upAmount;
+        else
+            m_toYPos = m_initPosY - m_upAmount;
+        m_timeSinceStart = Time.time;
+        m_goingUp = true;
+        m_bumpUp = true;
+        m_initPosY = transform.position.y;
     }
 }

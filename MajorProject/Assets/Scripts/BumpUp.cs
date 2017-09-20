@@ -9,19 +9,26 @@ public class BumpUp : MonoBehaviour {
     public bool m_goingUp;
     [Tooltip("How many times do you want the portrait to bounce?")]
     public int m_timesUp;
-    private int m_upCatcher;
+    protected int m_upCatcher;
     public float m_upAmount;
-    float m_timeSinceStart;
+    protected float m_timeSinceStart;
     public float m_speed;
-    float m_initPosY;
-    float m_toYPos;
+    protected float m_initPosY;
+    protected float m_toYPos;
 	// Use this for initialization
 	void Start () {
-
-	}
+        m_initPosY = transform.position.y;
+        Starts();
+    }
 	
 	// Update is called once per frame
 	void Update () {
+        Bumping();
+        Updates();
+    }
+
+    public virtual void Bumping()
+    {
         if (m_bumpUp)
         {
             float timeSinceLerp = Time.time - m_timeSinceStart;
@@ -52,10 +59,9 @@ public class BumpUp : MonoBehaviour {
         }
     }
 
-    public void StartBump()
+    public virtual void StartBump()
     {
         m_upCatcher = 0;
-        m_initPosY = transform.position.y;
         if (m_switchCatcher == true)
             m_toYPos = m_initPosY + m_upAmount;
         else
@@ -69,4 +75,8 @@ public class BumpUp : MonoBehaviour {
     {
         m_bumpUp = false;
     }
+
+    public virtual void Starts() { }
+    public virtual void Updates() { }
+
 }

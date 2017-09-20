@@ -280,6 +280,7 @@
     <Compile Include="Assets\Scripts\EndPrototype.cs" />
     <Compile Include="Assets\Scripts\FadeBlack.cs" />
     <Compile Include="Assets\Scripts\FollowTarget.cs" />
+    <Compile Include="Assets\Scripts\ForwardBackground.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\LeapFrogScript.cs" />
     <Compile Include="Assets\Scripts\Lerping.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\Quitter.cs" />
+    <Compile Include="Assets\Scripts\StatusBar.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\MaskHolder.cs" />
