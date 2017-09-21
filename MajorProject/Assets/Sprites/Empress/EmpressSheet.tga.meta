@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6b8385fb942efc8428d58163aa2ba8ee
-timeCreated: 1505954759
+timeCreated: 1505956885
 licenseType: Pro
 TextureImporter:
   fileIDToRecycleName:
@@ -43,7 +43,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -407,10 +407,10 @@ TextureImporter:
       name: HairLower
       rect:
         serializedVersion: 2
-        x: 956
-        y: 16
-        width: 66
-        height: 161
+        x: 963
+        y: 19
+        width: 59
+        height: 158
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
