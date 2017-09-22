@@ -57,6 +57,10 @@ public class WeaponBase : MonoBehaviour {
     public int m_howManyHits;
     public bool m_attackFinished;
     public AttackType m_attackType = AttackType.SingleOne;
+
+    public AnimationEffectScript m_animEffect;
+    public bool HasEffect { get { return m_animEffect == null ? false : true; } }
+
     [System.Serializable]
     public struct WeaponEffect
     {
