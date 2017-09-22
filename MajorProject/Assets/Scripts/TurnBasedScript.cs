@@ -1272,7 +1272,10 @@ public class TurnBasedScript : MonoBehaviour {
     {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            StartCoroutine(attacker.m_ActiveWeapon.m_animEffect.PlayEffect());
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
             attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
@@ -1305,6 +1308,10 @@ public class TurnBasedScript : MonoBehaviour {
         //    }
         //}
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //If the weapon has an effect and it is playing
+        //wait for it to finish before moving on
+        if (attacker.m_ActiveWeapon.HasEffect)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
         m_attackDone = true;
 
     }
@@ -1316,6 +1323,8 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+            if (attacker.m_ActiveWeapon.HasEffect)
+                attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1326,8 +1335,13 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.ReCheckHealth();
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+            //If the weapon has an effect and it is playing
+            //wait for it to finish before moving on
+            if (attacker.m_ActiveWeapon.HasEffect)
+                yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
 
         }
+
         m_attackDone = true;
     }
 
@@ -1342,6 +1356,8 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
                 yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+                if (attacker.m_ActiveWeapon.HasEffect)
+                    attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
                 if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
                 {
                     attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1352,6 +1368,11 @@ public class TurnBasedScript : MonoBehaviour {
                     attacker.ReCheckHealth();
                 }
                 yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+                //If the weapon has an effect and it is playing
+                //wait for it to finish before moving on
+                if (attacker.m_ActiveWeapon.HasEffect)
+                    yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
+
             }
         }
         m_attackDone = true;
@@ -1365,6 +1386,8 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+            if (attacker.m_ActiveWeapon.HasEffect)
+                attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1375,6 +1398,10 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.ReCheckHealth();
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+            //If the weapon has an effect and it is playing
+            //wait for it to finish before moving on
+            if (attacker.m_ActiveWeapon.HasEffect)
+                yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
 
         }
         m_attackDone = true;
@@ -1385,6 +1412,8 @@ public class TurnBasedScript : MonoBehaviour {
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
         //Weapon attacks all enemies with single hit
         foreach (CharacterStatSheet charSS in GetDefendingTeam())
         {
@@ -1399,6 +1428,9 @@ public class TurnBasedScript : MonoBehaviour {
             }
         }
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        if (attacker.m_ActiveWeapon.HasEffect &&
+            attacker.m_ActiveWeapon.m_animEffect.GetParticleSystem().isPlaying)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
 
         m_attackDone = true;
     }
@@ -1409,6 +1441,8 @@ public class TurnBasedScript : MonoBehaviour {
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+            if (attacker.m_ActiveWeapon.HasEffect)
+                attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
             //Weapon attacks all enemies with single hit
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
@@ -1437,6 +1471,11 @@ public class TurnBasedScript : MonoBehaviour {
                 }
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+            //If the weapon has an effect and it is playing
+            //wait for it to finish before moving on
+            if (attacker.m_ActiveWeapon.HasEffect)
+                yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
+
         }
         m_attackDone = true;
     }
@@ -1445,7 +1484,13 @@ public class TurnBasedScript : MonoBehaviour {
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //If the weapon has an effect and it is playing
+        //wait for it to finish before moving on
+        if (attacker.m_ActiveWeapon.HasEffect)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
         BattleOver = true;
         DidFlee = true;
         WonBattleQ = true;
@@ -1457,6 +1502,8 @@ public class TurnBasedScript : MonoBehaviour {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
             defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
@@ -1468,6 +1515,10 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.ReCheckHealth();
         }
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //If the weapon has an effect and it is playing
+        //wait for it to finish before moving on
+        if (attacker.m_ActiveWeapon.HasEffect)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
         m_attackDone = true;
     }
 
@@ -1475,9 +1526,15 @@ public class TurnBasedScript : MonoBehaviour {
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
         attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
         attacker.ReCheckHealth();
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //If the weapon has an effect and it is playing
+        //wait for it to finish before moving on
+        if (attacker.m_ActiveWeapon.HasEffect)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
         m_attackDone = true;
     }
 
@@ -1486,8 +1543,14 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
 
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasEffect)
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
 
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //If the weapon has an effect and it is playing
+        //wait for it to finish before moving on
+        if (attacker.m_ActiveWeapon.HasEffect)
+            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.m_animEffect.m_anim.name));
         m_attackDone = true;
     }
 }
