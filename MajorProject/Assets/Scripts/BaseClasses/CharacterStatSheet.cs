@@ -92,8 +92,8 @@ public class CharacterStatSheet : MonoBehaviour {
     public bool m_isDead = false;               //Is this character dead, mostly for combat
     public Animator m_animator;                 //Animator, holds animations
 
-        //What Character is in Combat
-    public bool m_attacking;                    //Is this character attacking
+    //What Character is in Combat
+    public AnimScript m_animScript;
     public bool m_decidedAttack;                //Has this player decided to attack yet
     public bool m_isEvil = false;               //Does this character take bonus holy damage
     public bool m_burning = false;              //Is this character currently on fire
@@ -317,25 +317,16 @@ public class CharacterStatSheet : MonoBehaviour {
         return m_animator.GetCurrentAnimatorStateInfo(0);
     }
 
-    //For animation events
-    //Syncs animation with damage
-    public void HitPointOpen()
+    public AnimScript GetAnimScript()
     {
-        m_attacking = true;
-    }
-
-    //For animation events
-    //Syncs animation with damage
-    public void HitPointClosed()
-    {
-        m_attacking = false;
+        return m_animScript;
     }
 
     public void StartFadeDeath()
     {
 
-        fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
-        FadeDeath = true;
+        gameObject.SetActive(false);
+        //FadeDeath = true;
     }
 
     //Simply turns current sprite alpha down

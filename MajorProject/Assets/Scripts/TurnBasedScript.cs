@@ -1272,7 +1272,7 @@ public class TurnBasedScript : MonoBehaviour {
     {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
             attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
@@ -1315,7 +1315,7 @@ public class TurnBasedScript : MonoBehaviour {
         for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-            yield return new WaitUntil(() => attacker.m_attacking);
+            yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1341,7 +1341,7 @@ public class TurnBasedScript : MonoBehaviour {
             for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
             {
                 attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-                yield return new WaitUntil(() => attacker.m_attacking);
+                yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
                 if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
                 {
                     attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1364,7 +1364,7 @@ public class TurnBasedScript : MonoBehaviour {
         foreach (CharacterStatSheet charSS in GetDefendingTeam())
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-            yield return new WaitUntil(() => attacker.m_attacking);
+            yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
@@ -1384,7 +1384,7 @@ public class TurnBasedScript : MonoBehaviour {
     IEnumerator MassHit(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         //Weapon attacks all enemies with single hit
         foreach (CharacterStatSheet charSS in GetDefendingTeam())
         {
@@ -1408,7 +1408,7 @@ public class TurnBasedScript : MonoBehaviour {
         for(int i = 0; i < 1; i++)
         {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-            yield return new WaitUntil(() => attacker.m_attacking);
+            yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
             //Weapon attacks all enemies with single hit
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
@@ -1444,7 +1444,7 @@ public class TurnBasedScript : MonoBehaviour {
     IEnumerator Flee(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         BattleOver = true;
         DidFlee = true;
@@ -1456,7 +1456,7 @@ public class TurnBasedScript : MonoBehaviour {
     {
         //Attack on person for single hit
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
             defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
@@ -1474,7 +1474,7 @@ public class TurnBasedScript : MonoBehaviour {
     IEnumerator HealOne(CharacterStatSheet attacker)
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         attacker.HealSelf(attacker.m_ActiveWeapon.GetAttack());
         attacker.ReCheckHealth();
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
@@ -1485,7 +1485,7 @@ public class TurnBasedScript : MonoBehaviour {
     {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
 
-        yield return new WaitUntil(() => attacker.m_attacking);
+        yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
 
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         m_attackDone = true;

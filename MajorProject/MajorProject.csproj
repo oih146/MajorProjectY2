@@ -260,6 +260,8 @@
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Point2DList.cs" />
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Rect2D.cs" />
     <Compile Include="Assets\Scripts\AlignmentLines.cs" />
+    <Compile Include="Assets\Scripts\AnimScript.cs" />
+    <Compile Include="Assets\Scripts\AnimationEffectScript.cs" />
     <Compile Include="Assets\Scripts\AreaDivider.cs" />
     <Compile Include="Assets\Scripts\BanditMoveScript.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />
@@ -288,6 +290,7 @@
     <Compile Include="Assets\Scripts\MapCreator.cs" />
     <Compile Include="Assets\Scripts\MenuFunctions.cs" />
     <Compile Include="Assets\Scripts\MerchantDeath.cs" />
+    <Compile Include="Assets\Scripts\NewBehaviourScript.cs" />
     <Compile Include="Assets\Scripts\Notification.cs" />
     <Compile Include="Assets\Scripts\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\ParticleSystems\ParticleAttractor.cs" />
