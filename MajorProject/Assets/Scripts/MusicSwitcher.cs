@@ -23,23 +23,17 @@ public class MusicSwitcher : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        StartLerping();
+        //StartLerping();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if(lerping)
-        {
-            StartLerping();
-            lerping = false;
-        }
-
         if(Lerping)
         {
             float timeSinceLerp = Time.time - m_timeSinceStart;
             float percentage = timeSinceLerp / m_LerpSpeed;
 
-            m_normalAudio.volume = Mathf.Lerp(m_normalAudioOn ? 0 : 1, !m_normalAudioOn ? 1 : 0, percentage);
+            m_normalAudio.volume = Mathf.Lerp(m_normalAudioOn ? 1 : 0, m_normalAudioOn ? 0 : 1, percentage);
             m_battleAudio.volume = 1 - m_normalAudio.volume;
             if(percentage >= 1f)
             {

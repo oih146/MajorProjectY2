@@ -142,4 +142,10 @@ public class WeaponBase : MonoBehaviour {
             m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
             m_attackType == AttackType.HealOne) ? true : false;
     }
+
+    public IEnumerator PlayWeaponEffect(CharacterStatSheet trigger)
+    {
+        yield return new WaitUntil(() => trigger.GetAnimScript().WeaponEffect);
+        m_animEffect.PlayEffect();
+    }
 }
