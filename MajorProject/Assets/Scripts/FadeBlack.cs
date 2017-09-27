@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class FadeBlack : MonoBehaviour {
 
@@ -21,20 +22,22 @@ public class FadeBlack : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (m_fading && ((m_fadeIn) ? blackScreen.color.a > 0.001f : blackScreen.color.a < 0.999f))
+        if (m_fading)
         {
             float timeLerping = Time.time - m_timeSinceStart;
             float percentage = timeLerping / m_fadeSpeed;
             Color buffCol = blackScreen.color;
             buffCol.a = Mathf.Lerp(m_alphaInit, (m_fadeIn) ? 0 : 1, percentage);
             blackScreen.color = buffCol;
-        }
-        else if (m_fading == true && ((m_fadeIn) ? blackScreen.color.a <= 0.001f : blackScreen.color.a >= 0.999f))
-        {
-            m_fading = false;
-            player.SetMovement(true);
-            if (m_fadeIn == true)
-                gameObject.SetActive(false);
+            if(percentage >= 1f)
+            {
+                m_fading = false;
+                player.SetMovement(true);
+                if (m_fadeIn == true)
+                    gameObject.SetActive(false);
+                else
+                    SceneManager.LoadScene(0);
+            }
         }
     }
 

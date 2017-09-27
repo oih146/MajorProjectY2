@@ -72,19 +72,20 @@ public class AnimationEffectScript : MonoBehaviour {
         FinishedAnimation = false;
     }
 
-    public float GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender, CharacterStatSheet[] defendingTeam)
+    public Vector3 GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender, CharacterStatSheet[] defendingTeam)
     {
-        float result = 0;
+        Vector3 result = Vector3.zero;
         switch (m_effectPlacement)
         {
             case EffectPlacement.User:
-                result = user.gameObject.transform.position.x;
+                result = user.gameObject.transform.position;
                 break;
             case EffectPlacement.Victim:
-                result = defender.gameObject.transform.position.x;
+                result = defender.gameObject.transform.position;
                 break;
             case EffectPlacement.MiddleVictims:
-                result = FindMiddleGround(defendingTeam);
+                float xPos = FindMiddleGround(defendingTeam);
+                result = new Vector3(xPos, user.gameObject.transform.position.y, user.gameObject.transform.position.z);
                 break;
             default:
                 break;

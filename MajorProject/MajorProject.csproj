@@ -261,6 +261,8 @@
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Point2D.cs" />
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Point2DList.cs" />
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Rect2D.cs" />
+    <Compile Include="Assets\Scripts\AbilityArchetypes\AbilityArchetype.cs" />
+    <Compile Include="Assets\Scripts\AbilityArchetypes\ArchetypeCreator.cs" />
     <Compile Include="Assets\Scripts\AlignmentLines.cs" />
     <Compile Include="Assets\Scripts\AnimScript.cs" />
     <Compile Include="Assets\Scripts\AnimationEffectScript.cs" />
@@ -285,10 +287,12 @@
     <Compile Include="Assets\Scripts\FadeBlack.cs" />
     <Compile Include="Assets\Scripts\FollowTarget.cs" />
     <Compile Include="Assets\Scripts\ForwardBackground.cs" />
+    <Compile Include="Assets\Scripts\GUIHandler.cs" />
     <Compile Include="Assets\Scripts\GameTime.cs" />
     <Compile Include="Assets\Scripts\LeapFrogScript.cs" />
     <Compile Include="Assets\Scripts\Lerping.cs" />
     <Compile Include="Assets\Scripts\MagicAttack.cs" />
+    <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MapCreator.cs" />
     <Compile Include="Assets\Scripts\MenuFunctions.cs" />
     <Compile Include="Assets\Scripts\MerchantDeath.cs" />

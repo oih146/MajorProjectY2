@@ -1295,9 +1295,7 @@ public class TurnBasedScript : MonoBehaviour {
 
         }
         attacker.m_animator.SetBool("SpellBreak", true);
-        Debug.Log("Stuck");
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
-        Debug.Log("Passed");
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
             attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
@@ -1438,8 +1436,7 @@ public class TurnBasedScript : MonoBehaviour {
         if (attacker.m_ActiveWeapon.HasEffect)
         {
             AnimationEffectScript animEffect = attacker.m_ActiveWeapon.m_animEffect;
-            Vector3 temp = GetDefendingTeam()[0].transform.position;
-            temp.x = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(attacker, defender, GetDefendingTeam());
+            Vector3 temp = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(attacker, defender, GetDefendingTeam());
             animEffect.gameObject.transform.position = temp;
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
