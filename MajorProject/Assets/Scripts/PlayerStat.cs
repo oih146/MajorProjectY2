@@ -19,7 +19,7 @@ public class PlayerStat : CharacterStatSheet {
             Debug.Log("Law");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-420, -5, 1);
+            buff.transform.localPosition = new Vector3(-420, -110, 1);
             buff.transform.localScale = new Vector3(1, 1, 1);
             if (value < 0)
                 m_light = 0;
@@ -27,11 +27,17 @@ public class PlayerStat : CharacterStatSheet {
                 m_light = 100;
             else
                 m_light = value;
-            if(value > 0)
+            if(m_light - value < 0)
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
             else
                 buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
+            m_light = value;
             m_LightSlider.value = m_light;
+            if (value < 0)
+                m_light = 0;
+            else if (value > 100)
+                m_light = 100;
+
         }
     }
     public int m_law;
@@ -47,19 +53,20 @@ public class PlayerStat : CharacterStatSheet {
             Debug.Log("Light");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-420, -15, 1);
+            buff.transform.localPosition = new Vector3(-420, -120, 1);
             buff.transform.localScale = new Vector3(1, 1, 1);
+
+
+            if (m_law - value < 0)
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
+            else
+                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
+            m_law = value;
+            m_LawSlider.value = m_law;
             if (value < 0)
                 m_law = 0;
             else if (value > 100)
                 m_law = 100;
-            else
-                m_law = value;
-            if (value > 0)
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
-            else
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
-            m_LawSlider.value = m_law;
 
         }
     }

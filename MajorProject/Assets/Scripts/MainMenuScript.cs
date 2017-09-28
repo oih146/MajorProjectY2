@@ -32,6 +32,7 @@ public class MainMenuScript : MonoBehaviour {
 
     void StartLerp()
     {
+        m_blackScreen.raycastTarget = true;
         m_timeSinceStart = Time.time;
         m_isLerping = true;
     }
