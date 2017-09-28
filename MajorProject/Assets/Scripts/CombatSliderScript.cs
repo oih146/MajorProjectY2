@@ -137,6 +137,6 @@ public class CombatSliderScript : MonoBehaviour {
     public void SetPortraitBackgroundColor(Color color)
     {
         m_sliderPortraitRoot2.color = color;
-        m_sliderPortraitRoot2.gameObject.transform.GetChild(0).GetComponent<Image>().color = color;
+        m_sliderPortraitRoot2.GetComponent<Image>().color = color;
     }
 }

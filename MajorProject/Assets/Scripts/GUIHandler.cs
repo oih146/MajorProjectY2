@@ -13,7 +13,7 @@ public class GUIHandler : MonoBehaviour {
         {
             GUIStyle style = new GUIStyle();
             style.richText = true;
-            GUI.Label(new Rect(10, 400, 100, 100), m_textSource.GetText(), style);
+            GUI.Label(new Rect(10, 10, 100, 100), "<color=red><size=30>" + m_textSource.GetText() + "</size></color>", style);
         }
 
     }

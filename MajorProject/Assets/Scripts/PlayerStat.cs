@@ -16,9 +16,11 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
+            Debug.Log("Law");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-300, 0, 1);
+            buff.transform.localPosition = new Vector3(-420, -5, 1);
+            buff.transform.localScale = new Vector3(1, 1, 1);
             if (value < 0)
                 m_light = 0;
             else if (value > 100)
@@ -42,9 +44,11 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
+            Debug.Log("Light");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-300, -15, 1);
+            buff.transform.localPosition = new Vector3(-420, -15, 1);
+            buff.transform.localScale = new Vector3(1, 1, 1);
             if (value < 0)
                 m_law = 0;
             else if (value > 100)
@@ -125,7 +129,7 @@ public class PlayerStat : CharacterStatSheet {
         MaxSpells += GetStatistics().GetWillPower() / 2;
         if (MaxSpells > 6)
             MaxSpells = 6;
-        SetSpellCharges(true);
+        //SetSpellCharges(true);
     }
 
     public void SetSpellCharges(bool status)
@@ -173,4 +177,23 @@ public class PlayerStat : CharacterStatSheet {
     {
         Light += amountToAdd;
     }
+
+    public AnimationEffectScript divineShieldLink;
+    public override void UpdateEffects()
+    {
+        base.UpdateEffects();
+
+        if (GetEffectTimeArray()[(int)eEffects.Invulnerability] < 1)
+        {
+            divineShieldLink.m_rootHolder.SetActive(false);
+        }
+    }
+
+    public override void ResetEffects()
+    {
+        base.ResetEffects();
+
+        divineShieldLink.m_rootHolder.SetActive(false);
+    }
+
 }

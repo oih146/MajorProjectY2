@@ -1186,6 +1186,8 @@ public class TurnBasedScript : MonoBehaviour {
     public IEnumerator EndBattle(bool didWin)
     {
         BattleActive = false;
+        //SetCombatUI(false);
+        SetCombatBarMovement(false);
         if (didWin)
         {
             yield return new WaitUntil(() => !friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
@@ -1208,6 +1210,7 @@ public class TurnBasedScript : MonoBehaviour {
         turnPointer.gameObject.SetActive(false);
         foreach (CharacterStatSheet charSS in friendlyObjects)
         {
+            charSS.ResetEffects();
             //charSS.GetHealthBar().gameObject.SetActive(false);
             charSS.GetCombatBar().gameObject.SetActive(false);
             //charSS.m_animator.Stop();
@@ -1622,7 +1625,7 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         if (attacker.m_ActiveWeapon.HasEffect)
         {
-            attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = attacker.transform.position;
+            attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = attacker.transform.position;
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
             if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
@@ -1632,7 +1635,8 @@ public class TurnBasedScript : MonoBehaviour {
                 yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
                 yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
             }
-            attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+            if(attacker.m_ActiveWeapon.m_animEffect.m_needsToBeStopped)
+                attacker.m_ActiveWeapon.m_animEffect.StopEffect();
 
         }
         attacker.m_animator.SetBool("SpellBreak", true);

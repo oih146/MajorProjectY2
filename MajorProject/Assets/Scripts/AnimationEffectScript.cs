@@ -11,6 +11,7 @@ public class AnimationEffectScript : MonoBehaviour {
         MiddleVictims
     }
 
+    public GameObject m_rootHolder;
     public EffectPlacement m_effectPlacement = EffectPlacement.User;
     public ParticleSystem m_partSys;
     public Animator m_animator;
@@ -24,6 +25,8 @@ public class AnimationEffectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (m_rootHolder == null)
+            m_rootHolder = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +48,8 @@ public class AnimationEffectScript : MonoBehaviour {
     {
         ResetAnimation();
         gameObject.SetActive(true);
+        m_rootHolder.SetActive(true);
+        Debug.Log(m_rootHolder.activeInHierarchy);
         if (m_animator != null)
         {
             m_animator.Play(m_anim.name);
@@ -60,6 +65,7 @@ public class AnimationEffectScript : MonoBehaviour {
         if (m_partSys != null) 
             m_partSys.Stop(true);
         gameObject.SetActive(false);
+        m_rootHolder.SetActive(false);
     }
 
     public void FinishedAnim()
