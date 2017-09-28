@@ -4290,8 +4290,8 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: Variable["SP"] > 0
-      userScript: 'Variable["Light"] = 2; Variable["Law"] = 2; Variable["Merch_heal"]
-        = true; '
+      userScript: Variable["Light"] = 2; Variable["Law"] = 2; Variable["Merch_heal"]
+        = true; Variable["SP"] = Variable["SP"] - 1;
       onExecute:
         m_PersistentCalls:
           m_Calls: []

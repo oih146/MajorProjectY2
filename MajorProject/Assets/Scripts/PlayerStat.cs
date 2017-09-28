@@ -80,6 +80,7 @@ public class PlayerStat : CharacterStatSheet {
             m_maxSpellsPerDay = value;
         }
     }
+    public GameObject spellRoot;
     public int m_spellsAvaliable;
     public int SpellAvaliable
     {
@@ -91,6 +92,13 @@ public class PlayerStat : CharacterStatSheet {
         set
         {
             m_spellsAvaliable = value;
+            for (int i = 0; i < spellRoot.transform.childCount; i++)
+            {
+                if (m_spellsAvaliable > i)
+                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                else
+                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+            }
         }
     }
     public CharacterStatSheet[] m_allies = new CharacterStatSheet[1];

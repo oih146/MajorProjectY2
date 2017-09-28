@@ -6,6 +6,8 @@ using PixelCrushers.DialogueSystem;
 public class MerchantDeath : CharacterStatSheet {
 
     bool dying = false;
+    bool heal = false;
+    public AnimationEffectScript m_heal;
 	// Use this for initialization
 	void Start () {
         GetLerpDeath();
@@ -25,6 +27,14 @@ public class MerchantDeath : CharacterStatSheet {
         {
             m_animator.SetBool("dead", true);
             FadingDeath();
+        }
+
+        if(DialogueLua.GetVariable("Merch_heal").AsBool == true && heal == false)
+        {
+            m_heal.transform.SetParent(gameObject.transform.GetChild(0));
+            m_heal.transform.localPosition = Vector3.zero;
+            m_heal.PlayEffect();
+            heal = true;
         }
 	}
 }

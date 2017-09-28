@@ -79,13 +79,14 @@ public class TurnBasedScript : MonoBehaviour {
     RaycastHit hitInfo;
     public GameObject healthBarSlider;
     public bool animationPlaying;
-
+    public static TurnBasedScript Instance;
     public Color[] m_attackColors;
 
     public IEnumerator co;
 
     void Awake()
     {
+        Instance = this;
         OnPlayerDeath += PlayerDied;
         OnPlayerSurrender += Surrendered;
         EnemyBase.IPonHit = m_IPOnHit;
