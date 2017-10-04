@@ -14,9 +14,9 @@ public class ResponseMaskDecider : MonoBehaviour {
         if (gameObject.GetComponentInParent<UnityEngine.UI.Button>().interactable == false)
         {
 
-            m_idCaller++;
-            sprite.sprite = MaskHolder.GetMask(personalId);
-            sprite.color = new Color(1, 1, 1, 0.5f);
+            //m_idCaller++;
+            //sprite.sprite = MaskHolder.GetMask(personalId);
+            //sprite.color = new Color(1, 1, 1, 0.5f);
         }
         else
             sprite.color = new Color(1, 1, 1, 0);

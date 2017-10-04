@@ -67,6 +67,7 @@ public class BattleTrigger : MonoBehaviour {
                 t++;
             }
             battleStarter.enabled = true;
+            MusicSwitcher.Instance.StartLerping();
             battleStarter.StartBattle(buffer2, buffer);
             enabled = false;
         }

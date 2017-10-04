@@ -165,7 +165,7 @@ public class CharacterStatSheet : MonoBehaviour {
     protected Lerping fadeDeathLerping;
     // Use this for initialization
     void Start() {
-        fadeDeathLerping = gameObject.AddComponent<Lerping>();
+        GetLerpDeath();
         m_combatStatistics = GetComponent<CombatStats>();
         Health = 100;
         GenerateStatistics();
@@ -189,6 +189,11 @@ public class CharacterStatSheet : MonoBehaviour {
         Update();
     }
 
+    public void GetLerpDeath()
+    {
+        fadeDeathLerping = gameObject.AddComponent<Lerping>();
+    }
+
     //Creates statistics for attributes 
     public void GenerateStatistics()
     {
@@ -197,7 +202,7 @@ public class CharacterStatSheet : MonoBehaviour {
         CriticalChance = GetStatistics().GetDexterity();
     }
 
-    public void ResetEffects()
+    public virtual void ResetEffects()
     {
         for(int i = 0; i < m_effectsToApply.Length; i++)
         {
@@ -245,7 +250,7 @@ public class CharacterStatSheet : MonoBehaviour {
         Health -= damageToTake;
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
-            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 100);
+            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 25);
         if (m_effectTime[(int)eEffects.CounterStance] > 0)
             return m_effectsToApply[(int)eEffects.CounterStance];
         return 0;
@@ -350,7 +355,7 @@ public class CharacterStatSheet : MonoBehaviour {
     }
 
     //Called at the end of every turn during combat, updates effects
-    public void UpdateEffects()
+    public virtual void UpdateEffects()
     {
         //CheckBurnDamage();
         for (int i = 0; i < m_effectsToApply.Length; i++)
@@ -366,7 +371,7 @@ public class CharacterStatSheet : MonoBehaviour {
         {
             Health -= m_effectsToApply[(int)eEffects.BurnDamage];
             ReCheckHealth();
-            if (m_effectTime[(int)eEffects.BurnDamage] == 1)
+            if (m_effectTime[(int)eEffects.BurnDamage] < 1)
                 Burning = false;
             if (DeathCheck())
                 TurnBasedScript.CallOnOutsideDeath();
