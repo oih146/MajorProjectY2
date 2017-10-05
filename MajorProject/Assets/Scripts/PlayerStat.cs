@@ -19,7 +19,7 @@ public class PlayerStat : CharacterStatSheet {
             Debug.Log("Law");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-420, -110, 1);
+            buff.transform.localPosition = new Vector3(-850, 20, 1);
             buff.transform.localScale = new Vector3(1, 1, 1);
             if (value < 0)
                 m_light = 0;
@@ -53,7 +53,7 @@ public class PlayerStat : CharacterStatSheet {
             Debug.Log("Light");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-420, -120, 1);
+            buff.transform.localPosition = new Vector3(-850, 20, 1);
             buff.transform.localScale = new Vector3(1, 1, 1);
 
 

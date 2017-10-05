@@ -832,11 +832,9 @@ public class TurnBasedScript : MonoBehaviour {
         yield return new WaitUntil(() => m_attackDone);
         switch (attacker.m_ActiveWeapon.DoesAttackAll())
         {
-            //Attack One person once
             case true:
                 CheckAllPlayers(GetDefendingTeam());
                 break;
-            //Attack one person multiple times
             case false:
                 CheckOnPlayer(attackerBuffer);
                 break;
@@ -1160,6 +1158,7 @@ public class TurnBasedScript : MonoBehaviour {
                 playerCounter++;
             else if (charSS.m_isDead == true)
             {
+                charSS.StartFadeDeath();
                 charSS.GetComponent<BoxCollider>().enabled = false;
                 charSS.GetHealthBar().gameObject.SetActive(false);
                 charSS.GetCombatBar().gameObject.SetActive(false);
@@ -1193,8 +1192,8 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(false);
         if (didWin)
         {
-            yield return new WaitUntil(() => !friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
-            yield return new WaitForSeconds(3f);
+            yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
+            //yield return new WaitForSeconds(3f);
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
             int spellLeft = 0;
@@ -1443,11 +1442,14 @@ public class TurnBasedScript : MonoBehaviour {
         {
             AnimationEffectScript animEffect = attacker.m_ActiveWeapon.m_animEffect;
             Vector3 temp = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(attacker, defender, GetDefendingTeam());
-            animEffect.gameObject.transform.position = temp;
+            animEffect.m_rootHolder.transform.position = temp;
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
             if (animEffect.HasAnimation)
+            {
+                animEffect.FinishedAnimation = false;
                 yield return new WaitUntil(() => animEffect.FinishedAnimation);
+            }
             else
             {
                 yield return new WaitUntil(() => animEffect.m_partSys.isPlaying);
@@ -1471,7 +1473,7 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.ReCheckHealth();
             }
         }
-        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        yield return new WaitUntil(() => attacker.m_animScript.AttackFinished);
         m_attackDone = true;
     }
 

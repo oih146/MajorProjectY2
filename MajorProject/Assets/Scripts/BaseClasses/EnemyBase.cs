@@ -32,11 +32,11 @@ public class EnemyBase : CharacterStatSheet {
             if (m_incapacitationPoints > m_maxIP && !m_surrender)
             {
                 Debug.Log(gameObject.name + " Surrendered");
-                Vector3 temp = gameObject.transform.position;
-                temp.y += 4;
-                temp.x += 2;
-                GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
-                obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
+                //Vector3 temp = gameObject.transform.position;
+                //temp.y += 4;
+                //temp.x += 2;
+                //GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
+                //obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
                 Surrendered = true;
                 GetCombatBar().m_combatActive = false;
                 GetCombatBar().enabled = false;

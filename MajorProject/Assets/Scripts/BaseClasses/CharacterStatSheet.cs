@@ -41,8 +41,8 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_health = value;
-            if (m_health <= 0)
-                StartFadeDeath();
+            //if (m_health <= 0)
+                //StartFadeDeath();
         }
     }
 
