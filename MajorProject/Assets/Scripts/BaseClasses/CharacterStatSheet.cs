@@ -82,7 +82,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Weapons
     [HideInInspector]
     public WeaponBase m_ActiveWeapon;           //LEAVE THIS BLANK IN INSPECTOR, Holds the weapon or spell to use in combat, changes
-    public WeaponBase m_weapon;                 //Holds melee weapon, may change type to Sword
+    public SwordScript m_weapon;                 //Holds melee weapon, may change type to Sword
     [HideInInspector]
     public CharacterStatSheet m_playerToAttack; //Character that will be attacked during combat
     public AttackStrength m_attackStrength;     //Strength of attack, decides how slow attack will be to charge
@@ -237,7 +237,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (attackerCombatStats != null && damageToTake > 0)
         {
             damageToTake += attackerCombatStats.GetStrength();
-            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 2 : 1;
+            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
         }
         if(attacktype != AttackStrength.Magic)
             damageToTake -= m_armor.GetDamageReduction(((int)m_effectTime[(int)eEffects.DamageReduction] > 0) ? (int)m_effectsToApply[(int)eEffects.DamageReduction] : 0);
@@ -249,8 +249,8 @@ public class CharacterStatSheet : MonoBehaviour {
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
         Health -= damageToTake;
         //Combat bar interrupt
-        if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
-            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 25);
+        if(m_combatBar.m_combatSlider.value > 0.73)
+            m_combatBar.TakeFromTimer((damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 17.5f);
         if (m_effectTime[(int)eEffects.CounterStance] > 0)
             return m_effectsToApply[(int)eEffects.CounterStance];
         return 0;

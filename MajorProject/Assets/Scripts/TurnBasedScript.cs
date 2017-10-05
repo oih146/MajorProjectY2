@@ -396,6 +396,8 @@ public class TurnBasedScript : MonoBehaviour {
         {
             //Play Animation 
             //Debug.Log("Melee " + m_attackingCharacter.gameObject.name.ToString());
+            m_decidingCharacter.m_weapon.m_strength = (AttackStrength)meleeType;
+            m_decidingCharacter.m_weapon.CalculateDamage();
             m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_weapon;
             m_decidingCharacter.m_attackStrength = (AttackStrength)meleeType;
             m_decidingCharacter.GetCombatBar().SlowDown(meleeType);
@@ -1302,7 +1304,7 @@ public class TurnBasedScript : MonoBehaviour {
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
         {
-            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength + attacker.AdditionalDamage()),
+            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
                 ((attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1),
                 attacker.m_ActiveWeapon.m_strength));
@@ -1339,7 +1341,7 @@ public class TurnBasedScript : MonoBehaviour {
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1381,7 +1383,7 @@ public class TurnBasedScript : MonoBehaviour {
                 yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
                 if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
                 {
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack()+ attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                     (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1420,7 +1422,7 @@ public class TurnBasedScript : MonoBehaviour {
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1461,7 +1463,7 @@ public class TurnBasedScript : MonoBehaviour {
         {
             if (!(charSS.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
-                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                 attacker.m_ActiveWeapon.m_strength));
@@ -1499,7 +1501,7 @@ public class TurnBasedScript : MonoBehaviour {
             if (!(defender.GetEffectTimeArray()[(int)eEffects.Invulnerability] > 0))
             {
                 if (!defender.m_surrender)
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + ((int)attacker.m_attackStrength) + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttack() + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                 (attacker.GetEffectTimeArray()[(int)eEffects.InteruptModifier] > 0) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier] : 1,
                     attacker.m_ActiveWeapon.m_strength));
