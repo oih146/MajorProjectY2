@@ -306,6 +306,21 @@
     <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\Quitter.cs" />
     <Compile Include="Assets\Scripts\StatusBar.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusDamageStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusEvilStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusIncapOnDeathStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusIncapStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusInterruptStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BurningStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\CounterStanceStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\DamageReductionStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\DisarmedStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InteruptHealthModStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InteruptModifierStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InvulnerabilityStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\SpeedReductionStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\StatusBase.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TakeBonusInteruptStatus.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\MaskHolder.cs" />
@@ -315,6 +330,7 @@
     <Compile Include="Assets\Scripts\UI\Button.cs" />
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UIButtonSlider.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\Smoke\Scroller.shader" />

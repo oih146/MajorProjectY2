@@ -53,7 +53,7 @@ public class PlayerStat : CharacterStatSheet {
             Debug.Log("Light");
             GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
             buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-850, 20, 1);
+            buff.transform.localPosition = new Vector3(-850, 0, 1);
             buff.transform.localScale = new Vector3(1, 1, 1);
 
 
@@ -198,7 +198,7 @@ public class PlayerStat : CharacterStatSheet {
     {
         base.UpdateEffects();
 
-        if (GetEffectTimeArray()[(int)eEffects.Invulnerability] < 1)
+        if (GetEffectArray()[(int)eEffects.Invulnerability].IsActive)
         {
             divineShieldLink.m_rootHolder.SetActive(false);
         }

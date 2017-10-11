@@ -73,22 +73,8 @@ public class EnemyBase : CharacterStatSheet {
     {
         //Regardless of how much damage is done, IP is gained
         Debug.Log("IP Gained");
-        IncapacitationPoints += IPonHit + (GetEffectTimeArray()[(int)eEffects.BonusIncapacitationPoints] > 0 ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints] : 0);
+        IncapacitationPoints += IPonHit + (GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].IsActive ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].Strength : 0);
 
         return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);
-    }
-
-    //Adds vulnerableToFire bool, for wolves
-    public override bool ChanceOfBurning()
-    {
-        float chanceofBurning = GetEffectArray()[(int)eEffects.BurnChance];
-        chanceofBurning += 50;
-        if (GetEffectTimeArray()[(int)eEffects.AdditionBurnChance] > 0 || m_vulnerableToFire)
-            chanceofBurning += 50;
-        if (Random.Range(0, 100) <= chanceofBurning)
-        {
-            return true;
-        }
-        return false;
     }
 }
