@@ -78,7 +78,7 @@ public class WeaponBase : MonoBehaviour {
         return m_animToPlay;
     }
 
-    public float GetAttack()
+    public virtual float GetAttack()
     {
         return m_attackDamage;
     }
@@ -141,5 +141,11 @@ public class WeaponBase : MonoBehaviour {
             m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll || 
             m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
             m_attackType == AttackType.HealOne) ? true : false;
+    }
+
+    public IEnumerator PlayWeaponEffect(CharacterStatSheet trigger)
+    {
+        yield return new WaitUntil(() => trigger.GetAnimScript().WeaponEffect);
+        m_animEffect.PlayEffect();
     }
 }

@@ -14,18 +14,26 @@ public class PlayerMovement : MonoBehaviour {
     void Awake()
     {
         CharacterStatSheet.m_InteruptMultiplier = m_InterruptBase;
+        ConversationEvents.OnConversationStart += SetMovementFalse;
+        ConversationEvents.OnConversationEnd += SetMovementTrue;
     }
 
-	// Use this for initialization
-	void Start () {
+    void OnDestroy()
+    {
+        ConversationEvents.OnConversationStart -= SetMovementFalse;
+        ConversationEvents.OnConversationEnd -= SetMovementTrue;
+    }
+
+    // Use this for initialization
+    void Start() {
         rigid = gameObject.GetComponent<Rigidbody>();
         rigid.useGravity = false;
         rigid.isKinematic = true;
         enabled = false;
     }
-	
-	// Update is called once per frame
-	void FixedUpdate () {
+
+    // Update is called once per frame
+    void FixedUpdate() {
         float move;
         if (m_autoMove)
             move = 0.5f;
@@ -40,12 +48,27 @@ public class PlayerMovement : MonoBehaviour {
         rigid.velocity = new Vector2(move * maxSpeed, rigid.velocity.y);
         m_speed = move;
 
-	}
+    }
 
     public void SetMovement(bool status)
     {
-        rigid.isKinematic = !status;
-        m_amMoving = status;
-        enabled = status;
+        if (status)
+            SetMovementTrue();
+        else
+            SetMovementFalse();
+    }
+
+    public void SetMovementTrue()
+    {
+        rigid.isKinematic = false;
+        m_amMoving = true;
+        enabled = true;
+    }
+
+    public void SetMovementFalse()
+    {
+        rigid.isKinematic = true;
+        m_amMoving = false;
+        enabled = false;
     }
 }
