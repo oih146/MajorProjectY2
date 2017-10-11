@@ -153,8 +153,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public StatusBar m_statusBar;
 
     //Effect and Abilities (relevent enums decide where variables are allocated)
-    private float[] m_effectTime = new float[(int)eEffects.NumOfEffects];           //Effects time
-    private float[] m_effectsToApply = new float[(int)eEffects.NumOfEffects];       //Effects strength (damage)
+    private StatusBase[] m_statusEffects = new StatusBase[(int)eEffects.NumOfEffects];       //Effects strength (damage)
 
     //Death Variables
     //-----------------------------------------
@@ -204,22 +203,17 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public virtual void ResetEffects()
     {
-        for(int i = 0; i < m_effectsToApply.Length; i++)
+        for(int i = 0; i < GetEffectArray().Length; i++)
         {
-            m_effectsToApply[i] = 0;
-            m_effectTime[i] = 0;
+            //Destroy(GetEffectArray()[i]);
+            GetEffectArray()[i] = (StatusBase)ScriptableObject.CreateInstance("StatusBase");
         }
         Burning = false;
     }
 
-    public float[] GetEffectArray()
+    public StatusBase[] GetEffectArray()
     {
-        return m_effectsToApply;
-    }
-
-    public float[] GetEffectTimeArray()
-    {
-        return m_effectTime;
+        return m_statusEffects;
     }
 
     //Used by attacker
@@ -240,7 +234,7 @@ public class CharacterStatSheet : MonoBehaviour {
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
         }
         if(attacktype != AttackStrength.Magic)
-            damageToTake -= m_armor.GetDamageReduction(((int)m_effectTime[(int)eEffects.DamageReduction] > 0) ? (int)m_effectsToApply[(int)eEffects.DamageReduction] : 0);
+            damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
         //Would be adding to health
@@ -250,9 +244,9 @@ public class CharacterStatSheet : MonoBehaviour {
         Health -= damageToTake;
         //Combat bar interrupt
         if(m_combatBar.m_combatSlider.value > 0.73)
-            m_combatBar.TakeFromTimer((damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 17.5f);
-        if (m_effectTime[(int)eEffects.CounterStance] > 0)
-            return m_effectsToApply[(int)eEffects.CounterStance];
+            m_combatBar.TakeFromTimer((damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f);
+        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+            return GetEffectArray()[(int)eEffects.CounterStance].Strength;
         return 0;
     }
 
@@ -267,8 +261,8 @@ public class CharacterStatSheet : MonoBehaviour {
     public float AdditionalDamage()
     {
         float temp = 0;
-        temp += (m_isEvil && m_effectTime[(int)eEffects.BonusToEvil] > 0) ? m_effectsToApply[(int)eEffects.BonusToEvil] : 0;
-        temp += (m_effectTime[(int)eEffects.BonusDamage] > 0) ? m_effectsToApply[(int)eEffects.BonusDamage] : 0;
+        temp += (m_isEvil && GetEffectArray()[(int)eEffects.BonusToEvil].IsActive) ? GetEffectArray()[(int)eEffects.BonusToEvil].Strength : 0;
+        temp += (GetEffectArray()[(int)eEffects.BonusDamage].IsActive) ? GetEffectArray()[(int)eEffects.BonusDamage].Strength : 0;
         return temp;
     }
 
@@ -348,49 +342,42 @@ public class CharacterStatSheet : MonoBehaviour {
     }
 
     //Simplifier for adding Effects
-    public void AddEffect(WeaponBase.WeaponEffect effect)
+    public void AddEffect(StatusBase statVars)
     {
-        m_effectsToApply[(int)effect.effectType] = effect.effectDamage;
-        m_effectTime[(int)effect.effectType] = effect.effectTime;
+        if (statVars.ApplyChance(this))
+        {
+            GetEffectArray()[(int)statVars.m_effectType] = statVars;
+        }
+ 
     }
 
     //Called at the end of every turn during combat, updates effects
     public virtual void UpdateEffects()
     {
         //CheckBurnDamage();
-        for (int i = 0; i < m_effectsToApply.Length; i++)
+        for (int i = 0; i < GetEffectArray().Length; i++)
         {
-            if(m_effectTime[i] > 0)
+            if(GetEffectArray()[i].TakeAndCheckActive())
             {
-                m_effectTime[i]--;
+                GetEffectArray()[i].Remove(this);
+            }
+            else
+            {
+                GetEffectArray()[i].Use(this);
             }
         }
-        if (m_effectTime[(int)eEffects.SpeedReduction] > 0)
-            GetCombatBar().SetTemporarySpeedDecrease(m_effectsToApply[(int)eEffects.SpeedReduction]);
-        if (Burning && m_effectTime[(int)eEffects.BurnDamage] > 0)
-        {
-            Health -= m_effectsToApply[(int)eEffects.BurnDamage];
-            ReCheckHealth();
-            if (m_effectTime[(int)eEffects.BurnDamage] < 1)
-                Burning = false;
-            if (DeathCheck())
-                TurnBasedScript.CallOnOutsideDeath();
-        }
+        //if (GetEffectArray()[(int)eEffects.SpeedReduction].IsActive)
+        //    GetCombatBar().SetTemporarySpeedDecrease(GetEffectArray()[(int)eEffects.SpeedReduction].Strength);
+        //if (Burning && GetEffectArray()[(int)eEffects.BurnDamage].IsActive)
+        //{
+        //    Health -= GetEffectArray()[(int)eEffects.BurnDamage].Strength;
+        //    ReCheckHealth();
+        //    if (GetEffectArray()[(int)eEffects.BurnDamage].IsActive)
+        //        Burning = false;
+        //    if (DeathCheck())
+        //        TurnBasedScript.CallOnOutsideDeath();
+        //}
 
-    }
-
-    //Calculate if character takes burning damage or not
-    public virtual bool ChanceOfBurning()
-    {
-        int burnChance = (int)m_effectTime[(int)eEffects.BurnChance];
-        burnChance += 50;
-        if (m_effectTime[(int)eEffects.AdditionBurnChance] > 0)
-            burnChance += 50;
-        if (Random.Range(0, 100) <= burnChance)
-        {
-            return true;
-        }
-        return false;
     }
 
     public Canvas GetPersonalCanvas()

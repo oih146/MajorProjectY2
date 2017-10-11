@@ -64,9 +64,10 @@ public class WeaponBase : MonoBehaviour {
     [System.Serializable]
     public struct WeaponEffect
     {
-        public eEffects effectType;
+        public StatusBase effect;
         public int effectTime;
         public int effectDamage;
+
     }
 
 
@@ -95,7 +96,7 @@ public class WeaponBase : MonoBehaviour {
     {
         for (int i = 0; i < weapAbility.Length; i++)
         {
-            attacker.AddEffect(weapAbility[i]);
+            attacker.AddEffect(weapAbility[i].effect.Init(weapAbility[i].effectTime, weapAbility[i].effectDamage));
         }
     }
 
@@ -104,24 +105,7 @@ public class WeaponBase : MonoBehaviour {
     {
         for (int i = 0; i < weapEffects.Length; i++)
         {
-            if (weapEffects[i].effectType == eEffects.BurnChance)
-            {
-                defender.AddEffect(weapEffects[i]);
-                if (defender.ChanceOfBurning())
-                {
-                    defender.Burning = true;
-                    defender.m_burnTimer = weapEffects[i].effectTime;
-                }
-            }
-            else if (weapEffects[i].effectType == eEffects.Disarmed)
-            {
-                defender.Disarmed = true;
-                defender.AddEffect(weapEffects[i]);
-            }
-            else
-            {
-                defender.AddEffect(weapEffects[i]);
-            }
+            defender.AddEffect(weapEffects[i].effect.Init(weapEffects[i].effectTime, weapEffects[i].effectDamage));
         }
     }
 
