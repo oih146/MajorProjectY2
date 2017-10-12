@@ -13,14 +13,4 @@ public class SwordScript : WeaponBase {
 	void Update () {
 		
 	}
-
-    public void CalculateDamage()
-    {
-        if (m_strength == AttackStrength.Light)
-            m_attackDamage = 15;
-        else if (m_strength == AttackStrength.Normal)
-            m_attackDamage = 25;
-        else if (m_strength == AttackStrength.Heavy)
-            m_attackDamage = 50;
-    }
 }

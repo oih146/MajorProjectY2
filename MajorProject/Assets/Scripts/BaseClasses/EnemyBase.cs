@@ -69,7 +69,7 @@ public class EnemyBase : CharacterStatSheet {
     //Override Functions
     //-------------------------------------------------------------------------
     //Applies IP when Enemies take damage
-    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attackStrength, bool interrupt = true)
+    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, ChargeTime attackStrength, bool interrupt = true)
     {
         //Regardless of how much damage is done, IP is gained
         Debug.Log("IP Gained");

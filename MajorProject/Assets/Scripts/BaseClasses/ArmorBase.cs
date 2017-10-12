@@ -10,7 +10,7 @@ public class ArmorBase : MonoBehaviour {
     public int[] m_stageDamageReduction;
 	// Use this for initialization
 	void Start () {
-		
+        m_currentDurability = m_breakStages[0];
 	}
 	
 	// Update is called once per frame

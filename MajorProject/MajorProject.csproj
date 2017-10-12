@@ -331,6 +331,7 @@
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UIButtonSlider.cs" />
+    <Compile Include="Assets\Scripts\UISliderKeeper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Art\Smoke\Scroller.shader" />
