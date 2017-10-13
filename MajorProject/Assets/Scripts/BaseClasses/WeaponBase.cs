@@ -66,11 +66,13 @@ public class WeaponBase : MonoBehaviour {
     public int m_howManyHits;
     public bool m_attackFinished;
     public AttackType m_attackType = AttackType.SingleOne;
-
+    public UseConsequences m_consequences;
     public AnimationEffectScript m_animEffect;
     public int GetAttackDamage { get { return (m_damageSet == AttackDamage.Custom ? m_attackDamage : (int)m_damageSet); } }
     public int SetAttackDamage { set { m_attackDamage = value; } }
     public bool HasEffect { get { return m_animEffect == null ? false : true; } }
+
+    public bool HasConsequences { get { return m_consequences == null ? false : true; } }
 
     [System.Serializable]
     public struct WeaponEffect

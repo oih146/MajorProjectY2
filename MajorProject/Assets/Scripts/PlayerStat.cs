@@ -16,11 +16,6 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            Debug.Log("Law");
-            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-            buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-850, 20, 1);
-            buff.transform.localScale = new Vector3(1, 1, 1);
             if (value < 0)
                 m_light = 0;
             else if (value > 100)
@@ -28,9 +23,9 @@ public class PlayerStat : CharacterStatSheet {
             else
                 m_light = value;
             if(m_light - value < 0)
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(30));
             else
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(0));
             m_light = value;
             m_LightSlider.value = m_light;
             if (value < 0)
@@ -50,17 +45,10 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            Debug.Log("Light");
-            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-            buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-850, 0, 1);
-            buff.transform.localScale = new Vector3(1, 1, 1);
-
-
             if (m_law - value < 0)
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(30));
             else
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(0));
             m_law = value;
             m_LawSlider.value = m_law;
             if (value < 0)
@@ -114,6 +102,8 @@ public class PlayerStat : CharacterStatSheet {
     void Start () {
         Starts();
         //AddToOrderChaos(5);
+        AddToOrderChaos(5);
+        AddToOrderChaos(5);
         GenerateWillPower();
         m_spellsAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
@@ -209,6 +199,16 @@ public class PlayerStat : CharacterStatSheet {
         base.ResetEffects();
 
         divineShieldLink.m_rootHolder.SetActive(false);
+    }
+
+    public override void AfterAttackConsequences(UseConsequences conseq)
+    {
+        conseq.ApplyConsequences(this, UseConsequences.ConsequenceApplication.AfterUse);
+    }
+
+    public override void OnKillConsequences(UseConsequences conseq)
+    {
+        conseq.ApplyConsequences(this, UseConsequences.ConsequenceApplication.OnKill);
     }
 
 }

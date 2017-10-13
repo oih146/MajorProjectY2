@@ -14,7 +14,7 @@ public class SpeedReductionStatus : StatusBase {
 		
 	}
 
-    public override void Use(CharacterStatSheet applyTo)
+    public override void OnUpdate(CharacterStatSheet applyTo)
     {
         applyTo.GetCombatBar().SetTemporarySpeedDecrease(Strength);
     }

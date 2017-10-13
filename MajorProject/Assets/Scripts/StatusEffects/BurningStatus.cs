@@ -16,7 +16,7 @@ public class BurningStatus : StatusBase {
 		
 	}
 
-    public override void Use(CharacterStatSheet useOn)
+    public override void OnUpdate(CharacterStatSheet useOn)
     {
         useOn.Health -= Strength;
         useOn.ReCheckHealth();
@@ -24,7 +24,15 @@ public class BurningStatus : StatusBase {
             TurnBasedScript.CallOnOutsideDeath();
     }
 
-    public override bool ApplyChance(CharacterStatSheet applyTo)
+    public override void OnApply(CharacterStatSheet applyTo)
+    {
+        if(ApplyChance(applyTo))
+        {
+            base.OnApply(applyTo);
+        }
+    }
+
+    public bool ApplyChance(CharacterStatSheet applyTo)
     {
         int burnChance = m_burnChance;
         burnChance += 50;
