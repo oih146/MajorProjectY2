@@ -100,6 +100,8 @@ public class CombatSliderScript : MonoBehaviour {
 
     public void SlowDown(float howMuch)
     {
+        if (howMuch < 0.001)
+            howMuch = 0.001f;
         howMuch *= (0.27f * 2);
         m_timeDivider = howMuch;
     }

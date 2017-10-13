@@ -85,7 +85,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public SwordScript m_weapon;                 //Holds melee weapon, may change type to Sword
     [HideInInspector]
     public CharacterStatSheet m_playerToAttack; //Character that will be attacked during combat
-    public AttackStrength m_attackStrength;     //Strength of attack, decides how slow attack will be to charge
+    public ChargeTime m_attackCharge;     //Strength of attack, decides how slow attack will be to charge
     public bool m_knowMagic;                    //Does this character know magic
     public MagicAttack[] m_spells;              //Magic known by this character
     public MagicAttack[] m_abilities;
@@ -94,6 +94,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     //What Character is in Combat
     public AnimScript m_animScript;
+    public bool m_decidedTarget;
     public bool m_decidedAttack;                //Has this player decided to attack yet
     public bool m_isEvil = false;               //Does this character take bonus holy damage
     public bool m_burning = false;              //Is this character currently on fire
@@ -218,14 +219,20 @@ public class CharacterStatSheet : MonoBehaviour {
 
     //Used by attacker
     //If the defending character has a counterattack ability
-    public void CounterTakeDamage(float damageToTake)
+    public IEnumerator CounterTakeDamage(float damageToTake)
     {
-        Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
-        Health -= damageToTake;
+        if(damageToTake > 0)
+        {
+            Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
+            //m_playerToAttack.m_animator.Play();
+            //yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
+            Health -= damageToTake;
+            yield return new WaitForSeconds(0.0f);
+        }
     }
 
     //Take damage, virtual to allow inheriting classes to override
-    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attacktype, bool interrupt = true)
+    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, ChargeTime attacktype, bool interrupt = true)
     {
         //Critical Hit Chance
         if (attackerCombatStats != null && damageToTake > 0)
@@ -233,7 +240,7 @@ public class CharacterStatSheet : MonoBehaviour {
             damageToTake += attackerCombatStats.GetStrength();
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
         }
-        if(attacktype != AttackStrength.Magic)
+        if(attacktype != ChargeTime.Magic)
             damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
@@ -344,10 +351,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Simplifier for adding Effects
     public void AddEffect(StatusBase statVars)
     {
-        if (statVars.ApplyChance(this))
-        {
-            GetEffectArray()[(int)statVars.m_effectType] = statVars;
-        }
+        statVars.OnApply(this);
  
     }
 

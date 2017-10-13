@@ -22,12 +22,20 @@ public enum eEffects
     NumOfEffects
 }
 
-public enum AttackStrength
+public enum ChargeTime
 {
     Light = 3,
     Normal = 5,
     Heavy = 8,
     Magic = 10
+}
+
+public enum AttackDamage
+{
+    Light = 15,
+    Normal = 25,
+    Heavy = 50,
+    Custom = 100
 }
 
 public enum AttackType
@@ -48,8 +56,9 @@ public enum AttackType
 
 public class WeaponBase : MonoBehaviour {
     
-    public float m_attackDamage;
-    public AttackStrength m_strength;
+    public int m_attackDamage;
+    public ChargeTime m_chargeTime;
+    public AttackDamage m_damageSet;
     //public float m_LawOrderShift;
     public Motion m_animToPlay;
     public Animation m_animationForPlay;
@@ -59,6 +68,8 @@ public class WeaponBase : MonoBehaviour {
     public AttackType m_attackType = AttackType.SingleOne;
 
     public AnimationEffectScript m_animEffect;
+    public int GetAttackDamage { get { return (m_damageSet == AttackDamage.Custom ? m_attackDamage : (int)m_damageSet); } }
+    public int SetAttackDamage { set { m_attackDamage = value; } }
     public bool HasEffect { get { return m_animEffect == null ? false : true; } }
 
     [System.Serializable]
@@ -131,5 +142,10 @@ public class WeaponBase : MonoBehaviour {
     {
         yield return new WaitUntil(() => trigger.GetAnimScript().WeaponEffect);
         m_animEffect.PlayEffect();
+    }
+
+    public virtual void TriggerChargeAnim()
+    {
+
     }
 }

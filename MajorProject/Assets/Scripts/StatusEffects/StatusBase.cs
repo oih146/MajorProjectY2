@@ -43,6 +43,9 @@ public class StatusBase : ScriptableObject {
         return false;
     }
 
+
+    //Virtual Functions
+    //------------------------------------------------------------
     public virtual bool ApplyChance(CharacterStatSheet applyTo)
     {
         return true;
@@ -50,7 +53,10 @@ public class StatusBase : ScriptableObject {
 
     public virtual void OnApply(CharacterStatSheet applyTo)
     {
-
+        if (ApplyChance(applyTo))
+        {
+            applyTo.GetEffectArray()[(int)m_effectType] = this;
+        }
     }
 
     public virtual void Remove(CharacterStatSheet removeFrom)
@@ -61,5 +67,9 @@ public class StatusBase : ScriptableObject {
     public virtual void Use(CharacterStatSheet useOn)
     {
 
+    }
+
+    public virtual void Setup(CharacterStatSheet attacker)
+    {
     }
 }
