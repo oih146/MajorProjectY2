@@ -78,7 +78,7 @@ public class AnimationEffectScript : MonoBehaviour {
         FinishedAnimation = false;
     }
 
-    public Vector3 GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender, CharacterStatSheet[] defendingTeam)
+    public Vector3 GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender)
     {
         Vector3 result = Vector3.zero;
         switch (m_effectPlacement)
@@ -89,14 +89,16 @@ public class AnimationEffectScript : MonoBehaviour {
             case EffectPlacement.Victim:
                 result = defender.gameObject.transform.position;
                 break;
-            case EffectPlacement.MiddleVictims:
-                float xPos = FindMiddleGround(defendingTeam);
-                result = new Vector3(xPos, user.gameObject.transform.position.y, user.gameObject.transform.position.z);
-                break;
             default:
                 break;
         }
         return result;
+    }
+
+    public Vector3 GetEffectPosition(CharacterStatSheet[] defendingTeam)
+    {
+        float xPos = FindMiddleGround(defendingTeam);
+        return new Vector3(xPos, defendingTeam[0].gameObject.transform.position.y, defendingTeam[0].gameObject.transform.position.z);
     }
 
     float FindMiddleGround(CharacterStatSheet[] team)
@@ -115,5 +117,20 @@ public class AnimationEffectScript : MonoBehaviour {
         float diff = (highestX - lowestX) / 2;
 
         return lowestX + diff;
+    }
+
+    public virtual void OnSelect(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnUse(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnEnd(CharacterStatSheet character)
+    {
+
     }
 }

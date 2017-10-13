@@ -28,7 +28,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &114013796735628234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -40,9 +40,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e2d04a025bbe4843b1c100be0af3ae1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upPoint: 10
-  upRate: 2
-  nextPos: 0
+  m_upPoint: 5
+  m_upSpeed: 3
+  m_lerping: 0
 --- !u!114 &114549933958498706
 MonoBehaviour:
   m_ObjectHideFlags: 1

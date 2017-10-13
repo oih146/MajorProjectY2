@@ -14,5 +14,10 @@ public class CounterStanceStatus : StatusBase {
         attacker.AddEffect(this);
     }
 
+    public override void Use(CharacterStatSheet useOn)
+    {
+        useOn.ResetCombatVars();
+    }
+
 
 }

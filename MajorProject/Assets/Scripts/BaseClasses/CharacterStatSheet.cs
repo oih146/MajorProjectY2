@@ -16,7 +16,7 @@ public enum LawNOrder
     Lawful = 100
    
 }
-  
+
 [RequireComponent(typeof(CombatStats))]
 public class CharacterStatSheet : MonoBehaviour {
 
@@ -42,16 +42,16 @@ public class CharacterStatSheet : MonoBehaviour {
         {
             m_health = value;
             //if (m_health <= 0)
-                //StartFadeDeath();
+            //StartFadeDeath();
         }
     }
 
     //Combat Variables
     //-------------------------------------------
-        //Armour
+    //Armour
     public ArmorBase m_armor;                   //Armour, reduces incoming damage, wears down
 
-        //Attributes
+    //Attributes
     private CombatStats m_combatStatistics;     //Holds combat attributes
     private int m_baseDamage;                   //Holder for strength, not used may delete
     public int BaseDamage
@@ -171,11 +171,11 @@ public class CharacterStatSheet : MonoBehaviour {
         GenerateStatistics();
         ResetEffects();
     }
-	
-	// Update is called once per frame
-	void Update() {
 
-	}
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     //To allow Start to be run by inheriting classes
     public void Starts()
@@ -204,7 +204,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public virtual void ResetEffects()
     {
-        for(int i = 0; i < GetEffectArray().Length; i++)
+        for (int i = 0; i < GetEffectArray().Length; i++)
         {
             //Destroy(GetEffectArray()[i]);
             GetEffectArray()[i] = (StatusBase)ScriptableObject.CreateInstance("StatusBase");
@@ -221,7 +221,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //If the defending character has a counterattack ability
     public IEnumerator CounterTakeDamage(float damageToTake)
     {
-        if(damageToTake > 0)
+        if (damageToTake > 0)
         {
             Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
             //m_playerToAttack.m_animator.Play();
@@ -240,7 +240,7 @@ public class CharacterStatSheet : MonoBehaviour {
             damageToTake += attackerCombatStats.GetStrength();
             damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
         }
-        if(attacktype != ChargeTime.Magic)
+        if (attacktype != ChargeTime.Magic)
             damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
@@ -250,10 +250,13 @@ public class CharacterStatSheet : MonoBehaviour {
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
         Health -= damageToTake;
         //Combat bar interrupt
-        if(m_combatBar.m_combatSlider.value > 0.73)
+        if (m_combatBar.m_combatSlider.value > 0.73)
             m_combatBar.TakeFromTimer((damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f);
         if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+        {
+            GetEffectArray()[(int)eEffects.CounterStance].Use(this);
             return GetEffectArray()[(int)eEffects.CounterStance].Strength;
+        }
         return 0;
     }
 
@@ -276,7 +279,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Check if this character is dead
     public bool DeathCheck()
     {
-        if(m_health <= 0)
+        if (m_health <= 0)
         {
             m_isDead = true;
             //play death anim
@@ -352,7 +355,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public void AddEffect(StatusBase statVars)
     {
         statVars.OnApply(this);
- 
+
     }
 
     //Called at the end of every turn during combat, updates effects
@@ -361,13 +364,13 @@ public class CharacterStatSheet : MonoBehaviour {
         //CheckBurnDamage();
         for (int i = 0; i < GetEffectArray().Length; i++)
         {
-            if(GetEffectArray()[i].TakeAndCheckActive())
+            if (GetEffectArray()[i].TakeAndCheckActive())
             {
                 GetEffectArray()[i].Remove(this);
             }
             else
             {
-                GetEffectArray()[i].Use(this);
+                GetEffectArray()[i].OnUpdate(this);
             }
         }
         //if (GetEffectArray()[(int)eEffects.SpeedReduction].IsActive)
@@ -381,11 +384,33 @@ public class CharacterStatSheet : MonoBehaviour {
         //    if (DeathCheck())
         //        TurnBasedScript.CallOnOutsideDeath();
         //}
-
     }
 
     public Canvas GetPersonalCanvas()
     {
         return m_playerCanvas;
+    }
+
+    public void ResetCombatVars()
+    {
+        m_ActiveWeapon.m_attackFinished = false;
+        GetCombatBar().m_combatSlider.value = 0;
+        GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Neutral]);
+        UpdateEffects();
+        GetCombatBar().Restart();
+        GetCombatBar().CombatActive = true;
+        m_decidedAttack = false;
+        m_decidedTarget = false;
+        m_playerToAttack = null;
+    }
+
+    public virtual void AfterAttackConsequences(UseConsequences conseq)
+    {
+
+    }
+
+    public virtual void OnKillConsequences(UseConsequences conseq)
+    {
+
     }
 }
