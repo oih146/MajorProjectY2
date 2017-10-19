@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198284071164328378}
   - component: {fileID: 199030806206030740}
   m_Layer: 0
-  m_Name: DivineFlame
+  m_Name: DivineFlame 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,14 +64,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497709958283544}
-  m_LocalRotation: {x: -0.47892463, y: 0.52022225, z: -0.52022237, w: 0.47892463}
-  m_LocalPosition: {x: -6.292474, y: -2.4372246, z: 0}
+  m_LocalRotation: {x: -0.50000006, y: 0.50000006, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4088197160062606}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 4.734, y: 90.00001, z: -90.00001}
+  m_LocalEulerAnglesHint: {x: 0, y: 90.00001, z: -90.00001}
 --- !u!198 &198284071164328378
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -127,7 +127,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1311662385
+  randomSeed: 731472152
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2746,7 +2746,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1561730581
+  randomSeed: -572843867
   InitialModule:
     serializedVersion: 3
     enabled: 1
