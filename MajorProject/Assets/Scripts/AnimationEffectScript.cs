@@ -44,7 +44,7 @@ public class AnimationEffectScript : MonoBehaviour {
         return m_partSys;
     }
 
-    public void PlayEffect()
+    public virtual void PlayEffect()
     {
         ResetAnimation();
         gameObject.SetActive(true);
@@ -58,7 +58,7 @@ public class AnimationEffectScript : MonoBehaviour {
             m_partSys.Play(true);
     }
 
-    public void StopEffect()
+    public virtual void StopEffect()
     {
         if (m_animator != null)
             m_animator.Stop();

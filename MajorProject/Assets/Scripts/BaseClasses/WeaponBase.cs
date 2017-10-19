@@ -55,13 +55,12 @@ public enum AttackType
 }
 
 public class WeaponBase : MonoBehaviour {
-    
+
     public int m_attackDamage;
     public ChargeTime m_chargeTime;
     public AttackDamage m_damageSet;
     //public float m_LawOrderShift;
     public Motion m_animToPlay;
-    public Animation m_animationForPlay;
     [Range(1, 10)]
     public int m_howManyHits;
     public bool m_attackFinished;
@@ -88,7 +87,7 @@ public class WeaponBase : MonoBehaviour {
     public WeaponEffect[] weapAbility;
 
     public Motion GetAnimationToPlay()
-    { 
+    {
         return m_animToPlay;
     }
 
@@ -126,7 +125,7 @@ public class WeaponBase : MonoBehaviour {
     public void ApplyEffects(CharacterStatSheet userOfWeap, CharacterStatSheet[] defenders)
     {
         AddAbilities(userOfWeap);
-        foreach(CharacterStatSheet charSS in defenders)
+        foreach (CharacterStatSheet charSS in defenders)
         {
             AddEffects(charSS);
         }
@@ -134,8 +133,8 @@ public class WeaponBase : MonoBehaviour {
 
     public bool DoesAttackAll()
     {
-        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| 
-            m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll || 
+        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack ||
+            m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll ||
             m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
             m_attackType == AttackType.HealOne) ? true : false;
     }
@@ -147,6 +146,45 @@ public class WeaponBase : MonoBehaviour {
     }
 
     public virtual void TriggerChargeAnim()
+    {
+
+    }
+
+    public virtual void OnSelect(CharacterStatSheet character)
+    {
+        if(HasEffect)
+        {
+            m_animEffect.OnSelect(character);
+        }
+    }
+
+    public virtual void OnAttack(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnUse(CharacterStatSheet character)
+    {
+        if (HasEffect)
+        {
+            m_animEffect.OnUse(character);
+        }
+    }
+
+    public virtual void OnEnd(CharacterStatSheet character)
+    {
+        if (HasEffect)
+        {
+            m_animEffect.OnEnd(character);
+        }
+    }
+
+    public virtual void OnPause()
+    {
+
+    }
+
+    public virtual void OnResume(CharacterStatSheet character)
     {
 
     }
