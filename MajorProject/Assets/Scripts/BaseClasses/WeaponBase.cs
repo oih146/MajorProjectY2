@@ -67,6 +67,9 @@ public class WeaponBase : MonoBehaviour {
     public AttackType m_attackType = AttackType.SingleOne;
     public UseConsequences m_consequences;
     public AnimationEffectScript m_animEffect;
+
+    public string m_AttackName;
+
     public int GetAttackDamage { get { return (m_damageSet == AttackDamage.Custom ? m_attackDamage : (int)m_damageSet); } }
     public int SetAttackDamage { set { m_attackDamage = value; } }
     public bool HasEffect { get { return m_animEffect == null ? false : true; } }
@@ -141,7 +144,9 @@ public class WeaponBase : MonoBehaviour {
 
     public IEnumerator PlayWeaponEffect(CharacterStatSheet trigger)
     {
+        trigger.GetAnimScript().AttackFinished = false;
         yield return new WaitUntil(() => trigger.GetAnimScript().WeaponEffect);
+        trigger.GetAnimScript().WeaponEffect = false;
         m_animEffect.PlayEffect();
     }
 

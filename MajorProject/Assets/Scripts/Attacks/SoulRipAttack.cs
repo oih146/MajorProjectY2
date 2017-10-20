@@ -21,6 +21,8 @@ public class SoulRipAttack : MagicAttack {
     {
         base.OnSelect(character);
 
+        character.m_animator.Play(m_animToPlay.name);
+
         m_animEffect.m_rootHolder.SetActive(true);
         m_animEffect.m_animator.Play(m_initalAnim.name);
 

@@ -18,7 +18,6 @@ public enum DoWithAlignNum
 public delegate bool DoWithFuncs(int Is, int To);
 public class MagicAttack : WeaponBase {
 
-    public string m_AttackName;
     public int m_CooldownTimeChecker;
     [HideInInspector]
     public int m_actualCooldown;

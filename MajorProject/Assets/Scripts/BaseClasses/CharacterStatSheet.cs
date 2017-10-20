@@ -424,4 +424,15 @@ public class CharacterStatSheet : MonoBehaviour {
     {
 
     }
+
+    public void ResetAnimationVariables()
+    {
+        GetAnimScript().ResetVariables();
+        if (m_ActiveWeapon != null)
+        {
+            m_ActiveWeapon.m_animEffect.ResetAnimation();
+            m_ActiveWeapon.m_animEffect.StopEffect();
+        }
+
+    }
 }

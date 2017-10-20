@@ -22,7 +22,7 @@ public class PlayerStat : CharacterStatSheet {
                 m_light = 100;
             else
                 m_light = value;
-            if(m_light - value < 0)
+            if (m_light - value < 0)
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(30));
             else
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(0));
@@ -102,8 +102,9 @@ public class PlayerStat : CharacterStatSheet {
     void Start () {
         Starts();
         //AddToOrderChaos(5);
-        AddToOrderChaos(5);
-        AddToOrderChaos(5);
+        AddToOrderChaos(-30);
+        //AddToOrderChaos(-30);
+        NotificationManager.Instance.PushNotificationBlock();
         GenerateWillPower();
         m_spellsAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;

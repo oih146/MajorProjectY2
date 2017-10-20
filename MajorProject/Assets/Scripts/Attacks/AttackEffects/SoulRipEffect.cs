@@ -39,7 +39,9 @@ public class SoulRipEffect : AnimationEffectScript {
     {
         base.OnUse(character);
 
-        m_targetForSoul.position = character.gameObject.transform.position;
+        PlayerAnimScript playerAnim = (PlayerAnimScript)character.m_animScript;
+
+        playerAnim.SetToCastHandPosition(m_targetForSoul.position);
 
     }
 }

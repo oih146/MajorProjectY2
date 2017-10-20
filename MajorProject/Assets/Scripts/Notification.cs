@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Notification : MonoBehaviour {
 
-    private Text text;
     public float m_upPoint;
     public float m_upSpeed;
     private float m_nextPos;
@@ -20,7 +19,6 @@ public class Notification : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        text = GetComponent<Text>();
         //gameObject.transform.localPosition = new Vector3(-220, 40, 1);
 
 
@@ -40,6 +38,7 @@ public class Notification : MonoBehaviour {
             {
                 m_lerping = false;
                 NotificationManager.Instance.DestroyCurrentNotification();
+                Destroy(gameObject);
             }
         }
 	}

@@ -280,6 +280,7 @@
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
     <Compile Include="Assets\Scripts\BattleTrigger.cs" />
     <Compile Include="Assets\Scripts\BumpUp.cs" />
+    <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\CombatSliderScript.cs" />
     <Compile Include="Assets\Scripts\CombatStats.cs" />
@@ -296,6 +297,7 @@
     <Compile Include="Assets\Scripts\MagicAttack.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MapCreator.cs" />
+    <Compile Include="Assets\Scripts\MaskHolder.cs" />
     <Compile Include="Assets\Scripts\MenuFunctions.cs" />
     <Compile Include="Assets\Scripts\MerchantDeath.cs" />
     <Compile Include="Assets\Scripts\MoveToolTipDisplay.cs" />
@@ -305,10 +307,12 @@
     <Compile Include="Assets\Scripts\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\ParticleSystems\ParticleAttractor.cs" />
     <Compile Include="Assets\Scripts\ParticleSystems\ParticleSpimn.cs" />
+    <Compile Include="Assets\Scripts\PlayerAnimScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\Quitter.cs" />
+    <Compile Include="Assets\Scripts\ResponseMaskDecider.cs" />
     <Compile Include="Assets\Scripts\StatusBar.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\BonusDamageStatus.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\BonusEvilStatus.cs" />
@@ -327,14 +331,14 @@
     <Compile Include="Assets\Scripts\StatusEffects\TakeBonusInteruptStatus.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
-    <Compile Include="Assets\Scripts\TestingScripts\MaskHolder.cs" />
-    <Compile Include="Assets\Scripts\TestingScripts\ResponseMaskDecider.cs" />
+    <Compile Include="Assets\Scripts\TestingScripts\TestingTransitions.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
     <Compile Include="Assets\Scripts\UI\Button.cs" />
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
     <Compile Include="Assets\Scripts\UIButtonSlider.cs" />
+    <Compile Include="Assets\Scripts\UILerping.cs" />
     <Compile Include="Assets\Scripts\UISliderKeeper.cs" />
     <Compile Include="Assets\Scripts\UseConsequences.cs" />
   </ItemGroup>
