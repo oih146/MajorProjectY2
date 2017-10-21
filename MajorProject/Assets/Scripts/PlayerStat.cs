@@ -16,20 +16,23 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-            buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-300, 0, 1);
             if (value < 0)
                 m_light = 0;
             else if (value > 100)
                 m_light = 100;
             else
                 m_light = value;
-            if(value > 0)
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(30);
+            if (m_light - value < 0)
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(30));
             else
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLightLine(0);
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(0));
+            m_light = value;
             m_LightSlider.value = m_light;
+            if (value < 0)
+                m_light = 0;
+            else if (value > 100)
+                m_light = 100;
+
         }
     }
     public int m_law;
@@ -42,20 +45,16 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            GameObject buff = Instantiate(m_notificationBox, GetPersonalCanvas().transform);
-            buff.SetActive(true);
-            buff.transform.localPosition = new Vector3(-300, -15, 1);
+            if (m_law - value < 0)
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(30));
+            else
+                NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(0));
+            m_law = value;
+            m_LawSlider.value = m_law;
             if (value < 0)
                 m_law = 0;
             else if (value > 100)
                 m_law = 100;
-            else
-                m_law = value;
-            if (value > 0)
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(30);
-            else
-                buff.GetComponent<UnityEngine.UI.Text>().text = m_alignmentLines.GetLawLine(0);
-            m_LawSlider.value = m_law;
 
         }
     }
@@ -76,6 +75,7 @@ public class PlayerStat : CharacterStatSheet {
             m_maxSpellsPerDay = value;
         }
     }
+    public GameObject spellRoot;
     public int m_spellsAvaliable;
     public int SpellAvaliable
     {
@@ -87,6 +87,13 @@ public class PlayerStat : CharacterStatSheet {
         set
         {
             m_spellsAvaliable = value;
+            for (int i = 0; i < spellRoot.transform.childCount; i++)
+            {
+                if (m_spellsAvaliable > i)
+                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                else
+                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+            }
         }
     }
     public CharacterStatSheet[] m_allies = new CharacterStatSheet[1];
@@ -95,6 +102,9 @@ public class PlayerStat : CharacterStatSheet {
     void Start () {
         Starts();
         //AddToOrderChaos(5);
+        AddToOrderChaos(-30);
+        //AddToOrderChaos(-30);
+        NotificationManager.Instance.PushNotificationBlock();
         GenerateWillPower();
         m_spellsAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
@@ -125,7 +135,7 @@ public class PlayerStat : CharacterStatSheet {
         MaxSpells += GetStatistics().GetWillPower() / 2;
         if (MaxSpells > 6)
             MaxSpells = 6;
-        SetSpellCharges(true);
+        //SetSpellCharges(true);
     }
 
     public void SetSpellCharges(bool status)
@@ -173,4 +183,33 @@ public class PlayerStat : CharacterStatSheet {
     {
         Light += amountToAdd;
     }
+
+    public AnimationEffectScript divineShieldLink;
+    public override void UpdateEffects()
+    {
+        base.UpdateEffects();
+
+        if (GetEffectArray()[(int)eEffects.Invulnerability].IsActive)
+        {
+            divineShieldLink.m_rootHolder.SetActive(false);
+        }
+    }
+
+    public override void ResetEffects()
+    {
+        base.ResetEffects();
+
+        divineShieldLink.m_rootHolder.SetActive(false);
+    }
+
+    public override void AfterAttackConsequences(UseConsequences conseq)
+    {
+        conseq.ApplyConsequences(this, UseConsequences.ConsequenceApplication.AfterUse);
+    }
+
+    public override void OnKillConsequences(UseConsequences conseq)
+    {
+        conseq.ApplyConsequences(this, UseConsequences.ConsequenceApplication.OnKill);
+    }
+
 }

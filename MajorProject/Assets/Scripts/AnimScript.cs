@@ -17,7 +17,12 @@ public class AnimScript : MonoBehaviour {
             m_attacking = value;
         }
     }
-    public bool WeaponEffect { get; set; }
+
+    bool m_weaponEffect;
+    public bool WeaponEffect { get { return m_weaponEffect; } set { m_weaponEffect = value; } }
+
+    bool m_attackFinished;
+    public bool AttackFinished { get { return m_attackFinished; } set { m_attackFinished = value; } }
 
     //For animation events
     //Syncs animation with damage
@@ -41,5 +46,22 @@ public class AnimScript : MonoBehaviour {
     public void WeaponEffectClosed()
     {
         WeaponEffect = false;
+    }
+
+    public void AttackDone()
+    {
+        AttackFinished = true;
+    }
+
+    public void AttackReset()
+    {
+        AttackFinished = false;
+    }
+
+    public void ResetVariables()
+    {
+        AttackFinished = false;
+        WeaponEffect = false;
+        Attacking = false;
     }
 }

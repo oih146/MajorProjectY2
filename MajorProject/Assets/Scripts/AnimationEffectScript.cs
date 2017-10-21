@@ -11,6 +11,7 @@ public class AnimationEffectScript : MonoBehaviour {
         MiddleVictims
     }
 
+    public GameObject m_rootHolder;
     public EffectPlacement m_effectPlacement = EffectPlacement.User;
     public ParticleSystem m_partSys;
     public Animator m_animator;
@@ -24,6 +25,8 @@ public class AnimationEffectScript : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        if (m_rootHolder == null)
+            m_rootHolder = gameObject;
 	}
 	
 	// Update is called once per frame
@@ -41,25 +44,29 @@ public class AnimationEffectScript : MonoBehaviour {
         return m_partSys;
     }
 
-    public void PlayEffect()
+    public virtual void PlayEffect()
     {
         ResetAnimation();
         gameObject.SetActive(true);
+        m_rootHolder.SetActive(true);
+        Debug.Log(m_rootHolder.activeInHierarchy);
         if (m_animator != null)
         {
             m_animator.Play(m_anim.name);
+            //m_animator.speed = 1;
         }
         if (m_partSys != null)
             m_partSys.Play(true);
     }
 
-    public void StopEffect()
+    public virtual void StopEffect()
     {
         if (m_animator != null)
             m_animator.Stop();
         if (m_partSys != null) 
             m_partSys.Stop(true);
         gameObject.SetActive(false);
+        m_rootHolder.SetActive(false);
     }
 
     public void FinishedAnim()
@@ -72,7 +79,7 @@ public class AnimationEffectScript : MonoBehaviour {
         FinishedAnimation = false;
     }
 
-    public Vector3 GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender, CharacterStatSheet[] defendingTeam)
+    public Vector3 GetEffectPosition(CharacterStatSheet user, CharacterStatSheet defender)
     {
         Vector3 result = Vector3.zero;
         switch (m_effectPlacement)
@@ -83,14 +90,16 @@ public class AnimationEffectScript : MonoBehaviour {
             case EffectPlacement.Victim:
                 result = defender.gameObject.transform.position;
                 break;
-            case EffectPlacement.MiddleVictims:
-                float xPos = FindMiddleGround(defendingTeam);
-                result = new Vector3(xPos, user.gameObject.transform.position.y, user.gameObject.transform.position.z);
-                break;
             default:
                 break;
         }
         return result;
+    }
+
+    public Vector3 GetEffectPosition(CharacterStatSheet[] defendingTeam)
+    {
+        float xPos = FindMiddleGround(defendingTeam);
+        return new Vector3(xPos, defendingTeam[0].gameObject.transform.position.y, defendingTeam[0].gameObject.transform.position.z + 10);
     }
 
     float FindMiddleGround(CharacterStatSheet[] team)
@@ -109,5 +118,20 @@ public class AnimationEffectScript : MonoBehaviour {
         float diff = (highestX - lowestX) / 2;
 
         return lowestX + diff;
+    }
+
+    public virtual void OnSelect(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnUse(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnEnd(CharacterStatSheet character)
+    {
+
     }
 }

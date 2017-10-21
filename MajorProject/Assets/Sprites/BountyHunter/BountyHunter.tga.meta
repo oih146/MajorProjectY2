@@ -1,0 +1,395 @@
+fileFormatVersion: 2
+guid: dcaf7e6f7efb50d489ad38a689fd7be9
+timeCreated: 1507868770
+licenseType: Pro
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: BountyHunter_0
+    21300002: BountyHunter_1
+    21300004: BountyHunter_3
+    21300006: BountyHunter_4
+    21300008: BountyHunter_5
+    21300010: BountyHunter_6
+    21300012: BountyHunter_7
+    21300014: BountyHunter_8
+    21300016: BountyHunter_9
+    21300018: BountyHunter_10
+    21300020: BountyHunter_11
+    21300022: BountyHunter_12
+    21300024: BountyHunter_13
+    21300026: BountyHunter_14
+    21300028: BountyHunter_15
+    21300030: BountyHunter_16
+    21300032: BountyHunter_17
+    21300034: BountyHunter_18
+    21300036: BountyHunter_19
+    21300038: BountyHunter_21
+    21300040: BountyHunter_2
+    21300042: BountyHunter_20
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 1
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: BountyHunter_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 1836
+        width: 178
+        height: 188
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_1
+      rect:
+        serializedVersion: 2
+        x: 498
+        y: 1507
+        width: 251
+        height: 372
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_3
+      rect:
+        serializedVersion: 2
+        x: 1368
+        y: 1508
+        width: 304
+        height: 487
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_4
+      rect:
+        serializedVersion: 2
+        x: 1728
+        y: 892
+        width: 313
+        height: 1156
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_5
+      rect:
+        serializedVersion: 2
+        x: 143
+        y: 1408
+        width: 241
+        height: 292
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_6
+      rect:
+        serializedVersion: 2
+        x: 547
+        y: 1067
+        width: 227
+        height: 379
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_7
+      rect:
+        serializedVersion: 2
+        x: 913
+        y: 1228
+        width: 171
+        height: 254
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_8
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 1155
+        width: 173
+        height: 357
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_9
+      rect:
+        serializedVersion: 2
+        x: 1336
+        y: 1218
+        width: 165
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_10
+      rect:
+        serializedVersion: 2
+        x: 1528
+        y: 1148
+        width: 158
+        height: 333
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_12
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 972
+        width: 373
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_13
+      rect:
+        serializedVersion: 2
+        x: 1355
+        y: 935
+        width: 161
+        height: 191
+      alignment: 9
+      pivot: {x: 0.54425997, y: 0.9601405}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_14
+      rect:
+        serializedVersion: 2
+        x: 1579
+        y: 895
+        width: 126
+        height: 225
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_15
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 405
+        width: 362
+        height: 413
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_16
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 772
+        width: 6
+        height: 34
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_17
+      rect:
+        serializedVersion: 2
+        x: 708
+        y: 381
+        width: 268
+        height: 435
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_18
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 370
+        width: 513
+        height: 502
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_19
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 20
+        width: 381
+        height: 396
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_21
+      rect:
+        serializedVersion: 2
+        x: 1540
+        y: 258
+        width: 457
+        height: 479
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_2
+      rect:
+        serializedVersion: 2
+        x: 761
+        y: 1556
+        width: 331
+        height: 341
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: BountyHunter_20
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 1584
+        width: 240
+        height: 252
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

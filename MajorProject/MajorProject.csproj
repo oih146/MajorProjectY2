@@ -18,7 +18,7 @@
     <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>5.5.1f1</UnityVersion>
     <RootNamespace></RootNamespace>
-    <LangVersion>4</LangVersion>
+    <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -27,7 +27,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -37,7 +37,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU</DefineConstants>
+    <DefineConstants>TRACE;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_5_1;UNITY_5_5;UNITY_5;UNITY_ANALYTICS;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_DUCK_TYPING;ENABLE_GENERICS;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_SPRITERENDERER_FLIPPING;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_RAKNET;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_WEBCAM;ENABLE_WWW;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_HUB;ENABLE_CLOUD_PROJECT_ID;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_METRICS;ENABLE_EDITOR_METRICS_CACHING;INCLUDE_DYNAMIC_GI;INCLUDE_GI;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;INCLUDE_PUBNUB;ENABLE_PLAYMODE_TESTS_RUNNER;ENABLE_SCRIPTING_NEW_CSHARP_COMPILER;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_SUBSTANCE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_UNITYWEBREQUEST;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_EVENT_QUEUE;ENABLE_CLUSTERINPUT;ENABLE_VIDEO;ENABLE_VR;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;UNITY_TEAM_LICENSE;ENABLE_VSTU;UNITY_PRO_LICENSE</DefineConstants>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -262,11 +262,13 @@
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Point2DList.cs" />
     <Compile Include="Assets\Puppet2D\Scripts\Triangulation\Utility\Rect2D.cs" />
     <Compile Include="Assets\Scripts\AbilityArchetypes\AbilityArchetype.cs" />
-    <Compile Include="Assets\Scripts\AbilityArchetypes\ArchetypeCreator.cs" />
     <Compile Include="Assets\Scripts\AlignmentLines.cs" />
     <Compile Include="Assets\Scripts\AnimScript.cs" />
     <Compile Include="Assets\Scripts\AnimationEffectScript.cs" />
     <Compile Include="Assets\Scripts\AreaDivider.cs" />
+    <Compile Include="Assets\Scripts\Attacks\AttackEffects\SoulRipEffect.cs" />
+    <Compile Include="Assets\Scripts\Attacks\CounterAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\SoulRipAttack.cs" />
     <Compile Include="Assets\Scripts\BanditMoveScript.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\ArmorBase.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
     <Compile Include="Assets\Scripts\BattleTrigger.cs" />
     <Compile Include="Assets\Scripts\BumpUp.cs" />
+    <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\CombatSliderScript.cs" />
     <Compile Include="Assets\Scripts\CombatStats.cs" />
@@ -294,29 +297,53 @@
     <Compile Include="Assets\Scripts\MagicAttack.cs" />
     <Compile Include="Assets\Scripts\MainMenuScript.cs" />
     <Compile Include="Assets\Scripts\MapCreator.cs" />
+    <Compile Include="Assets\Scripts\MaskHolder.cs" />
     <Compile Include="Assets\Scripts\MenuFunctions.cs" />
     <Compile Include="Assets\Scripts\MerchantDeath.cs" />
+    <Compile Include="Assets\Scripts\MoveToolTipDisplay.cs" />
     <Compile Include="Assets\Scripts\MusicSwitcher.cs" />
     <Compile Include="Assets\Scripts\Notification.cs" />
+    <Compile Include="Assets\Scripts\NotificationManager.cs" />
     <Compile Include="Assets\Scripts\ParallaxBackground.cs" />
     <Compile Include="Assets\Scripts\ParticleSystems\ParticleAttractor.cs" />
     <Compile Include="Assets\Scripts\ParticleSystems\ParticleSpimn.cs" />
+    <Compile Include="Assets\Scripts\PlayerAnimScript.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
     <Compile Include="Assets\Scripts\PlayerStat.cs" />
     <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\Quitter.cs" />
+    <Compile Include="Assets\Scripts\ResponseMaskDecider.cs" />
     <Compile Include="Assets\Scripts\StatusBar.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusDamageStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusEvilStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusIncapOnDeathStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusIncapStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BonusInterruptStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\BurningStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\CounterStanceStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\DamageReductionStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\DisarmedStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InteruptHealthModStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InteruptModifierStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\InvulnerabilityStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\SpeedReductionStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\StatusBase.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TakeBonusInteruptStatus.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
-    <Compile Include="Assets\Scripts\TestingScripts\MaskHolder.cs" />
-    <Compile Include="Assets\Scripts\TestingScripts\ResponseMaskDecider.cs" />
+    <Compile Include="Assets\Scripts\TestingScripts\TestingTransitions.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
     <Compile Include="Assets\Scripts\UI\Button.cs" />
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\UIButtonSlider.cs" />
+    <Compile Include="Assets\Scripts\UILerping.cs" />
+    <Compile Include="Assets\Scripts\UISliderKeeper.cs" />
+    <Compile Include="Assets\Scripts\UseConsequences.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Art\Smoke\Scroller.shader" />
     <None Include="Assets\Dialogue System\DLLs\_README.txt" />
     <None Include="Assets\Dialogue System\Documentation\_README.txt" />
     <None Include="Assets\Dialogue System\Examples\Art\Portraits\_README.txt" />

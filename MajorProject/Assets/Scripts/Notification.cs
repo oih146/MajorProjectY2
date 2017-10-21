@@ -5,30 +5,59 @@ using UnityEngine.UI;
 
 public class Notification : MonoBehaviour {
 
-    private Text text;
-    public float upPoint;
-    public float upRate;
-    public float nextPos;
+    public float m_upPoint;
+    public float m_upSpeed;
+    private float m_nextPos;
+    private float m_prevPos;
+    public bool m_lerping = false;
+    float m_timeSinceStart;
+
+    void OnEnable()
+    {
+        gameObject.transform.localScale = Vector3.one;
+    }
 
 	// Use this for initialization
 	void Start () {
-        text = GetComponent<Text>();
         //gameObject.transform.localPosition = new Vector3(-220, 40, 1);
-        nextPos = transform.localPosition.y + upPoint;
+
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (transform.localPosition.y < nextPos - 0.01f || transform.localPosition.y > nextPos + 0.01f)
+        if(m_lerping)
         {
-            Vector3 buff = transform.localPosition;
-            buff.y = Mathf.Lerp(transform.localPosition.y, nextPos, upRate * Time.deltaTime);
-            transform.localPosition = buff;
-        }
-        else
-        {
-            Destroy(gameObject);
+            float timeSinceLerpStart = Time.time - m_timeSinceStart;
+            float percentage = timeSinceLerpStart / m_upSpeed;
+
+            Vector3 temp = transform.position;
+            temp.y = Mathf.Lerp(m_prevPos, m_nextPos, percentage);
+            transform.position = temp;
+            if(percentage >= 1f)
+            {
+                m_lerping = false;
+                NotificationManager.Instance.DestroyCurrentNotification();
+                Destroy(gameObject);
+            }
         }
 	}
+
+    public void StartLerping()
+    {
+        m_prevPos = transform.position.y;
+        m_nextPos = transform.position.y + m_upPoint;
+        m_timeSinceStart = Time.time;
+        m_lerping = true;
+    }
+
+    public void SetText(string newText)
+    {
+        gameObject.GetComponent<Text>().text = newText;
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(true);
+    }
 }

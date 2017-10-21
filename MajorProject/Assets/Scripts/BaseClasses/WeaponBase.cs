@@ -22,12 +22,20 @@ public enum eEffects
     NumOfEffects
 }
 
-public enum AttackStrength
+public enum ChargeTime
 {
     Light = 3,
     Normal = 5,
     Heavy = 8,
     Magic = 10
+}
+
+public enum AttackDamage
+{
+    Light = 15,
+    Normal = 25,
+    Heavy = 50,
+    Custom = 100
 }
 
 public enum AttackType
@@ -47,26 +55,34 @@ public enum AttackType
 }
 
 public class WeaponBase : MonoBehaviour {
-    
-    public float m_attackDamage;
-    public AttackStrength m_strength;
+
+    public int m_attackDamage;
+    public ChargeTime m_chargeTime;
+    public AttackDamage m_damageSet;
     //public float m_LawOrderShift;
     public Motion m_animToPlay;
-    public Animation m_animationForPlay;
     [Range(1, 10)]
     public int m_howManyHits;
     public bool m_attackFinished;
     public AttackType m_attackType = AttackType.SingleOne;
-
+    public UseConsequences m_consequences;
     public AnimationEffectScript m_animEffect;
+
+    public string m_AttackName;
+
+    public int GetAttackDamage { get { return (m_damageSet == AttackDamage.Custom ? m_attackDamage : (int)m_damageSet); } }
+    public int SetAttackDamage { set { m_attackDamage = value; } }
     public bool HasEffect { get { return m_animEffect == null ? false : true; } }
+
+    public bool HasConsequences { get { return m_consequences == null ? false : true; } }
 
     [System.Serializable]
     public struct WeaponEffect
     {
-        public eEffects effectType;
+        public StatusBase effect;
         public int effectTime;
         public int effectDamage;
+
     }
 
 
@@ -74,11 +90,11 @@ public class WeaponBase : MonoBehaviour {
     public WeaponEffect[] weapAbility;
 
     public Motion GetAnimationToPlay()
-    { 
+    {
         return m_animToPlay;
     }
 
-    public float GetAttack()
+    public virtual float GetAttack()
     {
         return m_attackDamage;
     }
@@ -95,7 +111,7 @@ public class WeaponBase : MonoBehaviour {
     {
         for (int i = 0; i < weapAbility.Length; i++)
         {
-            attacker.AddEffect(weapAbility[i]);
+            attacker.AddEffect(weapAbility[i].effect.Init(weapAbility[i].effectTime, weapAbility[i].effectDamage));
         }
     }
 
@@ -104,24 +120,7 @@ public class WeaponBase : MonoBehaviour {
     {
         for (int i = 0; i < weapEffects.Length; i++)
         {
-            if (weapEffects[i].effectType == eEffects.BurnChance)
-            {
-                defender.AddEffect(weapEffects[i]);
-                if (defender.ChanceOfBurning())
-                {
-                    defender.Burning = true;
-                    defender.m_burnTimer = weapEffects[i].effectTime;
-                }
-            }
-            else if (weapEffects[i].effectType == eEffects.Disarmed)
-            {
-                defender.Disarmed = true;
-                defender.AddEffect(weapEffects[i]);
-            }
-            else
-            {
-                defender.AddEffect(weapEffects[i]);
-            }
+            defender.AddEffect(weapEffects[i].effect.Init(weapEffects[i].effectTime, weapEffects[i].effectDamage));
         }
     }
 
@@ -129,7 +128,7 @@ public class WeaponBase : MonoBehaviour {
     public void ApplyEffects(CharacterStatSheet userOfWeap, CharacterStatSheet[] defenders)
     {
         AddAbilities(userOfWeap);
-        foreach(CharacterStatSheet charSS in defenders)
+        foreach (CharacterStatSheet charSS in defenders)
         {
             AddEffects(charSS);
         }
@@ -137,15 +136,61 @@ public class WeaponBase : MonoBehaviour {
 
     public bool DoesAttackAll()
     {
-        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack|| 
-            m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll || 
+        return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack ||
+            m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll ||
             m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
             m_attackType == AttackType.HealOne) ? true : false;
     }
 
     public IEnumerator PlayWeaponEffect(CharacterStatSheet trigger)
     {
+        trigger.GetAnimScript().AttackFinished = false;
         yield return new WaitUntil(() => trigger.GetAnimScript().WeaponEffect);
+        trigger.GetAnimScript().WeaponEffect = false;
         m_animEffect.PlayEffect();
+    }
+
+    public virtual void TriggerChargeAnim()
+    {
+
+    }
+
+    public virtual void OnSelect(CharacterStatSheet character)
+    {
+        if(HasEffect)
+        {
+            m_animEffect.OnSelect(character);
+        }
+    }
+
+    public virtual void OnAttack(CharacterStatSheet character)
+    {
+
+    }
+
+    public virtual void OnUse(CharacterStatSheet character)
+    {
+        if (HasEffect)
+        {
+            m_animEffect.OnUse(character);
+        }
+    }
+
+    public virtual void OnEnd(CharacterStatSheet character)
+    {
+        if (HasEffect)
+        {
+            m_animEffect.OnEnd(character);
+        }
+    }
+
+    public virtual void OnPause()
+    {
+
+    }
+
+    public virtual void OnResume(CharacterStatSheet character)
+    {
+
     }
 }

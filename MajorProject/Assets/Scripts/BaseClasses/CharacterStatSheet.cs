@@ -16,7 +16,7 @@ public enum LawNOrder
     Lawful = 100
    
 }
-  
+
 [RequireComponent(typeof(CombatStats))]
 public class CharacterStatSheet : MonoBehaviour {
 
@@ -41,17 +41,17 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_health = value;
-            if (m_health <= 0)
-                StartFadeDeath();
+            //if (m_health <= 0)
+            //StartFadeDeath();
         }
     }
 
     //Combat Variables
     //-------------------------------------------
-        //Armour
+    //Armour
     public ArmorBase m_armor;                   //Armour, reduces incoming damage, wears down
 
-        //Attributes
+    //Attributes
     private CombatStats m_combatStatistics;     //Holds combat attributes
     private int m_baseDamage;                   //Holder for strength, not used may delete
     public int BaseDamage
@@ -82,10 +82,10 @@ public class CharacterStatSheet : MonoBehaviour {
     //Weapons
     [HideInInspector]
     public WeaponBase m_ActiveWeapon;           //LEAVE THIS BLANK IN INSPECTOR, Holds the weapon or spell to use in combat, changes
-    public WeaponBase m_weapon;                 //Holds melee weapon, may change type to Sword
+    public SwordScript m_weapon;                 //Holds melee weapon, may change type to Sword
     [HideInInspector]
     public CharacterStatSheet m_playerToAttack; //Character that will be attacked during combat
-    public AttackStrength m_attackStrength;     //Strength of attack, decides how slow attack will be to charge
+    public ChargeTime m_attackCharge;     //Strength of attack, decides how slow attack will be to charge
     public bool m_knowMagic;                    //Does this character know magic
     public MagicAttack[] m_spells;              //Magic known by this character
     public MagicAttack[] m_abilities;
@@ -94,6 +94,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     //What Character is in Combat
     public AnimScript m_animScript;
+    public bool m_decidedTarget;
     public bool m_decidedAttack;                //Has this player decided to attack yet
     public bool m_isEvil = false;               //Does this character take bonus holy damage
     public bool m_burning = false;              //Is this character currently on fire
@@ -153,8 +154,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public StatusBar m_statusBar;
 
     //Effect and Abilities (relevent enums decide where variables are allocated)
-    private float[] m_effectTime = new float[(int)eEffects.NumOfEffects];           //Effects time
-    private float[] m_effectsToApply = new float[(int)eEffects.NumOfEffects];       //Effects strength (damage)
+    private StatusBase[] m_statusEffects = new StatusBase[(int)eEffects.NumOfEffects];       //Effects strength (damage)
 
     //Death Variables
     //-----------------------------------------
@@ -165,17 +165,17 @@ public class CharacterStatSheet : MonoBehaviour {
     protected Lerping fadeDeathLerping;
     // Use this for initialization
     void Start() {
-        fadeDeathLerping = gameObject.AddComponent<Lerping>();
+        GetLerpDeath();
         m_combatStatistics = GetComponent<CombatStats>();
         Health = 100;
         GenerateStatistics();
         ResetEffects();
     }
-	
-	// Update is called once per frame
-	void Update() {
 
-	}
+    // Update is called once per frame
+    void Update() {
+
+    }
 
     //To allow Start to be run by inheriting classes
     public void Starts()
@@ -189,6 +189,11 @@ public class CharacterStatSheet : MonoBehaviour {
         Update();
     }
 
+    public void GetLerpDeath()
+    {
+        fadeDeathLerping = gameObject.AddComponent<Lerping>();
+    }
+
     //Creates statistics for attributes 
     public void GenerateStatistics()
     {
@@ -197,45 +202,46 @@ public class CharacterStatSheet : MonoBehaviour {
         CriticalChance = GetStatistics().GetDexterity();
     }
 
-    public void ResetEffects()
+    public virtual void ResetEffects()
     {
-        for(int i = 0; i < m_effectsToApply.Length; i++)
+        for (int i = 0; i < GetEffectArray().Length; i++)
         {
-            m_effectsToApply[i] = 0;
-            m_effectTime[i] = 0;
+            //Destroy(GetEffectArray()[i]);
+            GetEffectArray()[i] = (StatusBase)ScriptableObject.CreateInstance("StatusBase");
         }
         Burning = false;
     }
 
-    public float[] GetEffectArray()
+    public StatusBase[] GetEffectArray()
     {
-        return m_effectsToApply;
-    }
-
-    public float[] GetEffectTimeArray()
-    {
-        return m_effectTime;
+        return m_statusEffects;
     }
 
     //Used by attacker
     //If the defending character has a counterattack ability
-    public void CounterTakeDamage(float damageToTake)
+    public IEnumerator CounterTakeDamage(float damageToTake)
     {
-        Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
-        Health -= damageToTake;
+        if (damageToTake > 0)
+        {
+            Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
+            //m_playerToAttack.m_animator.Play();
+            //yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
+            Health -= damageToTake;
+            yield return new WaitForSeconds(0.0f);
+        }
     }
 
     //Take damage, virtual to allow inheriting classes to override
-    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attacktype, bool interrupt = true)
+    public virtual float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, ChargeTime attacktype, bool interrupt = true)
     {
         //Critical Hit Chance
         if (attackerCombatStats != null && damageToTake > 0)
         {
             damageToTake += attackerCombatStats.GetStrength();
-            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 2 : 1;
+            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
         }
-        if(attacktype != AttackStrength.Magic)
-            damageToTake -= m_armor.GetDamageReduction(((int)m_effectTime[(int)eEffects.DamageReduction] > 0) ? (int)m_effectsToApply[(int)eEffects.DamageReduction] : 0);
+        if (attacktype != ChargeTime.Magic)
+            damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
         m_armor.TookAHit();
         //Damage can't be less than zero
         //Would be adding to health
@@ -244,10 +250,24 @@ public class CharacterStatSheet : MonoBehaviour {
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
         Health -= damageToTake;
         //Combat bar interrupt
-        if(m_combatBar.m_combatSlider.value > 0.73 && interrupt)
-            m_combatBar.TakeFromTimer(((m_InteruptMultiplier * bonusInterupt) + (GetEffectTimeArray()[(int)eEffects.TakeBonusInterupt] > 0 ? GetEffectArray()[(int)eEffects.TakeBonusInterupt] : 0)) / 100);
-        if (m_effectTime[(int)eEffects.CounterStance] > 0)
-            return m_effectsToApply[(int)eEffects.CounterStance];
+        if (m_combatBar.m_combatSlider.value > 0.73)
+        {
+            float delay = (damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f;
+            m_combatBar.TakeFromTimer(delay);
+            if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+            {
+                GetEffectArray()[(int)eEffects.CounterStance].Use(this);
+                CounterAttack attack = (CounterAttack)m_ActiveWeapon;
+                attack.SecondaryUse(this);
+
+                return GetEffectArray()[(int)eEffects.CounterStance].Strength;
+            } else if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
+            {
+                SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
+                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, delay);
+            }
+        }
+
         return 0;
     }
 
@@ -262,15 +282,15 @@ public class CharacterStatSheet : MonoBehaviour {
     public float AdditionalDamage()
     {
         float temp = 0;
-        temp += (m_isEvil && m_effectTime[(int)eEffects.BonusToEvil] > 0) ? m_effectsToApply[(int)eEffects.BonusToEvil] : 0;
-        temp += (m_effectTime[(int)eEffects.BonusDamage] > 0) ? m_effectsToApply[(int)eEffects.BonusDamage] : 0;
+        temp += (m_isEvil && GetEffectArray()[(int)eEffects.BonusToEvil].IsActive) ? GetEffectArray()[(int)eEffects.BonusToEvil].Strength : 0;
+        temp += (GetEffectArray()[(int)eEffects.BonusDamage].IsActive) ? GetEffectArray()[(int)eEffects.BonusDamage].Strength : 0;
         return temp;
     }
 
     //Check if this character is dead
     public bool DeathCheck()
     {
-        if(m_health <= 0)
+        if (m_health <= 0)
         {
             m_isDead = true;
             //play death anim
@@ -343,53 +363,76 @@ public class CharacterStatSheet : MonoBehaviour {
     }
 
     //Simplifier for adding Effects
-    public void AddEffect(WeaponBase.WeaponEffect effect)
+    public void AddEffect(StatusBase statVars)
     {
-        m_effectsToApply[(int)effect.effectType] = effect.effectDamage;
-        m_effectTime[(int)effect.effectType] = effect.effectTime;
+        statVars.OnApply(this);
+
     }
 
     //Called at the end of every turn during combat, updates effects
-    public void UpdateEffects()
+    public virtual void UpdateEffects()
     {
         //CheckBurnDamage();
-        for (int i = 0; i < m_effectsToApply.Length; i++)
+        for (int i = 0; i < GetEffectArray().Length; i++)
         {
-            if(m_effectTime[i] > 0)
+            if (GetEffectArray()[i].TakeAndCheckActive())
             {
-                m_effectTime[i]--;
+                GetEffectArray()[i].Remove(this);
+            }
+            else
+            {
+                GetEffectArray()[i].OnUpdate(this);
             }
         }
-        if (m_effectTime[(int)eEffects.SpeedReduction] > 0)
-            GetCombatBar().SetTemporarySpeedDecrease(m_effectsToApply[(int)eEffects.SpeedReduction]);
-        if (Burning && m_effectTime[(int)eEffects.BurnDamage] > 0)
-        {
-            Health -= m_effectsToApply[(int)eEffects.BurnDamage];
-            ReCheckHealth();
-            if (m_effectTime[(int)eEffects.BurnDamage] == 1)
-                Burning = false;
-            if (DeathCheck())
-                TurnBasedScript.CallOnOutsideDeath();
-        }
-
-    }
-
-    //Calculate if character takes burning damage or not
-    public virtual bool ChanceOfBurning()
-    {
-        int burnChance = (int)m_effectTime[(int)eEffects.BurnChance];
-        burnChance += 50;
-        if (m_effectTime[(int)eEffects.AdditionBurnChance] > 0)
-            burnChance += 50;
-        if (Random.Range(0, 100) <= burnChance)
-        {
-            return true;
-        }
-        return false;
+        //if (GetEffectArray()[(int)eEffects.SpeedReduction].IsActive)
+        //    GetCombatBar().SetTemporarySpeedDecrease(GetEffectArray()[(int)eEffects.SpeedReduction].Strength);
+        //if (Burning && GetEffectArray()[(int)eEffects.BurnDamage].IsActive)
+        //{
+        //    Health -= GetEffectArray()[(int)eEffects.BurnDamage].Strength;
+        //    ReCheckHealth();
+        //    if (GetEffectArray()[(int)eEffects.BurnDamage].IsActive)
+        //        Burning = false;
+        //    if (DeathCheck())
+        //        TurnBasedScript.CallOnOutsideDeath();
+        //}
     }
 
     public Canvas GetPersonalCanvas()
     {
         return m_playerCanvas;
+    }
+
+    public void ResetCombatVars()
+    {
+        m_ActiveWeapon.m_attackFinished = false;
+        GetCombatBar().m_combatSlider.value = 0;
+        GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Neutral]);
+        UpdateEffects();
+        GetCombatBar().Restart();
+        GetCombatBar().CombatActive = true;
+        m_decidedAttack = false;
+        m_decidedTarget = false;
+        m_playerToAttack = null;
+    }
+
+    public virtual void AfterAttackConsequences(UseConsequences conseq)
+    {
+
+    }
+
+    public virtual void OnKillConsequences(UseConsequences conseq)
+    {
+
+    }
+
+    public void ResetAnimationVariables()
+    {
+        GetAnimScript().ResetVariables();
+        if (m_ActiveWeapon != null)
+        {
+            m_ActiveWeapon.m_animEffect.ResetAnimation();
+            m_ActiveWeapon.m_animEffect.StopEffect();
+        }
+
     }
 }

@@ -32,11 +32,11 @@ public class EnemyBase : CharacterStatSheet {
             if (m_incapacitationPoints > m_maxIP && !m_surrender)
             {
                 Debug.Log(gameObject.name + " Surrendered");
-                Vector3 temp = gameObject.transform.position;
-                temp.y += 4;
-                temp.x += 2;
-                GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
-                obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
+                //Vector3 temp = gameObject.transform.position;
+                //temp.y += 4;
+                //temp.x += 2;
+                //GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
+                //obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
                 Surrendered = true;
                 GetCombatBar().m_combatActive = false;
                 GetCombatBar().enabled = false;
@@ -69,26 +69,12 @@ public class EnemyBase : CharacterStatSheet {
     //Override Functions
     //-------------------------------------------------------------------------
     //Applies IP when Enemies take damage
-    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, AttackStrength attackStrength, bool interrupt = true)
+    public override float TakeDamage(float damageToTake, CombatStats attackerCombatStats, float bonusInterupt, ChargeTime attackStrength, bool interrupt = true)
     {
         //Regardless of how much damage is done, IP is gained
         Debug.Log("IP Gained");
-        IncapacitationPoints += IPonHit + (GetEffectTimeArray()[(int)eEffects.BonusIncapacitationPoints] > 0 ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints] : 0);
+        IncapacitationPoints += IPonHit + (GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].IsActive ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].Strength : 0);
 
         return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);
-    }
-
-    //Adds vulnerableToFire bool, for wolves
-    public override bool ChanceOfBurning()
-    {
-        float chanceofBurning = GetEffectArray()[(int)eEffects.BurnChance];
-        chanceofBurning += 50;
-        if (GetEffectTimeArray()[(int)eEffects.AdditionBurnChance] > 0 || m_vulnerableToFire)
-            chanceofBurning += 50;
-        if (Random.Range(0, 100) <= chanceofBurning)
-        {
-            return true;
-        }
-        return false;
     }
 }
