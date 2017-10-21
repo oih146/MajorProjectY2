@@ -238,7 +238,10 @@ public class CharacterStatSheet : MonoBehaviour {
         if (attackerCombatStats != null && damageToTake > 0)
         {
             damageToTake += attackerCombatStats.GetStrength();
-            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
+            damageToTake *= (
+                                Random.Range(0, 100) <= attackerCombatStats.GetDexterity() + 
+                                (GetEffectArray()[(int)eEffects.DexterityIncrease].IsActive ? GetEffectArray()[(int)eEffects.DexterityIncrease].Strength : 0)
+                                ) ? 1.5f : 1;
         }
         if (attacktype != ChargeTime.Magic)
             damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
