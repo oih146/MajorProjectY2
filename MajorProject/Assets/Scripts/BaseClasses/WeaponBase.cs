@@ -13,6 +13,8 @@ public enum eEffects
     TakeBonusInterupt,
     DamageReduction,            //+-
     SpeedReduction,
+    SpeedIncrease,
+    DexterityIncrease,
     CounterStance,
     Invulnerability,
     BonusDamage,                    //+

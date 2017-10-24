@@ -584,12 +584,6 @@ public class TurnBasedScript : MonoBehaviour {
                 }
             }
         }
-        if (isAllDisarmed)
-        {
-            Debug.Log("Battle Over, You Win");
-            BattleOver = true;
-            WonBattleQ = true;
-        }
         //attacker.GetCombatBar().m_combatSlider.value = 0;
         //attacker.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
         //SetTurnPointer(false);

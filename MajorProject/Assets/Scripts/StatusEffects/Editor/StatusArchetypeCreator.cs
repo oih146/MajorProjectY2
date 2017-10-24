@@ -8,7 +8,7 @@ public class StatusArchetypeCreator  {
     [MenuItem("Assets/Create/New Status Archetype")]
     public static void CreateAsset(MenuCommand command)
     {
-        StatusBase asset = StatusBase.CreateInstance<StatusBase>();
+        StatusBase asset = StatusBase.CreateInstance<DexterityIncreaseStatus>();
 
         AssetDatabase.CreateAsset(asset, "Assets/Scripts/StatusEffects/Archetypes/NewStatusArchetype.asset");
         AssetDatabase.SaveAssets();
