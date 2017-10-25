@@ -3212,7 +3212,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1442524347
+  randomSeed: -1544019235
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -15071,7 +15071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  profile: {fileID: 11400000, guid: 9e0c9b24b54193b46af160bdbbd84631, type: 2}
+  profile: {fileID: 11400000, guid: 85a2c55411e494f43bf2bec9556dfbeb, type: 2}
 --- !u!82 &1528171156
 AudioSource:
   m_ObjectHideFlags: 0
@@ -15292,8 +15292,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colour: {r: 1, g: 0, b: 0, a: 0.5}
-  floor: 0.3
+  floor: 0
   ceiling: 0.8
+  pulseSpeed: 0.2
   timeOffset: 0
 --- !u!1 &1651518677
 GameObject:
@@ -15576,6 +15577,7 @@ MonoBehaviour:
   colour: {r: 0, g: 0.33793116, b: 1, a: 0.5}
   floor: 0.5
   ceiling: 1.5
+  pulseSpeed: 0.2
   timeOffset: 0.3
 --- !u!1 &2119568465
 GameObject:
