@@ -53,6 +53,7 @@ public class ForwardBackground : MonoBehaviour {
             Vector3 temp = m_backgrounds[m_currentfrontBackground].transform.position;
             temp.y = Mathf.Lerp(m_initalYPos, m_toYPos, percentage);
             m_backgrounds[m_currentfrontBackground].transform.position = temp;
+            m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
             if (percentage >= 1f)
             {
                 m_lerping = false;
@@ -60,6 +61,7 @@ public class ForwardBackground : MonoBehaviour {
                 temp.z += m_backgrounds.Length * 0.1f;
                 temp.y = m_initalYPos;
                 m_backgrounds[m_currentfrontBackground].transform.position = temp;
+                m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
                 CurrentFrontBackground++;
 
             }
