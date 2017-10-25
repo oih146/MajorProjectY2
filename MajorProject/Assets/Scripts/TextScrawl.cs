@@ -29,7 +29,7 @@ public class TextScrawl : MonoBehaviour {
         if (percentageComplete >= 1f || Input.GetButtonDown("Jump"))
         {
             textBox.transform.parent.gameObject.SetActive(false);
-            FadeBlack.Activate(true);
+            FadeBlack.Instance.Activate(true);
             gameObject.SetActive(false);
         }
     }

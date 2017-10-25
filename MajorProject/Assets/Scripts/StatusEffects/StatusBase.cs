@@ -64,6 +64,7 @@ public class StatusBase : ScriptableObject {
 
     public virtual void Setup(CharacterStatSheet attacker)
     {
+
     }
 
     public virtual void OnUpdate(CharacterStatSheet useOn)

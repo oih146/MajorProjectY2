@@ -381,7 +381,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: None()
+        value: SendMessage(FlipPlayer, , Cinematics);
         type: 0
         typeString: 
       conversationID: 1

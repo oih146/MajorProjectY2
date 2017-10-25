@@ -18,7 +18,6 @@ public enum DoWithAlignNum
 public delegate bool DoWithFuncs(int Is, int To);
 public class MagicAttack : WeaponBase {
 
-    public string m_AttackName;
     public int m_CooldownTimeChecker;
     [HideInInspector]
     public int m_actualCooldown;
@@ -52,8 +51,8 @@ public class MagicAttack : WeaponBase {
     {
         DoWithFuncs funcToDo = dowithFunc[(int)m_doWith];
         if (m_magicAlignment == Aliginment.Law)
-            return funcToDo((int)law, alignmentRange);
+            return funcToDo(law, alignmentRange);
         else
-            return funcToDo((int)light, alignmentRange);
+            return funcToDo(light, alignmentRange);
     }
 }

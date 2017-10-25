@@ -44,7 +44,7 @@ public class AnimationEffectScript : MonoBehaviour {
         return m_partSys;
     }
 
-    public void PlayEffect()
+    public virtual void PlayEffect()
     {
         ResetAnimation();
         gameObject.SetActive(true);
@@ -53,12 +53,13 @@ public class AnimationEffectScript : MonoBehaviour {
         if (m_animator != null)
         {
             m_animator.Play(m_anim.name);
+            //m_animator.speed = 1;
         }
         if (m_partSys != null)
             m_partSys.Play(true);
     }
 
-    public void StopEffect()
+    public virtual void StopEffect()
     {
         if (m_animator != null)
             m_animator.Stop();
@@ -98,7 +99,7 @@ public class AnimationEffectScript : MonoBehaviour {
     public Vector3 GetEffectPosition(CharacterStatSheet[] defendingTeam)
     {
         float xPos = FindMiddleGround(defendingTeam);
-        return new Vector3(xPos, defendingTeam[0].gameObject.transform.position.y, defendingTeam[0].gameObject.transform.position.z);
+        return new Vector3(xPos, defendingTeam[0].gameObject.transform.position.y, defendingTeam[0].gameObject.transform.position.z + 10);
     }
 
     float FindMiddleGround(CharacterStatSheet[] team)

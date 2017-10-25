@@ -18,8 +18,8 @@ public class CombatSliderScript : MonoBehaviour {
     //public float timer2;
     public BumpUp m_bumpScript;
     public bool m_combatActive = false;
-    private bool m_tempSliderSpeedIncrease;
-    private float m_tempSpeedDecreaseValue;
+    private bool m_tempSpeedChange;
+    private float m_tempSpeedValue;
     //public bool take = false;
     public bool CombatActive
     {
@@ -93,8 +93,8 @@ public class CombatSliderScript : MonoBehaviour {
         m_combatSlider.value = 0;
         m_speed = m_defaultSpeed;
         CalculateSpeed();
-        if (m_tempSliderSpeedIncrease)
-            TemporarySliderSpeedDecrease();
+        if (m_tempSpeedChange)
+            TemporarySliderSpeedChange();
         m_timeDivider = 1;
     }
 
@@ -118,17 +118,18 @@ public class CombatSliderScript : MonoBehaviour {
         CalculateSpeed();
     }
 
-    public void TemporarySliderSpeedDecrease()
+    public void TemporarySliderSpeedChange()
     {
-        m_tempSliderSpeedIncrease = false;
-        m_speed += 2;
+        m_tempSpeedChange = false;
+        m_speed += m_tempSpeedValue;
+        m_tempSpeedValue = 0;
     }
 
-    public void SetTemporarySpeedDecrease(float amount)
+    public void SetTemporarySpeedValue(float amount)
     {
-        if(m_tempSpeedDecreaseValue < amount)
-            m_tempSpeedDecreaseValue = amount;
-        m_tempSliderSpeedIncrease = true;
+        m_tempSpeedValue += amount;
+        m_speed += amount;
+        m_tempSpeedChange = true;
     }
     
     void CalculateSpeed()

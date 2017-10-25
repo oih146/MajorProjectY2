@@ -4,12 +4,6 @@ using UnityEngine;
 
 public class GUIHandler : MonoBehaviour {
 
-    public delegate void OnToolTipActive(string text);
-    public static OnToolTipActive ToolTipEnableEvent;
-
-    public delegate void OnToolTipDisable();
-    public static OnToolTipDisable ToolTipDisableEvent;
-
     public AbilityArchetype m_textSource;
     //public bool m_MouseHover;
     //public Font m_font;
@@ -32,14 +26,14 @@ public class GUIHandler : MonoBehaviour {
         if (TurnBasedScript.Instance.BattleActive == true)
         {
             if (status)
-                ToolTipEnableEvent(m_textSource.GetText());
+                MoveToolTipDisplay.ToolTipEnableEvent(m_textSource.GetText());
             else
-                ToolTipDisableEvent();
+                MoveToolTipDisplay.ToolTipDisableEvent();
             //m_MouseHover = status;
         }
         else
         {
-            ToolTipDisableEvent();
+            MoveToolTipDisplay.ToolTipDisableEvent();
             //m_MouseHover = false;
         }
     }

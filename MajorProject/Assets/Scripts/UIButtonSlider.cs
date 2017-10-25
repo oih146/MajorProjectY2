@@ -14,6 +14,8 @@ public class UIButtonSlider : MonoBehaviour {
     Animator m_animator;
     RectTransform rect;
 
+    public Transform m_LerpPos;
+
 	// Use this for initialization
 	void Start () {
         m_animator = gameObject.GetComponent<Animator>();
@@ -30,8 +32,8 @@ public class UIButtonSlider : MonoBehaviour {
             float timeInLerp = m_time - m_timeSinceStart;
             m_percentage = timeInLerp / m_lerpSpeed;
             rect.position = Vector3.Lerp(
-                                (m_isOpen ? UISliderKeeper.Instance.m_lerpPoint.position : m_originalPos),
-                                (m_isOpen ? m_originalPos : UISliderKeeper.Instance.m_lerpPoint.position),
+                                (m_isOpen ? m_LerpPos.position : m_originalPos),
+                                (m_isOpen ? m_originalPos : m_LerpPos.position),
                                 m_percentage
                                 );
             if (m_percentage >= 1f)

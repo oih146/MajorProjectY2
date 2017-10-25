@@ -5,19 +5,49 @@ using UnityEngine.SceneManagement;
 
 public class FadeBlack : MonoBehaviour {
 
+    public delegate void FadeBlackStartEvent();
+    public static event FadeBlackStartEvent OnFadeBlackStart;
+    public delegate void FadeBlackEndEvent();
+    public static event FadeBlackEndEvent OnFadeBlackEnd;
+    public delegate void FadeBlackMiddleEvent();
+    public static event FadeBlackMiddleEvent OnFadeBlackMidle;
+
     public PlayerMovement player;
     public UnityEngine.UI.Image blackScreen;
-    static bool m_fadeIn = false;
-    static bool m_fading = false;
+    bool m_fadeIn = false;
+    bool m_fading = false;
     public float m_fadeSpeed = 5;
-    static float m_timeSinceStart;
-    static float m_alphaInit;
-    public static FadeBlack instance;
+    float m_timeSinceStart;
+    float m_alphaInit;
+    public static FadeBlack Instance;
+
+    void Awake()
+    {
+        Instance = this;
+    }
+
+    void OnEnable()
+    {
+        OnFadeBlackStart += TurnGameObjectOn;
+        OnFadeBlackEnd += TurnGameObjectOff;
+
+        OnFadeBlackEnd += TurnPlayerMovementOn;
+        OnFadeBlackStart += TurnPlayerMovementOff;
+    }
+
+    void OnDisable()
+    {
+        OnFadeBlackStart -= TurnGameObjectOn;
+        OnFadeBlackEnd -= TurnGameObjectOff;
+
+        OnFadeBlackEnd -= TurnPlayerMovementOn;
+        OnFadeBlackStart -= TurnPlayerMovementOff;
+    }
+
     // Use this for initialization
     void Start () {
         m_alphaInit = blackScreen.color.a;
         m_timeSinceStart = Time.time;
-        instance = this;
 	}
 	
 	// Update is called once per frame
@@ -32,27 +62,63 @@ public class FadeBlack : MonoBehaviour {
             if(percentage >= 1f)
             {
                 m_fading = false;
-                player.SetMovement(true);
+                //player.SetMovement(true);
                 if (m_fadeIn == true)
-                    gameObject.SetActive(false);
+                {
+                    if(OnFadeBlackEnd != null)
+                        OnFadeBlackEnd();
+                    //gameObject.SetActive(false);
+                }
                 else
-                    SceneManager.LoadScene(0);
+                {
+                    if (OnFadeBlackMidle != null)
+                        OnFadeBlackMidle();
+                    //SceneManager.LoadScene(0);
+                }
             }
         }
     }
 
-    public static void Activate(bool fadeIn)
+    public void Activate(bool fadeIn)
     {
         m_fadeIn = fadeIn;
-        m_alphaInit = instance.blackScreen.color.a;
-        SetTime();
+        m_alphaInit = blackScreen.color.a;
+        m_timeSinceStart = Time.time;
         m_fading = true;
-        instance.gameObject.SetActive(true);
+        gameObject.SetActive(true);
+        if(OnFadeBlackStart != null)
+            OnFadeBlackStart();
+        //gameObject.SetActive(true);
         
     }
 
-    public static void SetTime()
+    private void TurnGameObjectOff()
     {
-        m_timeSinceStart = Time.time;
+        gameObject.SetActive(false);
+    }
+
+    private void TurnGameObjectOn()
+    {
+        gameObject.SetActive(true);
+    }
+
+    private void TurnPlayerMovementOn()
+    {
+        player.SetMovement(true);
+    }
+
+    private void TurnPlayerMovementOff()
+    {
+        player.SetMovement(false);
+    }
+
+    public void AddLoadLevel()
+    {
+        OnFadeBlackMidle += ReturnToMenu;
+    }
+
+    private void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

@@ -36,7 +36,7 @@ public class AreaDivider : MonoBehaviour {
             }
             else
                 m_AlreadyPassed = false;
-            MapCreator.instance.NewMapPosition(m_AlreadyPassed);
+            //MapCreator.instance.NewMapPosition(m_AlreadyPassed);
         }
     }
 }

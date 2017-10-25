@@ -238,7 +238,10 @@ public class CharacterStatSheet : MonoBehaviour {
         if (attackerCombatStats != null && damageToTake > 0)
         {
             damageToTake += attackerCombatStats.GetStrength();
-            damageToTake *= (Random.Range(0, 100) <= attackerCombatStats.GetDexterity()) ? 1.5f : 1;
+            damageToTake *= (
+                                Random.Range(0, 100) <= attackerCombatStats.GetDexterity() + 
+                                (GetEffectArray()[(int)eEffects.DexterityIncrease].IsActive ? GetEffectArray()[(int)eEffects.DexterityIncrease].Strength : 0)
+                                ) ? 1.5f : 1;
         }
         if (attacktype != ChargeTime.Magic)
             damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
@@ -251,12 +254,23 @@ public class CharacterStatSheet : MonoBehaviour {
         Health -= damageToTake;
         //Combat bar interrupt
         if (m_combatBar.m_combatSlider.value > 0.73)
-            m_combatBar.TakeFromTimer((damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f);
-        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
-            GetEffectArray()[(int)eEffects.CounterStance].Use(this);
-            return GetEffectArray()[(int)eEffects.CounterStance].Strength;
+            float delay = (damageToTake + (m_InteruptMultiplier * bonusInterupt) + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f;
+            m_combatBar.TakeFromTimer(delay);
+            if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+            {
+                GetEffectArray()[(int)eEffects.CounterStance].Use(this);
+                CounterAttack attack = (CounterAttack)m_ActiveWeapon;
+                attack.SecondaryUse(this);
+
+                return GetEffectArray()[(int)eEffects.CounterStance].Strength;
+            } else if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
+            {
+                SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
+                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, delay);
+            }
         }
+
         return 0;
     }
 
@@ -411,6 +425,17 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public virtual void OnKillConsequences(UseConsequences conseq)
     {
+
+    }
+
+    public void ResetAnimationVariables()
+    {
+        GetAnimScript().ResetVariables();
+        if (m_ActiveWeapon != null)
+        {
+            m_ActiveWeapon.m_animEffect.ResetAnimation();
+            m_ActiveWeapon.m_animEffect.StopEffect();
+        }
 
     }
 }
