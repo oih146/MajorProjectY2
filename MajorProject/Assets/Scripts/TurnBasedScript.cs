@@ -1326,13 +1326,7 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         if (attacker.m_ActiveWeapon.HasEffect)
         {
-            Vector3 effectPos;
-            if(attacker.m_ActiveWeapon.m_animEffect.m_attachToUser)
-                effectPos = attacker.transform.position;
-            else
-                effectPos = defender.transform.position;
-            effectPos.z += 10;
-            attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = effectPos;
+            attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(attacker, defender);
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
             if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
@@ -1729,18 +1723,11 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
         if (attacker.m_ActiveWeapon.HasEffect)
         {
-            attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = attacker.transform.position;
+            attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(attacker, attacker);
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
-            if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
-                yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.FinishedAnimation);
-            else
-            {
-                yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
-                yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
-            }
-            if(attacker.m_ActiveWeapon.m_animEffect.m_needsToBeStopped)
-                attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+            //if(attacker.m_ActiveWeapon.m_animEffect.m_needsToBeStopped)
+                //attacker.m_ActiveWeapon.m_animEffect.StopEffect();
             attacker.m_animator.SetBool("SpellBreak", true);
         }
 

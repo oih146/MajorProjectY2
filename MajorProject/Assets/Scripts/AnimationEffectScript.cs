@@ -6,6 +6,7 @@ public class AnimationEffectScript : MonoBehaviour {
 
     public enum EffectPlacement
     {
+        Custom,
         User,
         Victim,
         MiddleVictims
@@ -89,6 +90,9 @@ public class AnimationEffectScript : MonoBehaviour {
                 break;
             case EffectPlacement.Victim:
                 result = defender.gameObject.transform.position;
+                break;
+            case EffectPlacement.Custom:
+                result = m_rootHolder.transform.position;
                 break;
             default:
                 break;

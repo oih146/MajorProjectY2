@@ -5,18 +5,7 @@ using UnityEngine;
 public class AnimScript : MonoBehaviour {
 
     bool m_attacking;                    //Is this character attacking
-    public bool Attacking
-    {
-        get
-        {
-            return m_attacking;
-        }
-
-        set
-        {
-            m_attacking = value;
-        }
-    }
+    public bool Attacking { get { return m_attacking; } set { m_attacking = value; } }
 
     bool m_weaponEffect;
     public bool WeaponEffect { get { return m_weaponEffect; } set { m_weaponEffect = value; } }

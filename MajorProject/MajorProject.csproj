@@ -266,8 +266,12 @@
     <Compile Include="Assets\Scripts\AnimScript.cs" />
     <Compile Include="Assets\Scripts\AnimationEffectScript.cs" />
     <Compile Include="Assets\Scripts\AreaDivider.cs" />
+    <Compile Include="Assets\Scripts\Attacks\AttackEffects\DivineFlameEffect.cs" />
+    <Compile Include="Assets\Scripts\Attacks\AttackEffects\PtUEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\SoulRipEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\CounterAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\DivineFlameAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\PtUAttack.cs" />
     <Compile Include="Assets\Scripts\Attacks\SoulRipAttack.cs" />
     <Compile Include="Assets\Scripts\BanditMoveScript.cs" />
     <Compile Include="Assets\Scripts\BanditStat.cs" />

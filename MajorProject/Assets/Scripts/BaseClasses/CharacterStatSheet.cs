@@ -260,7 +260,7 @@ public class CharacterStatSheet : MonoBehaviour {
             if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
             {
                 GetEffectArray()[(int)eEffects.CounterStance].Use(this);
-                CounterAttack attack = (CounterAttack)m_ActiveWeapon;
+                CounterAttack attack = new CounterAttack();
                 attack.SecondaryUse(this);
 
                 return GetEffectArray()[(int)eEffects.CounterStance].Strength;
