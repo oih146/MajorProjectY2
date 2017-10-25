@@ -83,10 +83,10 @@ MonoBehaviour:
       sampleCount: 10
       frameBlending: 0
   eyeAdaptation:
-    m_Enabled: 0
+    m_Enabled: 1
     m_Settings:
-      lowPercent: 1
-      highPercent: 65.05586
+      lowPercent: 8.117321
+      highPercent: 72.17319
       minLuminance: -5
       maxLuminance: 3.59
       keyValue: 0.1
@@ -100,9 +100,9 @@ MonoBehaviour:
     m_Enabled: 1
     m_Settings:
       bloom:
-        intensity: 1.95
+        intensity: 3.09
         threshold: 1
-        softKnee: 0.611
+        softKnee: 1
         radius: 7
         antiFlicker: 1
       lensDirt:
