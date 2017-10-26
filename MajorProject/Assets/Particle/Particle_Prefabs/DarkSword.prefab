@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 4217828562914254}
   - component: {fileID: 198573377605644384}
   - component: {fileID: 199530326299390528}
+  - component: {fileID: 95714696767190962}
   m_Layer: 0
   m_Name: DarkSword
   m_TagString: Untagged
@@ -65,13 +66,30 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1913697923586876}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 8.456255, y: 0.81892145, z: 0}
+  m_LocalPosition: {x: -0.40815258, y: -1.5616469, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4142664219679538}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+--- !u!95 &95714696767190962
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1913697923586876}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e1dc7d40d59663c4ba23d9eadefb9d0b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!198 &198573377605644384
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -127,7 +145,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2038770564
+  randomSeed: -1983061992
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2752,7 +2770,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -2142954490
+  randomSeed: -1436106007
   InitialModule:
     serializedVersion: 3
     enabled: 1
