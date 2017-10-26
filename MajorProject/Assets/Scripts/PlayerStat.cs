@@ -183,23 +183,15 @@ public class PlayerStat : CharacterStatSheet {
     {
         Light += amountToAdd;
     }
-
-    public AnimationEffectScript divineShieldLink;
     public override void UpdateEffects()
     {
         base.UpdateEffects();
 
-        if (GetEffectArray()[(int)eEffects.Invulnerability].IsActive)
-        {
-            divineShieldLink.m_rootHolder.SetActive(false);
-        }
     }
 
     public override void ResetEffects()
     {
         base.ResetEffects();
-
-        divineShieldLink.m_rootHolder.SetActive(false);
     }
 
     public override void AfterAttackConsequences(UseConsequences conseq)

@@ -48,6 +48,7 @@ public class CameraLookUp : MonoBehaviour {
     {
         if(col.tag == "Player")
         {
+            BattleMenuScript.Instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             StartLerp();
         }
     }
