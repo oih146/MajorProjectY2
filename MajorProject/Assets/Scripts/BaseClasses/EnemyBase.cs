@@ -53,9 +53,15 @@ public class EnemyBase : CharacterStatSheet {
     void Start()
     {
         Starts();
+
+        //fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
+    }
+
+    public override void Starts()
+    {
+        base.Starts();
         m_maxIP += GetStatistics().GetWillPowerIPIncrease();
         m_renderer = GetComponent<SpriteRenderer>();
-        //fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
     }
 
     // Update is called once per frame
@@ -76,5 +82,90 @@ public class EnemyBase : CharacterStatSheet {
         IncapacitationPoints += IPonHit + (GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].IsActive ? GetEffectArray()[(int)eEffects.BonusIncapacitationPoints].Strength : 0);
 
         return base.TakeDamage(damageToTake, attackerCombatStats, bonusInterupt, attackStrength, interrupt);
+    }
+
+
+
+
+
+
+    //Virtual Functions
+    //------------------------------------------------------------------------------
+    public virtual void DecideTarget(CharacterStatSheet[] possibleTargets)
+    {
+        int playerToAttack = Random.Range(0, possibleTargets.Length - 1);
+        while (possibleTargets[playerToAttack] == null)
+        {
+            playerToAttack = Random.Range(0, possibleTargets.Length - 1);
+        }
+        m_playerToAttack = possibleTargets[playerToAttack];
+
+        m_decidedTarget = true;
+    }
+
+    public virtual void DecideAttack()
+    {
+        int attackStrength;
+        //decided whether to use magic or not
+        if (Random.Range(0, 1) >= 0.5f && m_knowMagic == true)
+        {
+            //using magic
+            int spellIndex = Random.Range(0, m_spells.Length);
+            m_ActiveWeapon = m_spells[spellIndex];
+            attackStrength = (int)m_ActiveWeapon.m_chargeTime;
+        }
+        else
+        {
+            //not using magic
+            //Deciding attack charge time and damage
+            int attackDamage = 0;
+            attackStrength = Random.Range(0, 3);
+            switch (attackStrength)
+            {
+                case 0:
+                    attackStrength = 3;
+                    attackDamage = 15;
+                    break;
+                case 1:
+                    attackStrength = 5;
+                    attackDamage = 25;
+                    break;
+                case 2:
+                    attackStrength = 8;
+                    attackDamage = 35;
+                    break;
+                default:
+                    attackStrength = 3;
+                    attackDamage = 15;
+                    break;
+            }
+            //using melee
+            m_weapon.m_damageSet = AttackDamage.Custom;
+            m_weapon.m_chargeTime = (ChargeTime)attackStrength;
+            m_weapon.SetAttackDamage = attackDamage;
+            m_ActiveWeapon = m_weapon;
+        }
+        //decide enemy attackStrength
+        GetCombatBar().SlowDown(attackStrength);
+        m_attackCharge = (ChargeTime)attackStrength;
+        switch ((ChargeTime)attackStrength)
+        {
+            case ChargeTime.Light:
+                GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Light]);
+                break;
+            case ChargeTime.Normal:
+                GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Medium]);
+                break;
+            case ChargeTime.Heavy:
+                GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Heavy]);
+                break;
+            case ChargeTime.Magic:
+                GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Magic]);
+                break;
+            default:
+                GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Light]);
+                break;
+        }
+        m_decidedAttack = true;
     }
 }

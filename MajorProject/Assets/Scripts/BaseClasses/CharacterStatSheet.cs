@@ -165,11 +165,7 @@ public class CharacterStatSheet : MonoBehaviour {
     protected Lerping fadeDeathLerping;
     // Use this for initialization
     void Start() {
-        GetLerpDeath();
-        m_combatStatistics = GetComponent<CombatStats>();
-        Health = 100;
-        GenerateStatistics();
-        ResetEffects();
+        Starts();
     }
 
     // Update is called once per frame
@@ -178,15 +174,19 @@ public class CharacterStatSheet : MonoBehaviour {
     }
 
     //To allow Start to be run by inheriting classes
-    public void Starts()
+    public virtual void Starts()
     {
-        Start();
+        GetLerpDeath();
+        m_combatStatistics = GetComponent<CombatStats>();
+        Health = 100;
+        GenerateStatistics();
+        ResetEffects();
     }
 
     //To allow Update to be run by inheriting classes
-    public void Updates()
+    public virtual void Updates()
     {
-        Update();
+
     }
 
     public void GetLerpDeath()
@@ -260,7 +260,7 @@ public class CharacterStatSheet : MonoBehaviour {
             if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
             {
                 GetEffectArray()[(int)eEffects.CounterStance].Use(this);
-                CounterAttack attack = (CounterAttack)m_ActiveWeapon;
+                CounterAttack attack = new CounterAttack();
                 attack.SecondaryUse(this);
 
                 return GetEffectArray()[(int)eEffects.CounterStance].Strength;
