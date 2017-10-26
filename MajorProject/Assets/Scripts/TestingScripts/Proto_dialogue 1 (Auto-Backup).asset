@@ -735,7 +735,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Variable["Hours"] = Variable["Hours"] + 2;
+      userScript: 
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -2253,7 +2253,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 877.42267
+        x: 879.42267
         y: 202.98969
         width: 160
         height: 30
@@ -3784,7 +3784,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 903.19586
-        y: 149.89688
+        y: 150.89688
         width: 160
         height: 30
     - id: 5
@@ -6655,7 +6655,9 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Variable["graveDug"] = true
+      userScript: 'Variable["graveDug"] = true;
+
+        Variable["Light"] = Variable["Light"] + 3'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6729,7 +6731,9 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: Variable["graveDug"] = false
+      userScript: 'Variable["graveDug"] = false;
+
+        Variable["Light"] = Variable["Light"] + 3'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6802,7 +6806,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Light"] = Variable["Light"] + -2
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6955,7 +6959,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Light"] = Variable["Light"] + 3
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -6963,7 +6967,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 476.78357
+        x: 475.78357
         y: 484.88654
         width: 160
         height: 30
@@ -7459,7 +7463,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Law"] = Variable["Law"] + -1
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -7611,7 +7615,9 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["Law"] = Variable["Law"] + -1;
+
+        Variable["Light"] = Variable["Light"] + -1'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8465,7 +8471,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Light"] = Variable["Light"] + -2
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -8946,7 +8952,7 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: Variable["Law"] = Variable["Law"] + -1
       onExecute:
         m_PersistentCalls:
           m_Calls: []
@@ -9928,7 +9934,7 @@ MonoBehaviour:
         destinationDialogueID: 31
         isConnector: 0
         priority: 2
-      conditionsString: Variable["Light"] = Variable["Light"] + -1
+      conditionsString: Variable["Light"] = Variable["Light"] + -2
       userScript: 
       onExecute:
         m_PersistentCalls:
@@ -9938,7 +9944,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 256.86072
-        y: 465.53162
+        y: 468.53162
         width: 160
         height: 30
     - id: 17
@@ -10455,8 +10461,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 442.86072
-        y: 567.5316
+        x: 443.83157
+        y: 566.5607
         width: 160
         height: 30
     - id: 24
@@ -10600,7 +10606,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 621.8607
-        y: 616.5316
+        y: 617.5025
         width: 160
         height: 30
     - id: 26
@@ -12114,7 +12120,9 @@ MonoBehaviour:
         isConnector: 0
         priority: 2
       conditionsString: 
-      userScript: 
+      userScript: 'Variable["Law"] = Variable["Law"] + -1;
+
+        Variable["Light"] = Variable["Light"] + -1'
       onExecute:
         m_PersistentCalls:
           m_Calls: []
