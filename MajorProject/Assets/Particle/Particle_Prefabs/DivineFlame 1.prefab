@@ -65,7 +65,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1497709958283544}
   m_LocalRotation: {x: -0.50000006, y: 0.50000006, z: -0.5, w: 0.5}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -18.294882, y: -1.0180569, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4088197160062606}
@@ -127,7 +127,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 731472152
+  randomSeed: 1695762490
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2471,16 +2471,16 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4278190335
+          rgba: 4278190114
         key1:
           serializedVersion: 2
-          rgba: 4285377791
+          rgba: 4278200926
         key2:
           serializedVersion: 2
-          rgba: 47359
+          rgba: 19819
         key3:
           serializedVersion: 2
-          rgba: 0
+          rgba: 47359
         key4:
           serializedVersion: 2
           rgba: 0
@@ -2494,9 +2494,9 @@ ParticleSystem:
           serializedVersion: 2
           rgba: 0
         ctime0: 0
-        ctime1: 16962
+        ctime1: 18119
         ctime2: 65535
-        ctime3: 0
+        ctime3: 65535
         ctime4: 0
         ctime5: 0
         ctime6: 0
@@ -2746,7 +2746,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -572843867
+  randomSeed: -317947591
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5216,13 +5216,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 4286871295
+          rgba: 4282530693
         key1:
           serializedVersion: 2
-          rgba: 3993014015
+          rgba: 3992991330
         key2:
           serializedVersion: 2
-          rgba: 0
+          rgba: 166907
         key3:
           serializedVersion: 2
           rgba: 0
@@ -5240,7 +5240,7 @@ ParticleSystem:
           rgba: 0
         ctime0: 0
         ctime1: 54934
-        ctime2: 0
+        ctime2: 55127
         ctime3: 0
         ctime4: 0
         ctime5: 0
