@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Idle
+  m_Name: Hit
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -23,13 +23,13 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: {x: 0, y: 0, z: 8.979}
+        time: 0.16666667
+        value: {x: 0, y: 0, z: -15.107}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -37,7 +37,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -48,13 +48,13 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: {x: 0, y: 0, z: 7.918}
+        time: 0.16666667
+        value: {x: 0, y: 0, z: -8.9210005}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -62,33 +62,58 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.16666667
+        value: {x: 0, y: 0, z: -16.007}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.5
+        value: {x: 0, y: 0, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
   m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 0, y: 0, z: 0}
+        value: {x: 0.05, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: {x: -0.02, y: -0.16, z: 0}
+        time: 0.16666667
+        value: {x: 0.34, y: 0.58, z: -0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 3
-        value: {x: 0, y: 0, z: 0}
+        time: 0.5
+        value: {x: 0.05, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_2/SpearSpline2
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -99,13 +124,13 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: {x: -0.42, y: -0.07, z: -0}
+        time: 0.16666667
+        value: {x: -0.03, y: -0.18, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -113,32 +138,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: {x: -0.01, y: -0.14, z: -0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1.5
-        value: {x: 0.01, y: -0.18, z: 0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 3
-        value: {x: -0.01, y: -0.14, z: -0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/WristLeft_CTRL_GRP/WristLeft_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_1/SpearSpline1
   - curve:
       serializedVersion: 2
       m_Curve:
@@ -149,13 +149,13 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 1.5
-        value: {x: -0.05, y: 0.2, z: 0}
+        time: 0.16666667
+        value: {x: -0.08, y: -0.65, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
@@ -163,7 +163,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: COM_CTRL_GRP/COM_CTRL/Sword_CTRL_GRP/Sword_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -174,37 +174,37 @@ AnimationClip:
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
-    - path: 1827152301
+    - path: 3615712702
       attribute: 1
       script: {fileID: 0}
       classID: 4
       customType: 0
       isPPtrCurve: 0
-    - path: 2470415116
+    - path: 854266335
       attribute: 1
       script: {fileID: 0}
       classID: 4
       customType: 0
       isPPtrCurve: 0
-    - path: 1015499797
+    - path: 3411591944
       attribute: 1
       script: {fileID: 0}
       classID: 4
       customType: 0
       isPPtrCurve: 0
-    - path: 2736679031
-      attribute: 1
-      script: {fileID: 0}
-      classID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - path: 2614092476
+    - path: 2118977800
       attribute: 4
       script: {fileID: 0}
       classID: 4
       customType: 14
       isPPtrCurve: 0
-    - path: 3193746335
+    - path: 222021862
+      attribute: 4
+      script: {fileID: 0}
+      classID: 4
+      customType: 14
+      isPPtrCurve: 0
+    - path: 2452661153
       attribute: 4
       script: {fileID: 0}
       classID: 4
@@ -216,7 +216,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 3
+    m_StopTime: 0.5
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -242,13 +242,13 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: -0.02
+        time: 0.16666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -256,8 +256,8 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL
+    attribute: localEulerAnglesRaw.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -270,13 +270,265 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: -0.16
+        time: 0.16666667
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: -15.107
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.z
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: -8.9210005
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.z
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: -16.007
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.z
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0.05
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0.34
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0.05
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_2/SpearSpline2
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.16666667
+        value: 0.58
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -285,7 +537,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_2/SpearSpline2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -298,97 +550,13 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.z
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: -0.42
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.x
-    path: COM_CTRL_GRP/COM_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: -0.07
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalPosition.y
-    path: COM_CTRL_GRP/COM_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
+        time: 0.16666667
         value: -0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -397,7 +565,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: COM_CTRL_GRP/COM_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_2/SpearSpline2
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -405,19 +573,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0.01
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: 0.01
+        time: 0.16666667
+        value: -0.03
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
-        value: -0.01
+        time: 0.5
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -425,7 +593,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: COM_CTRL_GRP/COM_CTRL/WristLeft_CTRL_GRP/WristLeft_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_1/SpearSpline1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -433,19 +601,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0.14
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
+        time: 0.16666667
         value: -0.18
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
-        value: -0.14
+        time: 0.5
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -453,7 +621,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: COM_CTRL_GRP/COM_CTRL/WristLeft_CTRL_GRP/WristLeft_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_1/SpearSpline1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -461,19 +629,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
-        value: -0
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.5
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -481,7 +649,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: COM_CTRL_GRP/COM_CTRL/WristLeft_CTRL_GRP/WristLeft_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/spline_GRP_1/spline_Ctrl_GRP_1/SpearSpline1
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -494,13 +662,13 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: -0.05
+        time: 0.16666667
+        value: -0.08
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -509,7 +677,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: COM_CTRL_GRP/COM_CTRL/Sword_CTRL_GRP/Sword_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -522,13 +690,13 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
-        value: 0.2
+        time: 0.16666667
+        value: -0.65
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -537,7 +705,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: COM_CTRL_GRP/COM_CTRL/Sword_CTRL_GRP/Sword_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -550,13 +718,13 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1.5
+        time: 0.16666667
         value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 3
+        time: 0.5
         value: 0
         inSlope: 0
         outSlope: 0
@@ -565,175 +733,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: COM_CTRL_GRP/COM_CTRL/Sword_CTRL_GRP/Sword_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.x
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.y
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 8.979
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.z
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.x
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.y
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1.5
-        value: 7.918
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 3
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.z
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/WristRight_CTRL_GRP/WristRight_CTRL
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -744,7 +744,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -754,7 +754,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -764,27 +764,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairLeft1_CTRL_GRP/HairLeft1_CTRL/HairLeft2_CTRL_GRP/HairLeft2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.x
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_LocalEulerAngles.y
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -794,7 +774,57 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: COM_CTRL_GRP/COM_CTRL/COG_CTRL_GRP/COG_CTRL/Spine1_CTRL_GRP/Spine1_CTRL/Spine2_CTRL_GRP/Spine2_CTRL/Neck_CTRL_GRP/Neck_CTRL/Head_CTRL_GRP/Head_CTRL/HairRight1_CTRL_GRP/HairRight1_CTRL/HairRight2_CTRL_GRP/HairRight2_CTRL
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.x
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.y
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalEulerAngles.z
+    path: ROOT_CTRL_GRP/ROOT_CTRL/COM_CTRL_GRP/COM_CTRL/Spine_1_CTRL_GRP/Spine_1_CTRL/Spine_2_CTRL_GRP/Spine_2_CTRL/Neck_CTRL_GRP/Neck_CTRL
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0
