@@ -12,8 +12,8 @@ public class ParallaxBackground : MonoBehaviour {
     public bool m_moveRight;
 	// Use this for initialization
 	void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void FixedUpdate () {

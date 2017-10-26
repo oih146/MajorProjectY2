@@ -184,7 +184,11 @@ public class TurnBasedScript : MonoBehaviour {
                             SetCombatBarMovement(false);
 
                             m_playerChoosing = true;
-                            EnemyDecideTarget(i);
+                            EnemyBase eBase = enemyObjects[i];
+                            eBase.DecideTarget(friendlyObjects);
+                            eBase.DecideAttack();
+                            m_playerChoosing = false;
+                            SetCombatBarMovement(true);
                         }
                         else
                         {

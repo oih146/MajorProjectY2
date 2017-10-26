@@ -270,11 +270,11 @@
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\PtUEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\SoulRipEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\CounterAttack.cs" />
+    <Compile Include="Assets\Scripts\Attacks\DisarmAttack.cs" />
     <Compile Include="Assets\Scripts\Attacks\DivineFlameAttack.cs" />
     <Compile Include="Assets\Scripts\Attacks\PtUAttack.cs" />
     <Compile Include="Assets\Scripts\Attacks\SoulRipAttack.cs" />
     <Compile Include="Assets\Scripts\BanditMoveScript.cs" />
-    <Compile Include="Assets\Scripts\BanditStat.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\ArmorBase.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\Background.cs" />
     <Compile Include="Assets\Scripts\BaseClasses\CharacterStatSheet.cs" />
@@ -284,6 +284,7 @@
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
     <Compile Include="Assets\Scripts\BattleTrigger.cs" />
     <Compile Include="Assets\Scripts\BumpUp.cs" />
+    <Compile Include="Assets\Scripts\CameraLookUp.cs" />
     <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\CombatSliderScript.cs" />
@@ -292,6 +293,9 @@
     <Compile Include="Assets\Scripts\Dialogue\DialogueManager.cs" />
     <Compile Include="Assets\Scripts\DualBackgrounds.cs" />
     <Compile Include="Assets\Scripts\EndPrototype.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\BanditLord.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\BanditStat.cs" />
+    <Compile Include="Assets\Scripts\EnemyScripts\WolvesStat.cs" />
     <Compile Include="Assets\Scripts\FadeBlack.cs" />
     <Compile Include="Assets\Scripts\FollowTarget.cs" />
     <Compile Include="Assets\Scripts\ForwardBackground.cs" />
