@@ -251,6 +251,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (damageToTake < 0)
             damageToTake = 0;
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
+        //m_animator.Play("Hit");
         Health -= damageToTake;
         //Combat bar interrupt
         if (m_combatBar.m_combatSlider.value > 0.73)
@@ -347,7 +348,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public void StartFadeDeath()
     {
-
+        //m_animator.Play("Death");
         gameObject.SetActive(false);
         //FadeDeath = true;
     }
