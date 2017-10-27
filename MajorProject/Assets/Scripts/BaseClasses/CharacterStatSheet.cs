@@ -227,6 +227,7 @@ public class CharacterStatSheet : MonoBehaviour {
             //m_playerToAttack.m_animator.Play();
             //yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
             Health -= damageToTake;
+            ReCheckHealth();
             yield return new WaitForSeconds(0.0f);
         }
     }
@@ -251,8 +252,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (damageToTake < 0)
             damageToTake = 0;
         Debug.Log(gameObject.name + " took " + damageToTake.ToString());
-        //m_animator.Play("Hit");
-        Health -= damageToTake;
+        StartCoroutine(TakeHit(damageToTake));
         //Combat bar interrupt
         if (m_combatBar.m_combatSlider.value > 0.73)
         {
@@ -273,6 +273,15 @@ public class CharacterStatSheet : MonoBehaviour {
         }
 
         return 0;
+    }
+
+    IEnumerator TakeHit(float damageToTake)
+    {
+        m_animator.Play("Hit");
+        yield return new WaitUntil(() => GetAnimScript().TakeHit);
+        GetAnimScript().ResetHit();
+        Health -= damageToTake;
+        ReCheckHealth();
     }
 
     //If the weapon allows player to heal
@@ -348,7 +357,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public void StartFadeDeath()
     {
-        //m_animator.Play("Death");
+        m_animator.Play("Death");
         gameObject.SetActive(false);
         //FadeDeath = true;
     }

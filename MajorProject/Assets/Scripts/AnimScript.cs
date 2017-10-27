@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AnimScript : MonoBehaviour {
 
+    bool m_takeHit;
+    public bool TakeHit { get { return m_takeHit; } set { m_takeHit = value; } }
+
     bool m_attacking;                    //Is this character attacking
     public bool Attacking { get { return m_attacking; } set { m_attacking = value; } }
 
@@ -47,10 +50,21 @@ public class AnimScript : MonoBehaviour {
         AttackFinished = false;
     }
 
+    public void GetHit()
+    {
+        TakeHit = true;
+    }
+
+    public void ResetHit()
+    {
+        TakeHit = false;
+    }
+
     public void ResetVariables()
     {
         AttackFinished = false;
         WeaponEffect = false;
         Attacking = false;
+        TakeHit = false;
     }
 }
