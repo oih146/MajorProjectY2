@@ -31,6 +31,8 @@ public class FadeBlack : MonoBehaviour {
         OnFadeBlackStart += TurnGameObjectOn;
         OnFadeBlackEnd += TurnGameObjectOff;
 
+        OnFadeBlackMidle += RestartFadeOnMiddle;
+
         OnFadeBlackEnd += TurnPlayerMovementOn;
         OnFadeBlackStart += TurnPlayerMovementOff;
     }
@@ -39,6 +41,8 @@ public class FadeBlack : MonoBehaviour {
     {
         OnFadeBlackStart -= TurnGameObjectOn;
         OnFadeBlackEnd -= TurnGameObjectOff;
+
+        OnFadeBlackMidle -= RestartFadeOnMiddle;
 
         OnFadeBlackEnd -= TurnPlayerMovementOn;
         OnFadeBlackStart -= TurnPlayerMovementOff;
@@ -90,6 +94,11 @@ public class FadeBlack : MonoBehaviour {
             OnFadeBlackStart();
         //gameObject.SetActive(true);
         
+    }
+
+    void RestartFadeOnMiddle()
+    {
+        Activate(true);
     }
 
     private void TurnGameObjectOff()

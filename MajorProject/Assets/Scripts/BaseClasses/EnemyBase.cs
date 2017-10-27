@@ -53,23 +53,18 @@ public class EnemyBase : CharacterStatSheet {
     void Start()
     {
         Starts();
-
-        //fadeDeathLerping.StartLerp(2, m_renderer.color.a, 0);
     }
 
     public override void Starts()
     {
         base.Starts();
         m_maxIP += GetStatistics().GetWillPowerIPIncrease();
-        m_renderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Updates();
-        if (FadeDeath)
-            FadingDeath();
     }
 
     //Override Functions

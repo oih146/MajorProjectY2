@@ -83,7 +83,6 @@ public class CharacterStatSheet : MonoBehaviour {
     [HideInInspector]
     public WeaponBase m_ActiveWeapon;           //LEAVE THIS BLANK IN INSPECTOR, Holds the weapon or spell to use in combat, changes
     public SwordScript m_weapon;                 //Holds melee weapon, may change type to Sword
-    [HideInInspector]
     public CharacterStatSheet m_playerToAttack; //Character that will be attacked during combat
     public ChargeTime m_attackCharge;     //Strength of attack, decides how slow attack will be to charge
     public bool m_knowMagic;                    //Does this character know magic
@@ -150,7 +149,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public Canvas m_playerCanvas;
     public UnityEngine.UI.Slider m_healthBar;   //Health bar attached to this character
     public CombatSliderScript m_combatBar;   //This character's combat bar that is shown during combat
-    public GameObject m_notificationBox;
+    //public GameObject m_notificationBox;
     public StatusBar m_statusBar;
 
     //Effect and Abilities (relevent enums decide where variables are allocated)
@@ -159,10 +158,6 @@ public class CharacterStatSheet : MonoBehaviour {
     //Death Variables
     //-----------------------------------------
     public bool FadeDeath = false;              //For character death, does this character fade out in death
-    [HideInInspector]
-    public SpriteRenderer m_renderer;           //Sprite render, used to fade death
-    public float m_fadeSpeed;                   //Speed at which character fades when dying
-    protected Lerping fadeDeathLerping;
     // Use this for initialization
     void Start() {
         Starts();
@@ -170,13 +165,12 @@ public class CharacterStatSheet : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        Updates();
     }
 
     //To allow Start to be run by inheriting classes
     public virtual void Starts()
     {
-        GetLerpDeath();
         m_combatStatistics = GetComponent<CombatStats>();
         Health = 100;
         GenerateStatistics();
@@ -187,11 +181,6 @@ public class CharacterStatSheet : MonoBehaviour {
     public virtual void Updates()
     {
 
-    }
-
-    public void GetLerpDeath()
-    {
-        fadeDeathLerping = gameObject.AddComponent<Lerping>();
     }
 
     //Creates statistics for attributes 
@@ -358,21 +347,8 @@ public class CharacterStatSheet : MonoBehaviour {
     public void StartFadeDeath()
     {
         m_animator.Play("Death");
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
         //FadeDeath = true;
-    }
-
-    //Simply turns current sprite alpha down
-    public void FadingDeath()
-    {
-        Color buffCol = m_renderer.color;
-        buffCol.a = fadeDeathLerping.Lerp();
-        m_renderer.color = buffCol;
-        if (m_renderer.color.a < 0.001f)
-        {
-            FadeDeath = false;
-            gameObject.SetActive(false);
-        }
     }
 
     //Simplifier for adding Effects

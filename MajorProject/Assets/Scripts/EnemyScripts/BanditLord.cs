@@ -6,12 +6,12 @@ public class BanditLord : EnemyBase {
 
 	// Use this for initialization
 	void Start () {
-		
+        Starts();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        Updates();
 	}
 
     public override void DecideTarget(CharacterStatSheet[] possibleTargets)

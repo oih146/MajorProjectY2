@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
+    public static PlayerMovement Instance;
+
     public int m_InterruptBase;
     public static bool m_amMoving;
     public float maxSpeed = 10f;
@@ -13,6 +15,7 @@ public class PlayerMovement : MonoBehaviour {
 
     void Awake()
     {
+        Instance = this;
         CharacterStatSheet.m_InteruptMultiplier = m_InterruptBase;
         ConversationEvents.OnConversationStart += SetMovementFalse;
         ConversationEvents.OnConversationEnd += SetMovementTrue;

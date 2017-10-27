@@ -15,9 +15,9 @@ public class UILerping : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        m_initalPos = gameObject.transform.position;
-        m_targetPosition = m_targetPos.position;
-        StartLerp();
+        m_initalPos = gameObject.transform.localPosition;
+        m_targetPosition = m_targetPos.localPosition;
+        //StartLerp();
 	}
 
     void OnEnable()
@@ -39,7 +39,7 @@ public class UILerping : MonoBehaviour {
             float timeInLerp = Time.time - m_timeSinceStart;
             float percentage = timeInLerp / m_lerpSpeed;
 
-            gameObject.transform.position = Vector3.Lerp((m_atInitalPos ? m_initalPos : m_targetPosition), (!m_atInitalPos ? m_initalPos : m_targetPosition), percentage);
+            gameObject.transform.localPosition = Vector3.Lerp((m_atInitalPos ? m_initalPos : m_targetPosition), (!m_atInitalPos ? m_initalPos : m_targetPosition), percentage);
 
             if(percentage >= 1f)
             {
