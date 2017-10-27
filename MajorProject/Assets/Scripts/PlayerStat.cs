@@ -156,11 +156,20 @@ public class PlayerStat : CharacterStatSheet {
 
     void SetAlignment()
     {
-        if(DialogueLua.GetVariable("Law").AsFloat != 0)
+        bool pushing = false;
+        if (DialogueLua.GetVariable("Law").AsFloat != 0)
+        {
             AddToOrderChaos(DialogueLua.GetVariable("Law").AsInt);
+            pushing = true;
+        }
         DialogueLua.SetVariable("Law", 0);
-        if(DialogueLua.GetVariable("Light").AsFloat != 0)
+        if (DialogueLua.GetVariable("Light").AsFloat != 0)
+        {
             AddToGoodEvil(DialogueLua.GetVariable("Light").AsInt);
+            pushing = true;
+        }
+        if (pushing)
+            NotificationManager.Instance.PushNotificationBlock();
         DialogueLua.SetVariable("Light", 0);
     }
 

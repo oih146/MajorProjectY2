@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class BattleTrigger : MonoBehaviour {
 
-    public TurnBasedScript battleStarter;
-    public bool m_DoMove;
-    public bool m_DoTalk;
+    public EnemyBase[] m_enemies;
 
 	// Use this for initialization
 	void Start () {
@@ -18,19 +16,9 @@ public class BattleTrigger : MonoBehaviour {
 		
 	}
 
-    int FindNotBandits()
-    {
-        int total = 0;
-        if (m_DoMove == true)
-            total++;
-        if (m_DoTalk == true)
-            total++;
-        return total;
-    }
-
     void OnTriggerEnter(Collider hit)
     {
-        if(hit.tag == "Player" && battleStarter.BattleActive == false)
+        if(hit.tag == "Player" && TurnBasedScript.Instance.BattleActive == false)
         {
             gameObject.GetComponent<BoxCollider>().enabled = false;
             if (hit.transform.parent != null)
@@ -41,14 +29,8 @@ public class BattleTrigger : MonoBehaviour {
             {
                 hit.GetComponent<PlayerMovement>().SetMovement(false);
             }
-            battleStarter.BattleActive = true;
+            TurnBasedScript.Instance.BattleActive = true;
             Debug.Log("BATTLE!");
-            int takeFromChidCount = FindNotBandits();
-            EnemyBase[] buffer = new EnemyBase[gameObject.transform.childCount - takeFromChidCount];
-            for(int i = 0; i < gameObject.transform.childCount - takeFromChidCount; i++)
-            {
-                buffer[i] = gameObject.transform.GetChild(i).transform.GetChild(0).GetComponent<EnemyBase>();
-            }
             CharacterStatSheet[] buffer2;
             if (hit.transform.parent == null)
             {
@@ -66,9 +48,9 @@ public class BattleTrigger : MonoBehaviour {
                 buffer2[t] = charSS;
                 t++;
             }
-            battleStarter.enabled = true;
+            TurnBasedScript.Instance.enabled = true;
             MusicSwitcher.Instance.StartLerping();
-            battleStarter.StartBattle(buffer2, buffer);
+            TurnBasedScript.Instance.StartBattle(buffer2, m_enemies);
             enabled = false;
         }
     }

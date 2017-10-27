@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CinematicsHolder : MonoBehaviour {
 
+    //SendMessage(FlipPlayer, , Cinematics);
+
     public PlayerStat m_player;
     public FollowTarget m_empress;
 

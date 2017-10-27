@@ -171,6 +171,7 @@ namespace PixelCrushers.DialogueSystem
         public void OnClick()
         {
             if (target != null) target.SendMessage("OnClick", response, SendMessageOptions.RequireReceiver);
+            ConversationEvents.Instance.CallAfterPlayerResponseEvents();
         }
 
     }

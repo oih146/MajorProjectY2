@@ -6,6 +6,8 @@ public class AreaDivider : MonoBehaviour {
 
     public bool m_AlreadyPassed = false;
     public bool m_PlayerIn;
+    [Tooltip("How many hours will pass when the player moves through here")]
+    public int m_hoursToPass;
 	// Use this for initialization
 	void Start () {
 		
@@ -21,7 +23,7 @@ public class AreaDivider : MonoBehaviour {
         if(hit.tag == "Player")
         {
             m_PlayerIn = true;
-            GameTime.Instance.AddHours(15);
+            GameTime.Instance.AddHours(m_hoursToPass);
         }
     }
 

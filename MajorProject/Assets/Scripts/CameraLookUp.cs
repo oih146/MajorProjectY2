@@ -35,6 +35,10 @@ public class CameraLookUp : MonoBehaviour {
         temp.y = Mathf.Lerp(m_initalYPos, m_toYPos, percentage);
 
         m_camera.transform.position = temp;
+        if(percentage >= 1f)
+        {
+            m_lerping = false;
+        }
     }
 
 
@@ -48,6 +52,7 @@ public class CameraLookUp : MonoBehaviour {
     {
         if(col.tag == "Player")
         {
+            PlayerMovement.Instance.SetMovementFalse();
             BattleMenuScript.Instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             StartLerp();
         }
