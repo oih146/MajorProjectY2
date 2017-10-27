@@ -10,6 +10,7 @@ public class PlayerMovement : MonoBehaviour {
     public static bool m_amMoving;
     public float maxSpeed = 10f;
     public static float m_speed;
+    public bool m_walking = false;
     public bool m_autoMove;
     Rigidbody rigid;
 
@@ -31,8 +32,7 @@ public class PlayerMovement : MonoBehaviour {
     void Start() {
         rigid = gameObject.GetComponent<Rigidbody>();
         rigid.useGravity = false;
-        rigid.isKinematic = true;
-        enabled = false;
+        SetMovement(false);
     }
 
     // Update is called once per frame
@@ -44,10 +44,18 @@ public class PlayerMovement : MonoBehaviour {
             move = Input.GetAxis("Horizontal");
         if (move != 0 && rigid.isKinematic == false)
         {
+            if (!m_walking)
+            {
+                GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                m_walking = true;
+            }
             m_amMoving = true;
         }
         else
+        {
             m_amMoving = false;
+            m_walking = false;
+        }
         rigid.velocity = new Vector2(move * maxSpeed, rigid.velocity.y);
         m_speed = move;
 
@@ -70,8 +78,10 @@ public class PlayerMovement : MonoBehaviour {
 
     public void SetMovementFalse()
     {
+        GetComponentInChildren<PlayerStat>().SetToOutOfBattle();
         rigid.isKinematic = true;
         m_amMoving = false;
         enabled = false;
+        m_walking = false;
     }
 }

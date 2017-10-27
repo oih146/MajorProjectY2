@@ -23,7 +23,12 @@ public class SoulRipEffect : AnimationEffectScript {
 
     IEnumerator WaitTillDeath()
     {
-        yield return new WaitUntil(() => !m_partSys.IsAlive(false));
+        var variable = m_partSys.emission;
+        variable.enabled = false;
+        yield return new WaitUntil(() => !m_partSys.isEmitting);
+        variable.enabled = true;
+        m_partSys.Stop();
+        m_animator.Play("Soul_Rip_Fin");
         m_rootHolder.SetActive(false);
         FinishedAnimation = true;
     }

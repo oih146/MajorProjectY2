@@ -331,7 +331,7 @@ public class TurnBasedScript : MonoBehaviour {
 
     void SetAttackButton(bool newActive)
     {
-        foreach(Button button in battleMenu.AttackButton.GetComponentsInChildren<Button>())
+        foreach(Button button in battleMenu.AttackButtons)
         {
             button.interactable = newActive;
         }
@@ -956,6 +956,8 @@ public class TurnBasedScript : MonoBehaviour {
 
             charSS.m_decidedAttack = false;
             charSS.m_decidedTarget = false;
+
+            charSS.SetToBattleIdle();
         }
 
         //Straight Characters given
@@ -982,6 +984,8 @@ public class TurnBasedScript : MonoBehaviour {
 
             echarSS.m_decidedAttack = false;
             echarSS.m_decidedTarget = false;
+
+            echarSS.SetToBattleIdle();
         }
         m_playerCount = 0;
         SetPlayers(friendlyPlayers);
@@ -1240,6 +1244,7 @@ public class TurnBasedScript : MonoBehaviour {
         if (didWin)
         {
             yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
+            friendlyObjects[0].SetToOutOfBattle();
             //yield return new WaitForSeconds(3f);
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
@@ -1368,8 +1373,6 @@ public class TurnBasedScript : MonoBehaviour {
     //Multiple hits on single person
     IEnumerator MultipleSingle(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
-        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
-        {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             if (attacker.m_ActiveWeapon.HasEffect)
             {
@@ -1386,7 +1389,10 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_ActiveWeapon.m_animEffect.StopEffect();
                 attacker.m_animator.SetBool("SpellBreak", true);
             }
+        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
+        {
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+            attacker.GetAnimScript().Attacking = false;
             if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
@@ -1395,13 +1401,12 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_ActiveWeapon.m_chargeTime));
                 defender.ReCheckHealth();
                 attacker.ReCheckHealth();
-                if (defender.Health <= 0)
-                    if (attacker.m_ActiveWeapon.HasConsequences)
-                        attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
             }
-            yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
         }
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        if (attacker.m_ActiveWeapon.HasConsequences)
+            attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
 
         m_attackDone = true;
     }

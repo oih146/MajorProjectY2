@@ -266,11 +266,14 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
+        string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         m_animator.Play("Hit");
         yield return new WaitUntil(() => GetAnimScript().TakeHit);
         GetAnimScript().ResetHit();
         Health -= damageToTake;
         ReCheckHealth();
+        yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
+        m_animator.Play(prevanimName);
     }
 
     //If the weapon allows player to heal
@@ -346,7 +349,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public void StartFadeDeath()
     {
-        m_animator.Play("Death");
+        m_animator.Play("Die");
         //gameObject.SetActive(false);
         //FadeDeath = true;
     }
@@ -423,5 +426,15 @@ public class CharacterStatSheet : MonoBehaviour {
             m_ActiveWeapon.m_animEffect.StopEffect();
         }
 
+    }
+
+    public void SetToBattleIdle()
+    {
+        m_animator.Play("Idle");
+    }
+
+    public void SetToOutOfBattle()
+    {
+        m_animator.Play("CalmIdle");
     }
 }

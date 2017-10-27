@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BattleMenuScript : MonoBehaviour {
 
-    public GameObject AttackButton;
+    public Button[] AttackButtons;
     public GameObject FleeButton;
     public GameObject EndTurnButton;
     public GameObject MagicButtonRoot;
