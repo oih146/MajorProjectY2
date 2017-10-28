@@ -21,12 +21,15 @@ public class SoulRipAttack : MagicAttack {
     {
         base.OnSelect(character);
 
+        m_animEffect.m_rootHolder.transform.position = character.m_playerToAttack.transform.position;
+
         character.m_animator.Play(m_animToPlay.name);
 
         m_animEffect.m_rootHolder.SetActive(true);
         m_animEffect.m_animator.Play(m_initalAnim.name);
+        m_animEffect.m_partSys.Play();
 
-        DelayAnimation(m_animEffect.m_animator, (int)ChargeTime.Magic);
+        DelayAnimation(m_animEffect.m_animator, (int)m_chargeTime);
     }
 
     public override void OnUse(CharacterStatSheet character)
@@ -52,9 +55,22 @@ public class SoulRipAttack : MagicAttack {
         m_animSpeed = anim.speed;
     }
 
-    public void TakeFromTimer(Animator anim, float delay)
+    public void TakeFromTimer(Animator anim, float percentage)
     {
-        m_animTime = (m_animTime - delay) / anim.GetCurrentAnimatorStateInfo(0).length;
+        AnimationClip clip = new AnimationClip();
+        bool foundclip = false; 
+        foreach(AnimationClip animClip in anim.runtimeAnimatorController.animationClips)
+        {
+            if(animClip.name == m_initalAnim.name)
+            {
+                clip = animClip;
+                foundclip = true;
+            }
+        }
+        if (foundclip)
+            m_animTime = percentage * clip.length;
+        else
+            Debug.Log("Error! Didn't find Soul Rip Animation Clip");
         //anim.SetTime((anim.GetTime() - delay) * anim.speed);
     }
 
@@ -73,5 +89,6 @@ public class SoulRipAttack : MagicAttack {
             m_animEffect.m_animator.SetTime(m_animTime);
             //m_animEffect.m_animator.Play(m_animEffect.m_anim.name);
             Debug.Log(m_animEffect.m_animator.speed);
+        m_animEffect.m_animator.Play(m_initalAnim.name);
     }
 }

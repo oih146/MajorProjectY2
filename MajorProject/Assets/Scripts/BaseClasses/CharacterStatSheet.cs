@@ -257,7 +257,7 @@ public class CharacterStatSheet : MonoBehaviour {
             } else if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
             {
                 SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
-                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, delay);
+                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, m_combatBar.GetPercentageComplete());
             }
         }
 
@@ -269,7 +269,6 @@ public class CharacterStatSheet : MonoBehaviour {
         string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         m_animator.Play("Hit");
         yield return new WaitUntil(() => GetAnimScript().TakeHit);
-        GetAnimScript().ResetHit();
         Health -= damageToTake;
         ReCheckHealth();
         yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
@@ -295,6 +294,7 @@ public class CharacterStatSheet : MonoBehaviour {
     //Check if this character is dead
     public bool DeathCheck()
     {
+        GetAnimScript().ResetHit();
         if (m_health <= 0)
         {
             m_isDead = true;
