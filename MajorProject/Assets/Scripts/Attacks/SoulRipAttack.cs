@@ -19,9 +19,10 @@ public class SoulRipAttack : MagicAttack {
 
     public override void OnSelect(CharacterStatSheet character)
     {
-        base.OnSelect(character);
 
-        m_animEffect.m_rootHolder.transform.position = character.m_playerToAttack.transform.position;
+        Vector3 temp = character.m_playerToAttack.transform.position;
+        temp.z = character.transform.position.z;
+        m_animEffect.m_rootHolder.transform.position = temp;
 
         character.m_animator.Play(m_animToPlay.name);
 
@@ -30,6 +31,8 @@ public class SoulRipAttack : MagicAttack {
         m_animEffect.m_partSys.Play();
 
         DelayAnimation(m_animEffect.m_animator, (int)m_chargeTime);
+
+        m_animEffect.OnSelect(character);
     }
 
     public override void OnUse(CharacterStatSheet character)
@@ -77,6 +80,10 @@ public class SoulRipAttack : MagicAttack {
     public override void OnPause()
     {
         Debug.Log("Pausing");
+        SoulRipEffect soulrip = (SoulRipEffect)m_animEffect;
+
+        soulrip.UnParentSoul();
+
         m_animSpeed = m_animEffect.m_animator.speed;
         m_animTime = m_animEffect.m_animator.GetTime();
         m_animEffect.m_animator.speed = 0;
@@ -85,7 +92,11 @@ public class SoulRipAttack : MagicAttack {
     public override void OnResume(CharacterStatSheet character)
     {
             Debug.Log("Restart");
-            m_animEffect.m_animator.speed = m_animSpeed;
+
+        SoulRipEffect soulrip = (SoulRipEffect)m_animEffect;
+
+        soulrip.ParentSoul(character);
+        m_animEffect.m_animator.speed = m_animSpeed;
             m_animEffect.m_animator.SetTime(m_animTime);
             //m_animEffect.m_animator.Play(m_animEffect.m_anim.name);
             Debug.Log(m_animEffect.m_animator.speed);

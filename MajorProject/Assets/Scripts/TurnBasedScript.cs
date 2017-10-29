@@ -1294,7 +1294,7 @@ public class TurnBasedScript : MonoBehaviour {
         {
             charSS.GetCombatBar().gameObject.SetActive(false);
             charSS.GetHealthBar().gameObject.SetActive(false);
-            charSS.m_animator.Stop();
+            //charSS.m_animator.Stop();
             if (DidFlee == true || isAllDisarmed)
                 charSS.StartFadeDeath();
         }

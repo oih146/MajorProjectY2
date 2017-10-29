@@ -47,10 +47,8 @@ public class SoulRipEffect : AnimationEffectScript {
     {
         base.OnSelect(character);
 
-        PlayerAnimScript playerAnim = (PlayerAnimScript)character.m_animScript;
-
-        m_targetForSoul.parent = playerAnim.CastHandPosition;
-        m_targetForSoul.localPosition = Vector3.zero;
+        ParentSoul(character);
+        //m_targetForSoul.position = playerAnim.CastHandPosition.position;
 
         //PlayEffect();
     }
@@ -61,10 +59,21 @@ public class SoulRipEffect : AnimationEffectScript {
 
         //m_soulSystem.Play();
 
+        ParentSoul(character);
+        //m_targetForSoul.position = playerAnim.CastHandPosition.position;
+
+    }
+
+    public void ParentSoul(CharacterStatSheet character)
+    {
         PlayerAnimScript playerAnim = (PlayerAnimScript)character.m_animScript;
 
         m_targetForSoul.parent = playerAnim.CastHandPosition;
         m_targetForSoul.localPosition = Vector3.zero;
+    }
 
+    public void UnParentSoul()
+    {
+        m_targetForSoul.parent = m_partSys.transform;
     }
 }

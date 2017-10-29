@@ -272,7 +272,8 @@ public class CharacterStatSheet : MonoBehaviour {
         Health -= damageToTake;
         ReCheckHealth();
         yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
-        m_animator.Play(prevanimName);
+        if(!m_isDead)
+            m_animator.Play(prevanimName);
     }
 
     //If the weapon allows player to heal
@@ -299,8 +300,8 @@ public class CharacterStatSheet : MonoBehaviour {
         {
             m_isDead = true;
             //play death anim
-            m_animator.Stop();
-            //StartFadeDeath();
+            //m_animator.Stop();
+            StartFadeDeath();
             return true;
         }
         return false;
