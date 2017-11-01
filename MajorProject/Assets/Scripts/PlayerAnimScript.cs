@@ -6,7 +6,7 @@ public class PlayerAnimScript : AnimScript {
 
     [SerializeField]
     private Transform m_castHandTransform;
-    public Vector3 CastHandPosition { get { return m_castHandTransform.position; } }
+    public Transform CastHandPosition { get { return m_castHandTransform; } }
 
     [SerializeField]
     private Transform m_swordBaseTransform;
@@ -15,7 +15,7 @@ public class PlayerAnimScript : AnimScript {
 
     public void SetToCastHandPosition(Vector3 position)
     {
-        position = CastHandPosition;
+        position = CastHandPosition.position;
     }
 
     public void SetToSwordPosition(Transform trans)
