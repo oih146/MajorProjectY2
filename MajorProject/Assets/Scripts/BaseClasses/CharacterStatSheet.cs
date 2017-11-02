@@ -257,7 +257,7 @@ public class CharacterStatSheet : MonoBehaviour {
             } else if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
             {
                 SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
-                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, delay);
+                attack.TakeFromTimer(m_ActiveWeapon.m_animEffect.m_animator, m_combatBar.GetPercentageComplete());
             }
         }
 
@@ -266,11 +266,14 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
+        string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
         m_animator.Play("Hit");
         yield return new WaitUntil(() => GetAnimScript().TakeHit);
-        GetAnimScript().ResetHit();
         Health -= damageToTake;
         ReCheckHealth();
+        yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
+        if(!m_isDead)
+            m_animator.Play(prevanimName);
     }
 
     //If the weapon allows player to heal
@@ -292,12 +295,13 @@ public class CharacterStatSheet : MonoBehaviour {
     //Check if this character is dead
     public bool DeathCheck()
     {
+        GetAnimScript().ResetHit();
         if (m_health <= 0)
         {
             m_isDead = true;
             //play death anim
-            m_animator.Stop();
-            //StartFadeDeath();
+            //m_animator.Stop();
+            StartFadeDeath();
             return true;
         }
         return false;
@@ -346,7 +350,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     public void StartFadeDeath()
     {
-        m_animator.Play("Death");
+        m_animator.Play("Die");
         //gameObject.SetActive(false);
         //FadeDeath = true;
     }
@@ -423,5 +427,15 @@ public class CharacterStatSheet : MonoBehaviour {
             m_ActiveWeapon.m_animEffect.StopEffect();
         }
 
+    }
+
+    public void SetToBattleIdle()
+    {
+        m_animator.Play("Idle");
+    }
+
+    public void SetToOutOfBattle()
+    {
+        m_animator.Play("CalmIdle");
     }
 }

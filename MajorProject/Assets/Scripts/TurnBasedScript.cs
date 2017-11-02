@@ -76,6 +76,9 @@ public class TurnBasedScript : MonoBehaviour {
     public bool WonBattleQ;
     private bool DidFlee = false;
     bool usingMagic = false;
+    bool usingAbility = false;
+    bool usingMelee = false;
+    int magicAbilityValue = 0;
     bool isAllDisarmed = false;
     private int m_playerCount;
     public CharacterStatSheet[] friendlyObjects = new CharacterStatSheet[0];
@@ -232,15 +235,6 @@ public class TurnBasedScript : MonoBehaviour {
 
     void ContinueFromPlayer()
     {
-        foreach(WeaponBase.WeaponEffect weapEffect in m_decidingCharacter.m_ActiveWeapon.weapEffects)
-        {
-            weapEffect.effect.Setup(m_decidingCharacter);
-        }
-        foreach(WeaponBase.WeaponEffect weapAbility in m_decidingCharacter.m_ActiveWeapon.weapAbility)
-        {
-            weapAbility.effect.Setup(m_decidingCharacter);
-        }
-
         if (usingMagic)
         {
             for (int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
@@ -251,11 +245,75 @@ public class TurnBasedScript : MonoBehaviour {
                     break;
                 }
             }
+
+            m_decidingCharacter.m_attackCharge = 0;
+            m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_spells[magicAbilityValue];
+            m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_chargeTime -
+                     m_decidingCharacter.GetStatistics().GetWillPowerCastTimeDecrease());
+            m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Custom;
+            m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Magic]);
+        }
+        else if(usingAbility)
+        {
+            m_decidingCharacter.m_attackCharge = 0;
+            m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_abilities[magicAbilityValue];
+            m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_chargeTime);
+            //m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)m_decidingCharacter.m_ActiveWeapon.m_strength]);
+            switch (m_decidingCharacter.m_ActiveWeapon.m_chargeTime)
+            {
+                case ChargeTime.Light:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+                case ChargeTime.Normal:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Medium]);
+                    break;
+                case ChargeTime.Heavy:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
+                    break;
+                default:
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+            }
+        }else if (usingMelee)
+        {
+            m_decidingCharacter.m_attackCharge = m_decidingCharacter.m_weapon.m_chargeTime;
+            m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_weapon;
+
+            m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_chargeTime);
+            switch (m_decidingCharacter.m_ActiveWeapon.m_chargeTime)
+            {
+                case ChargeTime.Light:
+                    m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Light;
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+                case ChargeTime.Normal:
+                    m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Normal;
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Medium]);
+                    break;
+                case ChargeTime.Heavy:
+                    m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Heavy;
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
+                    break;
+                default:
+                    m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Light;
+                    m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
+                    break;
+            }
+        }
+
+        foreach (WeaponBase.WeaponEffect weapEffect in m_decidingCharacter.m_ActiveWeapon.weapEffects)
+        {
+            weapEffect.effect.Setup(m_decidingCharacter);
+        }
+        foreach (WeaponBase.WeaponEffect weapAbility in m_decidingCharacter.m_ActiveWeapon.weapAbility)
+        {
+            weapAbility.effect.Setup(m_decidingCharacter);
         }
 
         m_decidingCharacter.m_ActiveWeapon.OnSelect(m_decidingCharacter);
         ResumeAttackEffects();
         usingMagic = false;
+        usingAbility = false;
         m_playerChoosing = false;
         SetPlayerButtons(false);
         SetCombatBarMovement(true);
@@ -331,7 +389,7 @@ public class TurnBasedScript : MonoBehaviour {
 
     void SetAttackButton(bool newActive)
     {
-        foreach(Button button in battleMenu.AttackButton.GetComponentsInChildren<Button>())
+        foreach(Button button in battleMenu.AttackButtons)
         {
             button.interactable = newActive;
         }
@@ -463,30 +521,10 @@ public class TurnBasedScript : MonoBehaviour {
     //must match enum of same name
     public void MeleeButton(int meleeType)
     {
+        usingMelee = true;
+        usingAbility = false;
         usingMagic = false;
         m_decidingCharacter.m_weapon.m_chargeTime = (ChargeTime)meleeType;
-        m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_weapon;
-        m_decidingCharacter.m_attackCharge = (ChargeTime)meleeType;
-        m_decidingCharacter.GetCombatBar().SlowDown(meleeType);
-        switch ((ChargeTime)meleeType)
-        {
-            case ChargeTime.Light:
-                m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Light;
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
-                break;
-            case ChargeTime.Normal:
-                m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Normal;
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Medium]);
-                break;
-            case ChargeTime.Heavy:
-                m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Heavy;
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
-                break;
-            default:
-                m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Light;
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
-                break;
-        }
         m_decidingCharacter.m_decidedAttack = true;
         if (m_decidingCharacter.m_decidedTarget == true)
         {
@@ -500,26 +538,10 @@ public class TurnBasedScript : MonoBehaviour {
     //Parameter decides which ability in array to use
     public void AbilityButtonPressed(int abilityIndex)
     {
+        usingMelee = false;
+        usingAbility = true;
         usingMagic = false;
-        m_decidingCharacter.m_attackCharge = 0;
-        m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_abilities[abilityIndex];
-        m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_chargeTime);
-        //m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)m_decidingCharacter.m_ActiveWeapon.m_strength]);
-        switch (m_decidingCharacter.m_ActiveWeapon.m_chargeTime)
-        {
-            case ChargeTime.Light:
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
-                break;
-            case ChargeTime.Normal:
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Medium]);
-                break;
-            case ChargeTime.Heavy:
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
-                break;
-            default:
-                m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Light]);
-                break;
-        }
+        magicAbilityValue = abilityIndex;
         m_decidingCharacter.m_decidedAttack = true;
 
         if ((!m_decidingCharacter.m_abilities[abilityIndex].DoesAttackAll() && m_decidingCharacter.m_decidedTarget == true) ||
@@ -537,13 +559,10 @@ public class TurnBasedScript : MonoBehaviour {
         PlayerStat player = (PlayerStat)m_decidingCharacter;
         if (player.m_spellsAvaliable > 0)
         {
-            m_decidingCharacter.m_attackCharge = 0;
-            m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_spells[magicSpell];
-            m_decidingCharacter.GetCombatBar().SlowDown((int)m_decidingCharacter.m_ActiveWeapon.m_chargeTime -
-                     m_decidingCharacter.GetStatistics().GetWillPowerCastTimeDecrease());
-            m_decidingCharacter.m_ActiveWeapon.m_damageSet = AttackDamage.Custom;
-            m_decidingCharacter.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Magic]);
+            magicAbilityValue = magicSpell;
             m_decidingCharacter.m_decidedAttack = true;
+            usingMelee = false;
+            usingAbility = false;
             usingMagic = true;
             if ((!m_decidingCharacter.m_spells[magicSpell].DoesAttackAll() && m_decidingCharacter.m_playerToAttack != null) ||
             m_decidingCharacter.m_spells[magicSpell].DoesAttackAll())
@@ -956,6 +975,8 @@ public class TurnBasedScript : MonoBehaviour {
 
             charSS.m_decidedAttack = false;
             charSS.m_decidedTarget = false;
+
+            charSS.SetToBattleIdle();
         }
 
         //Straight Characters given
@@ -982,6 +1003,8 @@ public class TurnBasedScript : MonoBehaviour {
 
             echarSS.m_decidedAttack = false;
             echarSS.m_decidedTarget = false;
+
+            echarSS.SetToBattleIdle();
         }
         m_playerCount = 0;
         SetPlayers(friendlyPlayers);
@@ -1240,6 +1263,7 @@ public class TurnBasedScript : MonoBehaviour {
         if (didWin)
         {
             yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
+            friendlyObjects[0].SetToOutOfBattle();
             //yield return new WaitForSeconds(3f);
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
@@ -1270,7 +1294,7 @@ public class TurnBasedScript : MonoBehaviour {
         {
             charSS.GetCombatBar().gameObject.SetActive(false);
             charSS.GetHealthBar().gameObject.SetActive(false);
-            charSS.m_animator.Stop();
+            //charSS.m_animator.Stop();
             if (DidFlee == true || isAllDisarmed)
                 charSS.StartFadeDeath();
         }
@@ -1368,8 +1392,6 @@ public class TurnBasedScript : MonoBehaviour {
     //Multiple hits on single person
     IEnumerator MultipleSingle(CharacterStatSheet attacker, CharacterStatSheet defender)
     {
-        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
-        {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             if (attacker.m_ActiveWeapon.HasEffect)
             {
@@ -1386,7 +1408,10 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_ActiveWeapon.m_animEffect.StopEffect();
                 attacker.m_animator.SetBool("SpellBreak", true);
             }
+        for (int i = 0; i < attacker.m_ActiveWeapon.m_howManyHits; i++)
+        {
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+            attacker.GetAnimScript().Attacking = false;
             if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
             {
                 attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
@@ -1395,13 +1420,12 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_ActiveWeapon.m_chargeTime));
                 defender.ReCheckHealth();
                 attacker.ReCheckHealth();
-                if (defender.Health <= 0)
-                    if (attacker.m_ActiveWeapon.HasConsequences)
-                        attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
             }
-            yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
         }
+        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        if (attacker.m_ActiveWeapon.HasConsequences)
+            attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
 
         m_attackDone = true;
     }
@@ -1659,7 +1683,7 @@ public class TurnBasedScript : MonoBehaviour {
         if (attacker.m_ActiveWeapon.HasEffect)
         {
             attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = defender.transform.position;
-            StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
+            attacker.m_ActiveWeapon.m_animEffect.PlayEffect();
             attacker.m_animator.SetBool("SpellBreak", false);
             if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
             {
@@ -1688,7 +1712,9 @@ public class TurnBasedScript : MonoBehaviour {
             if(defender.Health <= 0)
                 if (attacker.m_ActiveWeapon.HasConsequences)
                     attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+            yield return new WaitUntil(() => defender.GetAnimScript().TakeHit);
         }
+
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
         m_attackDone = true;

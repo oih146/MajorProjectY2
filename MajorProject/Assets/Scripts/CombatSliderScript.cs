@@ -12,6 +12,7 @@ public class CombatSliderScript : MonoBehaviour {
     public float m_timeDivider = 1;
     public float m_chargeTimeReduction = 0;
     public float m_speed = 0;
+    public float m_percentageGetter = 0;
     float stopCatcher;
     float m_time;
     //public float timer;
@@ -54,6 +55,7 @@ public class CombatSliderScript : MonoBehaviour {
             m_time += Time.deltaTime / m_timeDivider;
             float timeSinceLerp = m_time - m_timeSinceStart;
             float percentageComplete = timeSinceLerp / m_speed;
+            m_percentageGetter = percentageComplete;
 
             m_combatSlider.value = Mathf.Lerp(0, m_combatSlider.maxValue, percentageComplete);
             //timer += Time.deltaTime;
@@ -74,6 +76,11 @@ public class CombatSliderScript : MonoBehaviour {
         //    take = !take;
         //    CombatActive = false;
         //}
+    }
+
+    public float GetPercentageComplete()
+    {
+        return m_percentageGetter;
     }
 
     public void TakeFromTimer(float taking)
