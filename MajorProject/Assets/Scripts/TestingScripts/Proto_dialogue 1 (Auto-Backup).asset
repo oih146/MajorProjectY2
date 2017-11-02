@@ -9567,7 +9567,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1126.8608
+        x: 1124.8608
         y: 462.53162
         width: 160
         height: 30
@@ -9615,9 +9615,13 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
+      - title: Response Menu Sequence
+        value: 
+        type: 0
+        typeString: 
       conversationID: 7
       isRoot: 0
       isGroup: 0
@@ -9635,7 +9639,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1130.8606
+        x: 1132.0583
         y: 519.5316
         width: 160
         height: 30
@@ -10287,7 +10291,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -10883,7 +10887,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -10903,7 +10907,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 618.8607
+        x: 616.8607
         y: 735.5316
         width: 160
         height: 30
@@ -11248,7 +11252,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -11803,7 +11807,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BanditLeader)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 8
@@ -12251,7 +12255,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BanditLeader)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 8
@@ -12393,7 +12397,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BanditLeader)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 8
@@ -12461,7 +12465,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(AddToConversationEnd,,BanditLeader)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 8
@@ -12482,7 +12486,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 167.1134
-        y: 326.70102
+        y: 325.6021
         width: 160
         height: 30
   syncInfo:

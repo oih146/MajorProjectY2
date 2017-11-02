@@ -38,6 +38,7 @@ public class CameraLookUp : MonoBehaviour {
         if(percentage >= 1f)
         {
             m_lerping = false;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 

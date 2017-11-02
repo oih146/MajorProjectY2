@@ -54,4 +54,21 @@ public class BattleTrigger : MonoBehaviour {
             enabled = false;
         }
     }
+
+    public void AddToConversationEnd()
+    {
+        ConversationEvents.OnConversationEnd += EnableThis;
+    }
+
+    public void EnableThis()
+    {
+        StartCoroutine(StartBattle());
+    }
+
+    IEnumerator StartBattle()
+    {
+        yield return new WaitUntil(() => !FindObjectOfType<PixelCrushers.DialogueSystem.DialogueSystemController>().IsConversationActive);
+        GetComponent<Collider>().enabled = true;
+        ConversationEvents.OnConversationEnd -= EnableThis;
+    }
 }

@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class UIButtonSlider : MonoBehaviour {
 
-    private Vector3 m_originalPos;
     public bool m_isOpen = false;
     public bool m_lerping = false;
+    public UnityEngine.UI.Button m_tabCloser;
     private float m_timeSinceStart = 0;
     public static float m_lerpSpeed;
     private float m_percentage = 1;
@@ -14,15 +14,24 @@ public class UIButtonSlider : MonoBehaviour {
     Animator m_animator;
     RectTransform rect;
 
+    public Transform m_originalPos;
     public Transform m_LerpPos;
 
 	// Use this for initialization
 	void Start () {
         m_animator = gameObject.GetComponent<Animator>();
         rect = GetComponent<RectTransform>();
-        m_originalPos = rect.position;
+    }
 
-	}
+    void OnEnable()
+    {
+        m_tabCloser.onClick.AddListener(SetOpenClosed);
+    }
+
+    void OnDisable()
+    {
+        m_tabCloser.onClick.RemoveListener(SetOpenClosed);
+    }
 
     void Update()
     {
@@ -32,8 +41,8 @@ public class UIButtonSlider : MonoBehaviour {
             float timeInLerp = m_time - m_timeSinceStart;
             m_percentage = timeInLerp / m_lerpSpeed;
             rect.position = Vector3.Lerp(
-                                (m_isOpen ? m_LerpPos.position : m_originalPos),
-                                (m_isOpen ? m_originalPos : m_LerpPos.position),
+                                (m_isOpen ? m_LerpPos.position : m_originalPos.position),
+                                (m_isOpen ? m_originalPos.position : m_LerpPos.position),
                                 m_percentage
                                 );
             if (m_percentage >= 1f)
@@ -50,7 +59,6 @@ public class UIButtonSlider : MonoBehaviour {
         m_timeSinceStart = Time.time;
         if (m_percentage < 1)
             m_time += ((1 - m_percentage) * m_lerpSpeed);
-
         m_lerping = true;
     }
 
@@ -58,7 +66,9 @@ public class UIButtonSlider : MonoBehaviour {
     {
         m_isOpen = !m_isOpen;
         if (!m_isOpen)
+        {
             UISliderKeeper.Instance.ProcessSlideRequest(this);
+        }
         else
         {
             UISliderKeeper.Instance.EmptyCurrentSlider();
