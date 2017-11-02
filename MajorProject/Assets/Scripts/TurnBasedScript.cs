@@ -949,6 +949,7 @@ public class TurnBasedScript : MonoBehaviour {
     //Setups battles
     public void StartBattle(CharacterStatSheet[] friendlyPlayers, EnemyBase[] enemyPlayers)
     {
+        BattleOver = false;
         SetCombatUI(true);
         m_playerMoving = false;
         m_playerChoosing = false;
@@ -1303,6 +1304,8 @@ public class TurnBasedScript : MonoBehaviour {
 
         MusicSwitcher.Instance.StartLerping();
 
+        OnBattleEnd();
+
     }
 
     //Sets pointer
@@ -1366,7 +1369,8 @@ public class TurnBasedScript : MonoBehaviour {
                 yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
                 yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
             }
-            //attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+            if(attacker.m_ActiveWeapon.m_animEffect.m_needsToBeStopped)
+                attacker.m_ActiveWeapon.m_animEffect.StopEffect();
             attacker.m_animator.SetBool("SpellBreak", true);
         }
 

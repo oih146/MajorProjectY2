@@ -29,13 +29,21 @@ public class ForwardBackground : MonoBehaviour {
     public float m_lerpSpeed;
     float m_timeSinceStart;
     public bool m_lerping;
+    public bool m_lerpOthers;
     float m_initalYPos;
     public float m_lerpAmount;
     float m_toYPos;
+    float[] initalPoses;
+    float[] toPoses;
+    List<GameObject> m_downwardBackgrounds;
+    List<GameObject> m_upwardBackgrounds;
+
 
     void Awake()
     {
         Instance = this;
+        initalPoses = new float[m_backgrounds.Length];
+        toPoses = new float[m_backgrounds.Length];
     }
 
 	// Use this for initialization
@@ -47,20 +55,23 @@ public class ForwardBackground : MonoBehaviour {
 	void Update () {
         if (m_lerping)
         {
+            if(m_lerpOthers)
+                LerpOthers();
+
             float timeSinceLerp = Time.time - m_timeSinceStart;
             float percentage = timeSinceLerp / m_lerpSpeed;
 
-            Vector3 temp = m_backgrounds[m_currentfrontBackground].transform.position;
+            Vector3 temp = m_backgrounds[m_currentfrontBackground].transform.localPosition;
             temp.y = Mathf.Lerp(m_initalYPos, m_toYPos, percentage);
-            m_backgrounds[m_currentfrontBackground].transform.position = temp;
+            m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
             m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
             if (percentage >= 1f)
             {
                 m_lerping = false;
                 MoveForward();
                 temp.z += m_backgrounds.Length * 0.1f;
-                temp.y = m_initalYPos;
-                m_backgrounds[m_currentfrontBackground].transform.position = temp;
+                temp.y = -(m_backgrounds.Length * 0.1f);
+                m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
                 m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
                 CurrentFrontBackground++;
 
@@ -70,9 +81,15 @@ public class ForwardBackground : MonoBehaviour {
 
     public void StartLerp()
     {
-        m_initalYPos = m_backgrounds[m_currentfrontBackground].transform.position.y;
-        m_toYPos = m_backgrounds[m_currentfrontBackground].transform.position.y + m_lerpAmount;
+        m_initalYPos = m_backgrounds[m_currentfrontBackground].transform.localPosition.y;
+        m_toYPos = m_backgrounds[m_currentfrontBackground].transform.localPosition.y + m_lerpAmount;
         m_timeSinceStart = Time.time;
+        for (int i = 0; i < m_backgrounds.Length; i++)
+        {
+            initalPoses[i] = m_backgrounds[i].transform.localPosition.y;
+            toPoses[i] = m_backgrounds[i].transform.localPosition.y + 0.10000f;
+        }
+        m_lerpOthers = true;
         m_lerping = true;
     }
 
@@ -80,9 +97,29 @@ public class ForwardBackground : MonoBehaviour {
     {
         foreach(GameObject game in m_backgrounds)
         {
-            Vector3 temp = game.transform.position;
+            Vector3 temp = game.transform.localPosition;
             temp.z -= 0.1f;
-            game.transform.position = temp;
+            game.transform.localPosition = temp;
+        }
+    }
+
+    void LerpOthers()
+    {
+
+        for (int i = 0; i < m_backgrounds.Length; i++)
+        {
+            if (m_backgrounds[i] != m_backgrounds[m_currentfrontBackground])
+            {
+                float timeSinceLerp = Time.time - m_timeSinceStart;
+                float percentage = timeSinceLerp / m_lerpSpeed;
+
+                Vector3 temp = m_backgrounds[i].transform.localPosition;
+                temp.y = Mathf.Lerp(initalPoses[i], toPoses[i], percentage);
+                m_backgrounds[i].transform.localPosition = temp;
+                m_backgrounds[i].GetComponent<DualBackgrounds>().CopyOver();
+                if (percentage >= 1f)
+                    m_lerpOthers = false;
+            }
         }
     }
 }

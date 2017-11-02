@@ -213,11 +213,13 @@ public class CharacterStatSheet : MonoBehaviour {
         if (damageToTake > 0)
         {
             Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
-            //m_playerToAttack.m_animator.Play();
-            //yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
+            //m_playerToAttack.m_animator.Play(m_ActiveWeapon.m_animToPlay.name);
+            yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
+            CounterAttack ca = (CounterAttack)m_playerToAttack.m_ActiveWeapon;
+            m_playerToAttack.m_animator.Play(ca.m_counterMotion.name);
+            yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
             Health -= damageToTake;
             ReCheckHealth();
-            yield return new WaitForSeconds(0.0f);
         }
     }
 
@@ -267,11 +269,17 @@ public class CharacterStatSheet : MonoBehaviour {
     IEnumerator TakeHit(float damageToTake)
     {
         string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-        m_animator.Play("Hit");
-        yield return new WaitUntil(() => GetAnimScript().TakeHit);
+        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+        {
+            m_animator.Play("Hit");
+            yield return new WaitUntil(() => GetAnimScript().TakeHit);
+        }
         Health -= damageToTake;
         ReCheckHealth();
-        yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
+        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+        {
+            yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
+        }
         if(!m_isDead)
             m_animator.Play(prevanimName);
     }

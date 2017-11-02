@@ -87,7 +87,7 @@ public class GameTime : MonoBehaviour {
             AddDays(toAdd);
         else
         {
-            StartLerp((amount / 24.0f) * 360);
+            StartLerp(((amount / 24.0f) * 360) /5);
             UpdateTimeText();
         }
     }
@@ -95,7 +95,7 @@ public class GameTime : MonoBehaviour {
     public void AddDays(int amount)
     {
         m_days += amount;
-        StartLerp((amount / 24) * 360);
+        StartLerp(((amount / 24.0f) * 360) / 5);
     }
 
     //For Sequence on Dialogue System
