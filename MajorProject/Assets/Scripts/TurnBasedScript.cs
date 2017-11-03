@@ -301,10 +301,10 @@ public class TurnBasedScript : MonoBehaviour {
             }
         }
 
-        foreach (WeaponBase.WeaponEffect weapEffect in m_decidingCharacter.m_ActiveWeapon.weapEffects)
-        {
-            weapEffect.effect.Setup(m_decidingCharacter);
-        }
+        //foreach (WeaponBase.WeaponEffect weapEffect in m_decidingCharacter.m_ActiveWeapon.weapEffects)
+        //{
+        //    weapEffect.effect.Setup(m_decidingCharacter);
+        //}
         foreach (WeaponBase.WeaponEffect weapAbility in m_decidingCharacter.m_ActiveWeapon.weapAbility)
         {
             weapAbility.effect.Setup(m_decidingCharacter);
@@ -1377,10 +1377,10 @@ public class TurnBasedScript : MonoBehaviour {
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
         {
-            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
+            StartCoroutine(attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
                 ((attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1),
-                attacker.m_ActiveWeapon.m_chargeTime));
+                attacker.m_ActiveWeapon.m_chargeTime)));
             defender.ReCheckHealth();
             attacker.ReCheckHealth();
             if (defender.Health <= 0)

@@ -26,4 +26,9 @@ public class CinematicsHolder : MonoBehaviour {
         m_player.transform.localEulerAngles = new Vector3(m_player.transform.localEulerAngles.x, (m_player.transform.localEulerAngles.y == 0 ? 180 : 0), m_player.transform.localEulerAngles.z);
         m_player.gameObject.transform.localScale = new Vector3(m_player.transform.localScale.x, m_player.transform.localScale.y, -m_player.transform.localScale.z);
     }
+
+    public void ParentCameraNull()
+    {
+        Camera.main.transform.parent = null;
+    }
 }

@@ -12646,7 +12646,9 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: "SendMessage(ParentCameraNull,,Cinematics)@0; SendMessage(SetMovementTrue,,Player
+          1)@0; SendMessage(SetSpeed,25,Player 1)@0; SendMessage(SetSpeed,3.5,Empress
+          Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main Camera)@5; Delay(5.0)@5; "
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -12672,7 +12674,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 551.6495
+        x: 547.6495
         y: 106.08247
         width: 160
         height: 30

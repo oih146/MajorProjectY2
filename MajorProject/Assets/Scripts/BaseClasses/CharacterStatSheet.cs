@@ -213,11 +213,9 @@ public class CharacterStatSheet : MonoBehaviour {
         if (damageToTake > 0)
         {
             Debug.Log(gameObject.name + " took Counter Damage: " + damageToTake);
+            CharacterStatSheet counterAttacker = m_playerToAttack;
             //m_playerToAttack.m_animator.Play(m_ActiveWeapon.m_animToPlay.name);
-            yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
-            CounterAttack ca = (CounterAttack)m_playerToAttack.m_ActiveWeapon;
-            m_playerToAttack.m_animator.Play(ca.m_counterMotion.name);
-            yield return new WaitUntil(() => m_playerToAttack.m_animScript.Attacking);
+            yield return new WaitUntil(() => counterAttacker.m_animScript.Attacking);
             Health -= damageToTake;
             ReCheckHealth();
         }
@@ -252,7 +250,7 @@ public class CharacterStatSheet : MonoBehaviour {
             if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
             {
                 GetEffectArray()[(int)eEffects.CounterStance].Use(this);
-                CounterAttack attack = new CounterAttack();
+                CounterAttack attack = (CounterAttack)m_ActiveWeapon;
                 attack.SecondaryUse(this);
 
                 return GetEffectArray()[(int)eEffects.CounterStance].Strength;
@@ -269,19 +267,19 @@ public class CharacterStatSheet : MonoBehaviour {
     IEnumerator TakeHit(float damageToTake)
     {
         string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
-        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+        if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             m_animator.Play("Hit");
             yield return new WaitUntil(() => GetAnimScript().TakeHit);
         }
         Health -= damageToTake;
         ReCheckHealth();
-        if (GetEffectArray()[(int)eEffects.CounterStance].IsActive)
+        if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
+            if (!m_isDead)
+                m_animator.Play(prevanimName);
         }
-        if(!m_isDead)
-            m_animator.Play(prevanimName);
     }
 
     //If the weapon allows player to heal
@@ -367,7 +365,6 @@ public class CharacterStatSheet : MonoBehaviour {
     public void AddEffect(StatusBase statVars)
     {
         statVars.OnApply(this);
-
     }
 
     //Called at the end of every turn during combat, updates effects

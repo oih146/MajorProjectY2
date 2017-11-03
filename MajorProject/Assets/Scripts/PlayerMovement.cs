@@ -84,4 +84,14 @@ public class PlayerMovement : MonoBehaviour {
         enabled = false;
         m_walking = false;
     }
+
+    public void SetSpeed(string newSpeed)
+    {
+        int intspeed;
+        if(int.TryParse(newSpeed, out intspeed))
+        {
+            maxSpeed = intspeed;
+        }
+    }
+
 }
