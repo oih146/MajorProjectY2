@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class WolvesStat : EnemyBase {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-
 
     public override void DecideTarget(CharacterStatSheet[] possibleTargets)
     {
@@ -22,15 +12,18 @@ public class WolvesStat : EnemyBase {
 
     public override void DecideAttack()
     {
-        int m_chanceForHowl = 0;
+        m_animator.SetBool("Disarming", false);
+        int m_chanceForHowl = 30;
         if(m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
         {
-            m_chanceForHowl = 30;
+            m_chanceForHowl += 60;
         }
 
         if (Random.Range(0, 100) <= m_chanceForHowl)
         {
             m_ActiveWeapon = m_abilities[0];
+            Debug.Log("Howling");
+            m_animator.SetBool("Disarming", true);
         }
         else
         {

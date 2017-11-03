@@ -1766,7 +1766,7 @@ public class TurnBasedScript : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
-        yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
+        //yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name) || attacker.m_ActiveWeapon.m_animToPlay.name == "Riposte_Idle");
 
         m_attackDone = true;
     }
