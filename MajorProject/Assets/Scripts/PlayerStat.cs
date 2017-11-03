@@ -102,7 +102,7 @@ public class PlayerStat : CharacterStatSheet {
     void Start () {
         Starts();
         //AddToOrderChaos(5);
-        AddToOrderChaos(-30);
+        //AddToOrderChaos(-30);
         //AddToOrderChaos(-30);
         NotificationManager.Instance.PushNotificationBlock();
         GenerateWillPower();

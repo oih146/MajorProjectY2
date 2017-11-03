@@ -453,7 +453,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Walk
+  m_Name: Walk2
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -524,7 +524,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Walk2
+  m_Name: Walk
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -767,7 +767,7 @@ AnimatorStateMachine:
     m_Position: {x: 204, y: 288, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102425159566212998}
-    m_Position: {x: -252, y: 132, z: 0}
+    m_Position: {x: 180, y: 408, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102720698535089086}
     m_Position: {x: -228, y: 228, z: 0}
@@ -788,7 +788,7 @@ AnimatorStateMachine:
     m_Position: {x: 192, y: 348, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102717286819249150}
-    m_Position: {x: 180, y: 408, z: 0}
+    m_Position: {x: -216, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102743716076787596}
     m_Position: {x: 36, y: 216, z: 0}
