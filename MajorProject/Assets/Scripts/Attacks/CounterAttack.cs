@@ -48,6 +48,8 @@ public class CounterAttack : MagicAttack {
     public override void OnEnd(CharacterStatSheet character)
     {
         base.OnEnd(character);
+
+        character.SetToBattleIdle();
     }
 
 }
