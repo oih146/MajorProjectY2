@@ -284,6 +284,7 @@
     <Compile Include="Assets\Scripts\BattleMenuScript.cs" />
     <Compile Include="Assets\Scripts\BattleTrigger.cs" />
     <Compile Include="Assets\Scripts\BumpUp.cs" />
+    <Compile Include="Assets\Scripts\CameraLookAcross.cs" />
     <Compile Include="Assets\Scripts\CameraLookUp.cs" />
     <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="Assets\Scripts\TestingScripts\TestingTransitions.cs" />
     <Compile Include="Assets\Scripts\TextScrawl.cs" />
     <Compile Include="Assets\Scripts\TurnBasedScript.cs" />
+    <Compile Include="Assets\Scripts\TurnOffMovement.cs" />
     <Compile Include="Assets\Scripts\UI\Button.cs" />
     <Compile Include="Assets\Scripts\UI\Credits.cs" />
     <Compile Include="Assets\Scripts\UI\MainMenu.cs" />

@@ -50,6 +50,9 @@ public class StatusBase : ScriptableObject {
     public virtual void OnApply(CharacterStatSheet applyTo)
     {
         applyTo.GetEffectArray()[(int)m_effectType] = this;
+        //applyTo.GetEffectArray()[(int)m_effectType].m_effectType = this.m_effectType;
+        //applyTo.GetEffectArray()[(int)m_effectType].m_strength = this.Strength;
+        //applyTo.GetEffectArray()[(int)m_effectType].m_timeActive = this.m_timeActive;
     }
 
     public virtual void Remove(CharacterStatSheet removeFrom)

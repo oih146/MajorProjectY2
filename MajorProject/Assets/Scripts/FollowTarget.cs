@@ -47,4 +47,13 @@ public class FollowTarget : MonoBehaviour {
         }
 
 	}
+
+    public void SetSpeed(string newSpeed)
+    {
+        float intspeed;
+        if(float.TryParse(newSpeed, out intspeed))
+        {
+            moveSpeed = intspeed;
+        }
+    }
 }
