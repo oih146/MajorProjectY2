@@ -30,7 +30,7 @@ public class GameTime : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         UpdateTimeText();
-        AddHours(14);
+        //AddHours(14);
 	}
 	
 	// Update is called once per frame
