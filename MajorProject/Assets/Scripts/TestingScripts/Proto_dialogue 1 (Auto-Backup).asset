@@ -2810,7 +2810,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1255.7731
+        x: 1256.7439
         y: 370
         width: 160
         height: 30
@@ -3031,7 +3031,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 692.88654
-        y: 415.36084
+        y: 414.38995
         width: 160
         height: 30
     - id: 12
@@ -3105,7 +3105,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 1253.7113
-        y: 420
+        y: 420.9709
         width: 160
         height: 30
     - id: 13
@@ -13419,7 +13419,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(DisableMovement,,Player1)@0;
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13504,7 +13504,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13572,7 +13572,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13640,7 +13640,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9

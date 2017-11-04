@@ -10,6 +10,7 @@ public class ConversationEvents : MonoBehaviour {
     public static event OnConversationEvent OnConversationEnd;
     public static event OnConversationEvent OnConversationStart;
     public static event OnConversationEvent AfterPlayerResponse;
+    public static event OnConversationEvent AfterConversationLineEnd;
     public static int m_playerResponseNumber = 0;
 
     void Awake()
@@ -49,6 +50,14 @@ public class ConversationEvents : MonoBehaviour {
         if(AfterPlayerResponse != null)
         {
             AfterPlayerResponse();
+        }
+    }
+
+    public void CallAfterConversationLineEnd()
+    {
+        if(AfterConversationLineEnd != null)
+        {
+            AfterConversationLineEnd();
         }
     }
 

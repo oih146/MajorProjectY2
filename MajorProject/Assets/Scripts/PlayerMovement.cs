@@ -14,7 +14,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool m_autoMove;
     Rigidbody rigid;
 
-    void Awake()
+    void OnEnable()
     {
         Instance = this;
         CharacterStatSheet.m_InteruptMultiplier = m_InterruptBase;
@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour {
         ConversationEvents.OnConversationEnd += SetMovementTrue;
     }
 
-    void OnDestroy()
+    void OnDisable()
     {
         ConversationEvents.OnConversationStart -= SetMovementFalse;
         ConversationEvents.OnConversationEnd -= SetMovementTrue;
@@ -92,6 +92,11 @@ public class PlayerMovement : MonoBehaviour {
         {
             maxSpeed = intspeed;
         }
+    }
+
+    public void DisableMovement()
+    {
+        enabled = false;
     }
 
 }

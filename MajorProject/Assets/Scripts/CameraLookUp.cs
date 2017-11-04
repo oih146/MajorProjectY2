@@ -14,7 +14,6 @@ public class CameraLookUp : MonoBehaviour {
 
     void Start()
     {
-        m_initalYPos = m_camera.transform.eulerAngles.y;
     }
 
     void Update()
@@ -45,6 +44,8 @@ public class CameraLookUp : MonoBehaviour {
 
     public void StartLerp()
     {
+        m_initalYPos = m_camera.transform.eulerAngles.y;
+        BattleMenuScript.Instance.gameObject.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
         m_timeSinceStart = Time.time;
         m_lerping = true;
     }

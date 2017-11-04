@@ -17,7 +17,7 @@ public class ParallaxBackground : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-		if(PlayerMovement.m_amMoving)
+        if (PlayerMovement.m_amMoving && m_target.transform.parent != null)
         {
             Vector3 buff = gameObject.transform.position;
             buff.x += (PlayerMovement.m_speed * m_moveSpeed);
@@ -31,7 +31,7 @@ public class ParallaxBackground : MonoBehaviour {
 
     void Update()
     {
-        if(PlayerMovement.m_amMoving)
+        if(PlayerMovement.m_amMoving || m_target.transform.parent == null)
             LeapFrog();
     }
 
