@@ -18,11 +18,9 @@ public class PlayerMovement : MonoBehaviour {
     {
         Instance = this;
         CharacterStatSheet.m_InteruptMultiplier = m_InterruptBase;
-        ConversationEvents.OnConversationStart += SetMovementFalse;
-        ConversationEvents.OnConversationEnd += SetMovementTrue;
     }
 
-    void OnDisable()
+    public void RemoveEvents()
     {
         ConversationEvents.OnConversationStart -= SetMovementFalse;
         ConversationEvents.OnConversationEnd -= SetMovementTrue;
@@ -30,6 +28,8 @@ public class PlayerMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        ConversationEvents.OnConversationStart += SetMovementFalse;
+        ConversationEvents.OnConversationEnd += SetMovementTrue;
         rigid = gameObject.GetComponent<Rigidbody>();
         rigid.useGravity = false;
         SetMovement(false);
