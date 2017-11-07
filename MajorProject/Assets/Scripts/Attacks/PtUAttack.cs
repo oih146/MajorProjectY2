@@ -13,4 +13,12 @@ public class PtUAttack : MagicAttack {
 	void Update () {
 		
 	}
+
+    public override void OnEnd(CharacterStatSheet character)
+    {
+        base.OnEnd(character);
+
+        PtUEffect ptueffect = (PtUEffect)m_animEffect;
+        ptueffect.StopEffect();
+    }
 }

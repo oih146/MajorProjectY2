@@ -24,7 +24,7 @@ public class BanditLord : EnemyBase {
         int m_chanceForRiposte = 0;
         if (m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
         {
-            m_chanceForRiposte = 30;
+            m_chanceForRiposte = 100;
         }
 
         if (Random.Range(0, 100) <= m_chanceForRiposte)
@@ -84,5 +84,7 @@ public class BanditLord : EnemyBase {
                 break;
         }
         m_decidedAttack = true;
+
+        m_ActiveWeapon.OnSelect(this);
     }
 }

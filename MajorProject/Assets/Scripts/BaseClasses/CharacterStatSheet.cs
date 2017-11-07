@@ -196,6 +196,8 @@ public class CharacterStatSheet : MonoBehaviour {
         for (int i = 0; i < GetEffectArray().Length; i++)
         {
             //Destroy(GetEffectArray()[i]);
+            if (GetEffectArray()[i] != null)
+                GetEffectArray()[i].Remove(this);
             GetEffectArray()[i] = (StatusBase)ScriptableObject.CreateInstance("StatusBase");
         }
         Burning = false;
