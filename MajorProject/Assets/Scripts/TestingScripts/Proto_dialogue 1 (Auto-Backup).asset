@@ -2461,7 +2461,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SendMessage(AttachToEvents,,BanditGroup)@{{end}}
         type: 0
         typeString: 
       conversationID: 2

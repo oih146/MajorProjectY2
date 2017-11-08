@@ -22,7 +22,7 @@ public class BanditMoveScript : MidConversationEvent {
         m_xToMoveTo = m_MoveOnXAxis.position.x;
 	}
 
-    void OnEnable()
+    void AttachToEvents()
     {
         ConversationEvents.AfterConversationLineEnd += MakeBanditsMove;
         ConversationEvents.AfterPlayerResponse += MakeBanditsMove;
