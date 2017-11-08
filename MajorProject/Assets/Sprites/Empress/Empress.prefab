@@ -1554,6 +1554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4673778493353798}
   - component: {fileID: 114535946759198876}
+  - component: {fileID: 95397400581960298}
   m_Layer: 0
   m_Name: Empress
   m_TagString: Untagged
@@ -3214,7 +3215,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1150939923444874}
-  m_LocalRotation: {x: -0.000000005268356, y: 3.2474009e-15, z: 0.99713695, w: -0.07561642}
+  m_LocalRotation: {x: -0.0000000052683564, y: 3.247401e-15, z: 0.997137, w: -0.07561643}
   m_LocalPosition: {x: -0.000007557852, y: 0.99999905, z: -0.0000000018591602}
   m_LocalScale: {x: 0.9680028, y: 0.9680028, z: 0.96800244}
   m_Children: []
@@ -4824,6 +4825,23 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1442710438526734}
   m_Mesh: {fileID: 4300000, guid: 44a146e7ebf6da64a91fb048f0129b1c, type: 2}
+--- !u!95 &95397400581960298
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1620427714350360}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5f40578650ebce4478f7a56ccb517bce, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114012067803159258
 MonoBehaviour:
   m_ObjectHideFlags: 1
