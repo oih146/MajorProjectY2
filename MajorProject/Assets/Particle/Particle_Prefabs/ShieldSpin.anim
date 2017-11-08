@@ -19,14 +19,14 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: {x: 0, y: 0, z: 239.83128}
-        inSlope: {x: 0, y: 0, z: -201.51004}
-        outSlope: {x: 0, y: 0, z: -201.51004}
+        inSlope: {x: 0, y: 0, z: -64.67134}
+        outSlope: {x: 0, y: 0, z: -64.67134}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.5
+        time: 2
         value: {x: 0, y: 0, z: 120}
-        inSlope: {x: 0, y: 0, z: -202.90927}
-        outSlope: {x: 0, y: 0, z: -202.90927}
+        inSlope: {x: 0, y: 0, z: -60.772476}
+        outSlope: {x: 0, y: 0, z: -60.772476}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -43,10 +43,11 @@ AnimationClip:
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
     genericBindings:
-    - path: 0
+    - serializedVersion: 2
+      path: 0
       attribute: 4
       script: {fileID: 0}
-      classID: 4
+      typeID: 4
       customType: 14
       isPPtrCurve: 0
     pptrCurveMapping: []
@@ -55,7 +56,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.5
+    m_StopTime: 2
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -81,7 +82,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.5
+        time: 2
         value: 0
         inSlope: 0
         outSlope: 0
@@ -103,7 +104,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.5
+        time: 2
         value: 0
         inSlope: 0
         outSlope: 0
@@ -121,14 +122,14 @@ AnimationClip:
       - serializedVersion: 2
         time: 0
         value: 239.83128
-        inSlope: -201.51004
-        outSlope: -201.51004
+        inSlope: -64.67134
+        outSlope: -64.67134
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.5
+        time: 2
         value: 120
-        inSlope: -202.90927
-        outSlope: -202.90927
+        inSlope: -60.772476
+        outSlope: -60.772476
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -171,9 +172,8 @@ AnimationClip:
   m_HasGenericRootTransform: 1
   m_HasMotionFloatCurves: 0
   m_GenerateMotionCurves: 0
-  m_IsEmpty: 0
   m_Events:
-  - time: 0.5
+  - time: 2
     functionName: FinishedAnim
     data: 
     objectReferenceParameter: {fileID: 0}
