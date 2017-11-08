@@ -141,7 +141,7 @@ public class WeaponBase : MonoBehaviour {
         return (m_attackType == AttackType.MultipleAll || m_attackType == AttackType.MassAttack ||
             m_attackType == AttackType.SingleAll || m_attackType == AttackType.HealAll ||
             m_attackType == AttackType.BuffDebuff || m_attackType == AttackType.Flee ||
-            m_attackType == AttackType.HealOne) ? true : false;
+            m_attackType == AttackType.HealOne || m_attackType == AttackType.Branching) ? true : false;
     }
 
     public IEnumerator PlayWeaponEffect(CharacterStatSheet trigger)

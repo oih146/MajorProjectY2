@@ -107,7 +107,7 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_burning = value;
-            m_statusBar.GetBurned().SetActive(value);
+            //m_statusBar.GetBurned().SetActive(value);
         }
     }
     [HideInInspector]
@@ -127,7 +127,7 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_disarmed = value;
-            m_statusBar.GetDisarmed().SetActive(value);
+            //m_statusBar.GetDisarmed().SetActive(value);
         }
     }
     public bool m_surrender;                //Has this player surrendered
@@ -141,7 +141,7 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_surrender = value;
-            m_statusBar.GetSurrendered().SetActive(value);
+            //m_statusBar.GetSurrendered().SetActive(value);
         }
     }
 

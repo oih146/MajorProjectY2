@@ -860,7 +860,7 @@ public class TurnBasedScript : MonoBehaviour {
                 co = MassHit(attacker, attackerBuffer);
                 break;
             case AttackType.Branching:
-                attacker.m_ActiveWeapon.ApplyEffects(attacker, attackerBuffer);
+                attacker.m_ActiveWeapon.ApplyEffects(attacker, GetDefendingTeam()[0]);
                 co = LatchingAttack(attacker, attackerBuffer);
                 break;
             case AttackType.Drain:
@@ -1591,60 +1591,109 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.m_ActiveWeapon.m_animEffect.StopEffect();
         }
 
-
-        for (int i = 0; i < 1; i++)
+        bool someoneDied = false;
+        do
         {
-            attacker.ResetAnimationVariables();
-            yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
-           //Weapon attacks all enemies with single hit
-            if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
+            someoneDied = false;
+            foreach (CharacterStatSheet charSS in GetDefendingTeam())
             {
-                if (!defender.m_surrender)
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
+                if (!(charSS.GetEffectArray()[(int)eEffects.Invulnerability].IsActive) && !charSS.m_isDead)
+                {
+                    attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                 (attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1,
                     attacker.m_ActiveWeapon.m_chargeTime));
-                else
-                    defender.Health = 0;
-                defender.ReCheckHealth();
-                attacker.ReCheckHealth();
-                if (defender.Health <= 0)
-                {
-                    if (attacker.m_ActiveWeapon.HasEffect)
+                    yield return new WaitUntil(() => charSS.GetAnimScript().TakeHit);
+                    yield return new WaitForSeconds(0.1f);
+                    charSS.ReCheckHealth();
+                    attacker.ReCheckHealth();
+                    if (charSS.Health <= 0)
                     {
-                        attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = defender.transform.position;
-                        attacker.ResetAnimationVariables();
-                        attacker.GetAnimScript().WeaponEffect = true;
-                        StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
-                        if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
-                        {
-                            yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.FinishedAnimation);
-                            //attacker.m_ActiveWeapon.m_animEffect.m_animator.Stop();
-                        }
-                        else
-                        {
-                            yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
-                            yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
-                        }
-                        //attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+                        charSS.m_isDead = true;
+                        if (attacker.m_ActiveWeapon.HasConsequences)
+                            attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                        attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = charSS.transform.position;
+                        someoneDied = true;
+                        ResizeArrayOnDeath((EnemyBase[])GetDefendingTeam());
 
-                    }
-                    if (attacker.m_ActiveWeapon.HasConsequences)
-                        attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
-                    bool foundNextEnemy = false;
-                    for (int t = 0; t < GetDefendingTeam().Length; t++)
-                    {
-                        if (GetDefendingTeam()[t].Health > 0 && !foundNextEnemy)
-                        {
-                            i--;
-                            foundNextEnemy = true;
-                            defender = GetDefendingTeam()[t];
-                            attacker.m_ActiveWeapon.AddEffects(defender);
-                        }
                     }
                 }
             }
-        }
+
+            if (attacker.m_ActiveWeapon.HasEffect && someoneDied)
+            {
+
+                attacker.ResetAnimationVariables();
+                attacker.GetAnimScript().WeaponEffect = true;
+                StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
+                if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
+                {
+                    yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.FinishedAnimation);
+                    //attacker.m_ActiveWeapon.m_animEffect.m_animator.Stop();
+                }
+                else
+                {
+                    yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
+                    yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
+                }
+                //attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+            }
+
+        } while (someoneDied);
+
+        //for (int i = 0; i < 1; i++)
+        //{
+        //    attacker.ResetAnimationVariables();
+        //    yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        //   //Weapon attacks all enemies with single hit
+        //    if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
+        //    {
+        //        if (!defender.m_surrender)
+        //            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
+        //            attacker.GetStatistics(),
+        //        (attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1,
+        //            attacker.m_ActiveWeapon.m_chargeTime));
+        //        else
+        //            defender.Health = 0;
+        //        defender.ReCheckHealth();
+        //        attacker.ReCheckHealth();
+        //        if (defender.Health <= 0)
+        //        {
+        //            if (attacker.m_ActiveWeapon.HasEffect)
+        //            {
+        //                attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = defender.transform.position;
+        //                attacker.ResetAnimationVariables();
+        //                attacker.GetAnimScript().WeaponEffect = true;
+        //                StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
+        //                if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
+        //                {
+        //                    yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.FinishedAnimation);
+        //                    //attacker.m_ActiveWeapon.m_animEffect.m_animator.Stop();
+        //                }
+        //                else
+        //                {
+        //                    yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_animEffect.m_partSys.isPlaying);
+        //                    yield return new WaitUntil(() => !attacker.m_ActiveWeapon.m_animEffect.m_partSys.isEmitting);
+        //                }
+        //                //attacker.m_ActiveWeapon.m_animEffect.StopEffect();
+
+        //            }
+        //            if (attacker.m_ActiveWeapon.HasConsequences)
+        //                attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+        //            bool foundNextEnemy = false;
+        //            for (int t = 0; t < GetDefendingTeam().Length; t++)
+        //            {
+        //                if (GetDefendingTeam()[t].Health > 0 && !foundNextEnemy)
+        //                {
+        //                    i--;
+        //                    foundNextEnemy = true;
+        //                    defender = GetDefendingTeam()[t];
+        //                    attacker.m_ActiveWeapon.AddEffects(defender);
+        //                }
+        //            }
+        //        }
+        //    }
+        //}
         attacker.m_animator.SetBool("SpellBreak", true);
 
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
