@@ -7,6 +7,20 @@ public class FollowTarget : MonoBehaviour {
     public Animator m_animator;
     public float moveSpeed;
     public bool m_moving;
+    bool Moving {
+        get { return m_moving; }
+        set
+        {
+            if(value != m_moving)
+            {
+                if (value == false)
+                    m_animator.Play("Idle");
+                else
+                    m_animator.Play("Walk");
+                m_moving = value;
+            }
+        }
+    }
     public Transform target;
     public float offset;
 
@@ -23,26 +37,16 @@ public class FollowTarget : MonoBehaviour {
 	void FixedUpdate () {
         if ((target.position.x < transform.position.x - offset || target.position.x > transform.position.x + offset))
         {
-            if(m_moving == false)
-            {
-                m_animator.Play("Walk");
-            }
-            m_moving = true;
+            Moving = true;
 
 
-            Vector3 buff = transform.position;
             Vector3 buff2 = transform.position;
             buff2.x = Mathf.Lerp(transform.position.x, target.position.x, moveSpeed * Time.deltaTime);
-            float speed = Mathf.Abs(buff.x - buff2.x) / Time.deltaTime;
             transform.position = buff2;
         }
         else if (target.position.x > transform.position.x - offset && target.position.x < transform.position.x + offset)
         {
-            if (m_moving == true)
-            {
-                m_animator.Play("Idle");
-            }
-            m_moving = false;
+            Moving = false;
 
         }
 

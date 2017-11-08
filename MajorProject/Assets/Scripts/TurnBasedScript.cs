@@ -1244,7 +1244,10 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(false);
         if (didWin)
         {
-            yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
+            if (friendlyObjects[0].GetAnimatorStateInfo().loop)
+                friendlyObjects[0].m_animator.Play("Idle");
+            else
+                yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
             friendlyObjects[0].SetToOutOfBattle();
             //yield return new WaitForSeconds(3f);
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
