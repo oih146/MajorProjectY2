@@ -27,13 +27,11 @@ public class FarmersSetup : MonoBehaviour {
         if(col.tag == "Player")
         {
             FadeBlack.OnFadeBlackEnd += ActivatePostFarmers;
-            ConversationEvents.OnConversationEnd += StartFade;
         }
     }
 
     void StartFade()
     {
         FadeBlack.Instance.Activate(false);
-        ConversationEvents.OnConversationEnd -= StartFade;
     }
 }

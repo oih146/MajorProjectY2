@@ -24,6 +24,8 @@ public class FadeBlack : MonoBehaviour {
     void Awake()
     {
         Instance = this;
+        OnFadeBlackEnd += TurnPlayerMovementOn;
+        OnFadeBlackStart += TurnPlayerMovementOff;
     }
 
     void OnEnable()
@@ -33,8 +35,7 @@ public class FadeBlack : MonoBehaviour {
 
         OnFadeBlackMidle += RestartFadeOnMiddle;
 
-        OnFadeBlackEnd += TurnPlayerMovementOn;
-        OnFadeBlackStart += TurnPlayerMovementOff;
+
     }
 
     void OnDisable()
@@ -43,9 +44,6 @@ public class FadeBlack : MonoBehaviour {
         OnFadeBlackEnd -= TurnGameObjectOff;
 
         OnFadeBlackMidle -= RestartFadeOnMiddle;
-
-        OnFadeBlackEnd -= TurnPlayerMovementOn;
-        OnFadeBlackStart -= TurnPlayerMovementOff;
     }
 
     // Use this for initialization
@@ -114,11 +112,13 @@ public class FadeBlack : MonoBehaviour {
     private void TurnPlayerMovementOn()
     {
         player.SetMovement(true);
+        OnFadeBlackEnd -= TurnPlayerMovementOn;
     }
 
     private void TurnPlayerMovementOff()
     {
         player.SetMovement(false);
+        OnFadeBlackStart -= TurnPlayerMovementOff;
     }
 
     public void AddLoadLevel()

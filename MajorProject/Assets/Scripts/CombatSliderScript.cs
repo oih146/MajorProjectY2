@@ -98,7 +98,7 @@ public class CombatSliderScript : MonoBehaviour {
         m_time = Time.time;
         m_timeSinceStart = Time.time;
         m_combatSlider.value = 0;
-        m_speed = m_defaultSpeed;
+        m_speed = m_defaultSpeed * 0.75f;
         CalculateSpeed();
         if (m_tempSpeedChange)
             TemporarySliderSpeedChange();
@@ -110,7 +110,7 @@ public class CombatSliderScript : MonoBehaviour {
         if (howMuch < 0.001)
             howMuch = 0.001f;
         howMuch *= (0.27f * 2);
-        m_timeDivider = howMuch;
+        m_timeDivider = (howMuch * 0.75f);
     }
 
     public void ChargeTimeReduction(float chargeTimeReduct)

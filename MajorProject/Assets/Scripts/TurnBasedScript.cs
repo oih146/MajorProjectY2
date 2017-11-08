@@ -180,51 +180,27 @@ public class TurnBasedScript : MonoBehaviour {
 
                     if (enemyObjects[i].GetCombatBar().m_combatSlider.value > 0.73 && enemyObjects[i].m_decidedAttack == false && enemyObjects[i].m_decidedTarget == false)
                     {
-                        if (enemyObjects[i].Disarmed == false)
-                        {
-                            PlayerTurn = false;
-                            m_attackingCharacter = null;
-                            SetCombatBarMovement(false);
+                        PlayerTurn = false;
+                        m_attackingCharacter = null;
+                        SetCombatBarMovement(false);
 
-                            m_playerChoosing = true;
-                            EnemyBase eBase = enemyObjects[i];
-                            eBase.DecideTarget(friendlyObjects);
-                            eBase.DecideAttack();
-                            m_playerChoosing = false;
-                            SetCombatBarMovement(true);
-                        }
-                        else
-                        {
-                            enemyObjects[i].m_decidedTarget = true;
-                            enemyObjects[i].m_decidedAttack = true;
-                            enemyObjects[i].GetEffectArray()[(int)eEffects.Disarmed].TakeTime();
-                            enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Heavy]);
-                            enemyObjects[i].GetCombatBar().SlowDown((int)ChargeTime.Heavy);
-                        }
+                        m_playerChoosing = true;
+                        EnemyBase eBase = enemyObjects[i];
+                        eBase.DecideTarget(friendlyObjects);
+                        eBase.DecideAttack();
+                        m_playerChoosing = false;
+                        SetCombatBarMovement(true);
                         return;
                     }
 
                     if (enemyObjects[i].GetCombatBar().m_combatSlider.value == enemyObjects[i].GetCombatBar().m_combatSlider.maxValue && enemyObjects[i].m_surrender != true)
                     {
-                        if (enemyObjects[i].Disarmed == false)
-                        {
-                            //SetTurnPointer(true);
-                            PlayerTurn = false;
-                            SetCombatBarMovement(false);
-                            m_playerMoving = true;
-                            PauseAttackEffects();
-                            Attack(enemyObjects[i]);
-                        }
-                        else
-                        {
-                            enemyObjects[i].UpdateEffects();
-                            if(!enemyObjects[i].GetEffectArray()[(int)eEffects.Disarmed].IsActive)
-                                enemyObjects[i].Disarmed = false;
-                            enemyObjects[i].GetCombatBar().Restart();
-                            enemyObjects[i].m_decidedTarget = false;
-                            enemyObjects[i].m_decidedAttack = false;
-                            enemyObjects[i].GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
-                        }
+                        //SetTurnPointer(true);
+                        PlayerTurn = false;
+                        SetCombatBarMovement(false);
+                        m_playerMoving = true;
+                        PauseAttackEffects();
+                        Attack(enemyObjects[i]);
                         return;
 
                     }
