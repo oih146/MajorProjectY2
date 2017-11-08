@@ -10163,7 +10163,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -10826,7 +10826,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -11115,7 +11115,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7

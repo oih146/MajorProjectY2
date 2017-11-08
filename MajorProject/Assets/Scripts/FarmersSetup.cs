@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class FarmersSetup : MonoBehaviour {
 
-    public GameObject m_postFarmers;
+    [SerializeField]
+    private GameObject[] m_turnOffs;
+
+    [SerializeField]
+    private GameObject[] m_turnOns;
 
 	// Use this for initialization
 	void Start () {
@@ -18,15 +22,18 @@ public class FarmersSetup : MonoBehaviour {
 
     void ActivatePostFarmers()
     {
-        m_postFarmers.SetActive(true);
-        FadeBlack.OnFadeBlackEnd -= ActivatePostFarmers;
+        foreach (GameObject game in m_turnOffs)
+            game.SetActive(false);
+        foreach (GameObject game in m_turnOns)
+            game.SetActive(true);
+        FadeBlack.OnFadeBlackMidle -= ActivatePostFarmers;
     }
 
     void OnTriggerEnter(Collider col)
     {
         if(col.tag == "Player")
         {
-            FadeBlack.OnFadeBlackEnd += ActivatePostFarmers;
+            FadeBlack.OnFadeBlackMidle += ActivatePostFarmers;
         }
     }
 

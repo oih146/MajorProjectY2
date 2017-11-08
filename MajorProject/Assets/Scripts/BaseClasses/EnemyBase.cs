@@ -102,19 +102,19 @@ public class EnemyBase : CharacterStatSheet {
             {
                 case 0:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
                 case 1:
                     attackStrength = 5;
-                    attackDamage = 25;
+                    attackDamage = 8;
                     break;
                 case 2:
                     attackStrength = 8;
-                    attackDamage = 35;
+                    attackDamage = 12;
                     break;
                 default:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
             }
             //using melee

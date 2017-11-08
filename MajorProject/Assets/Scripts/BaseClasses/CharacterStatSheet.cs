@@ -235,9 +235,9 @@ public class CharacterStatSheet : MonoBehaviour {
                                 (GetEffectArray()[(int)eEffects.DexterityIncrease].IsActive ? GetEffectArray()[(int)eEffects.DexterityIncrease].Strength : 0)
                                 ) ? 1.5f : 1;
         }
-        if (attacktype != ChargeTime.Magic)
-            damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
-        m_armor.TookAHit();
+        //if (attacktype != ChargeTime.Magic)
+            //damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
+        //m_armor.TookAHit();
         //Damage can't be less than zero
         //Would be adding to health
         if (damageToTake < 0)
