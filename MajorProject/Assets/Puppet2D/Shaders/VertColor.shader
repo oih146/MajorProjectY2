@@ -1,4 +1,6 @@
-﻿Shader "Puppet2D/vertColor" { 
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "Puppet2D/vertColor" { 
    Properties {
     
    }
@@ -25,7 +27,7 @@
          {
             vertexOutput output;
  
-            output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+            output.pos = UnityObjectToClipPos(input.vertex);
             output.vertColor = input.vertColor;
             
             return output;

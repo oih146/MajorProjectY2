@@ -99,28 +99,28 @@ public class Puppet2D_AutoRig : Editor {
             Undo.RegisterCompleteObjectUndo (guides, "guides");
 
             // Set controls
-            Transform _hipPoint = guide.transform.FindChild("hip_guide").transform;
-            Transform _chestPoint = guide.transform.FindChild("chest_guide").transform;
+            Transform _hipPoint = guide.transform.Find("hip_guide").transform;
+            Transform _chestPoint = guide.transform.Find("chest_guide").transform;
 
-            Transform _thighLPoint = guide.transform.FindChild("thighL_guide").transform;
-            Transform _footLPoint = guide.transform.FindChild("footL_guide").transform;
+            Transform _thighLPoint = guide.transform.Find("thighL_guide").transform;
+            Transform _footLPoint = guide.transform.Find("footL_guide").transform;
 
-            Transform _thighRPoint = guide.transform.FindChild("thighR_guide").transform;
-            Transform _footRPoint = guide.transform.FindChild("footR_guide").transform;
+            Transform _thighRPoint = guide.transform.Find("thighR_guide").transform;
+            Transform _footRPoint = guide.transform.Find("footR_guide").transform;
 
-            Transform _armLPoint = guide.transform.FindChild("armL_guide").transform;
-            Transform _handLPoint = guide.transform.FindChild("handL_guide").transform;
+            Transform _armLPoint = guide.transform.Find("armL_guide").transform;
+            Transform _handLPoint = guide.transform.Find("handL_guide").transform;
 
-            Transform _armRPoint = guide.transform.FindChild("armR_guide").transform;
-            Transform _handRPoint = guide.transform.FindChild("handR_guide").transform;
+            Transform _armRPoint = guide.transform.Find("armR_guide").transform;
+            Transform _handRPoint = guide.transform.Find("handR_guide").transform;
 
-            Transform _headPoint = guide.transform.FindChild("head_guide").transform;
+            Transform _headPoint = guide.transform.Find("head_guide").transform;
 
-            Transform _elbowLPoint = guide.transform.FindChild("elbowL_guide").transform;
-            Transform _kneeLPoint = guide.transform.FindChild("kneeL_guide").transform;
+            Transform _elbowLPoint = guide.transform.Find("elbowL_guide").transform;
+            Transform _kneeLPoint = guide.transform.Find("kneeL_guide").transform;
     
-            Transform _elbowRPoint = guide.transform.FindChild("elbowR_guide").transform;
-            Transform _kneeRPoint = guide.transform.FindChild("kneeR_guide").transform;
+            Transform _elbowRPoint = guide.transform.Find("elbowR_guide").transform;
+            Transform _kneeRPoint = guide.transform.Find("kneeR_guide").transform;
 
 
             // Hide other global controls

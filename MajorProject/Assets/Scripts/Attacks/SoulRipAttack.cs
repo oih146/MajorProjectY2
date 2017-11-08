@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class SoulRipAttack : MagicAttack {
 
@@ -85,7 +86,7 @@ public class SoulRipAttack : MagicAttack {
         soulrip.UnParentSoul();
 
         m_animSpeed = m_animEffect.m_animator.speed;
-        m_animTime = m_animEffect.m_animator.GetTime();
+        m_animTime = m_animEffect.m_animator.GetAnimatorTransitionInfo(0).normalizedTime;
         m_animEffect.m_animator.speed = 0;
     }
 
@@ -97,7 +98,7 @@ public class SoulRipAttack : MagicAttack {
 
         soulrip.ParentSoul(character);
         m_animEffect.m_animator.speed = m_animSpeed;
-            m_animEffect.m_animator.SetTime(m_animTime);
+            m_animEffect.m_animator.Play(m_initalAnim.name, -1, (float)m_animTime);
             //m_animEffect.m_animator.Play(m_animEffect.m_anim.name);
             Debug.Log(m_animEffect.m_animator.speed);
         m_animEffect.m_animator.Play(m_initalAnim.name);

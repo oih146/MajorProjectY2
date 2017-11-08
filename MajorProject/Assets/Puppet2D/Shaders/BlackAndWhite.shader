@@ -1,4 +1,6 @@
-﻿
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+
 Shader "Puppet2D/BlackAndWhite"
 {
    Properties {
@@ -38,7 +40,7 @@ Shader "Puppet2D/BlackAndWhite"
  
             output.uv = TRANSFORM_TEX(input.texcoord.xy,_MainTex);
            
-            output.pos = mul(UNITY_MATRIX_MVP, input.vertex);
+            output.pos = UnityObjectToClipPos(input.vertex);
             
             
             return output;

@@ -43,10 +43,10 @@ public class CounterAttack : MagicAttack {
     {
         float m_timegrab = Time.time;
         yield return new WaitForSeconds(character.m_animator.GetCurrentAnimatorStateInfo(0).length);
-        character.m_animator.Stop();
+        character.m_animator.enabled = false;
         character.m_animator.Play(m_counterMotion.name);
         yield return new WaitForSeconds(0.1f);
-        character.m_animator.Stop();
+        character.m_animator.enabled = false;
     }
 
     public override void OnEnd(CharacterStatSheet character)

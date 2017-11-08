@@ -63,7 +63,7 @@ public class AnimationEffectScript : MonoBehaviour {
     public virtual void StopEffect()
     {
         if (m_animator != null)
-            m_animator.Stop();
+            m_animator.enabled = false;
         if (m_partSys != null) 
             m_partSys.Stop(true);
         gameObject.SetActive(false);

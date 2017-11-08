@@ -36,7 +36,7 @@ public class SoulRipEffect : AnimationEffectScript {
         variable.enabled = true;
         m_partSys.Stop();
         m_soulSystem.Stop();
-        m_animator.Stop();
+        m_animator.enabled = false;
         m_rootHolder.SetActive(false);
         m_targetForSoul.parent = m_partSys.transform;
         m_soulSystem.gameObject.SetActive(false);
