@@ -13,17 +13,13 @@ public class WolvesStat : EnemyBase {
     public override void DecideAttack()
     {
         m_animator.SetBool("Disarming", false);
-        int m_chanceForHowl = 30;
-        if(m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
-        {
-            m_chanceForHowl += 60;
-        }
+        int m_chanceForHowl = 25;
 
         if (Random.Range(0, 100) <= m_chanceForHowl)
         {
             m_ActiveWeapon = m_abilities[0];
-            Debug.Log("Howling");
             m_animator.SetBool("Disarming", true);
+            m_ActiveWeapon.weapEffects[0].effectDamage = 30;
         }
         else
         {
@@ -35,19 +31,19 @@ public class WolvesStat : EnemyBase {
             {
                 case 0:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
                 case 1:
                     attackStrength = 5;
-                    attackDamage = 25;
+                    attackDamage = 8;
                     break;
                 case 2:
                     attackStrength = 8;
-                    attackDamage = 35;
+                    attackDamage = 10;
                     break;
                 default:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
             }
             //using melee

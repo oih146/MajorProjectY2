@@ -35,13 +35,21 @@ public class MusicExchange : MonoBehaviour {
 
     void ExchangeClip()
     {
-        if(m_musicSource == MusicSource.Combat)
+        if (m_musicSource == MusicSource.Combat)
         {
-            MusicSwitcher.Instance.m_battleAudio.clip = m_newClip;   
+            float time = MusicSwitcher.Instance.m_battleAudio.time;
+            MusicSwitcher.Instance.m_battleAudio.Stop();
+            MusicSwitcher.Instance.m_battleAudio.clip = m_newClip;
+            MusicSwitcher.Instance.m_battleAudio.time = time;
+            MusicSwitcher.Instance.m_battleAudio.Play();
         }
-        else if(m_musicSource == MusicSource.Regular)
+        else if (m_musicSource == MusicSource.Regular)
         {
+            float time = MusicSwitcher.Instance.m_normalAudio.time;
+            MusicSwitcher.Instance.m_normalAudio.Stop();
             MusicSwitcher.Instance.m_normalAudio.clip = m_newClip;
+            MusicSwitcher.Instance.m_normalAudio.time = time;
+            MusicSwitcher.Instance.m_normalAudio.Play();
         }
     }
 }

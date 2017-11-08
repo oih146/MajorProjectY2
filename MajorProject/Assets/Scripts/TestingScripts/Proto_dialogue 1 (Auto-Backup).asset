@@ -6651,7 +6651,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: 
       conversationID: 5
@@ -6679,7 +6679,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 651.8557
+        x: 650.8557
         y: 393.6598
         width: 160
         height: 30
@@ -7097,7 +7097,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@2; Delay(4.0);
         type: 0
         typeString: 
       conversationID: 5
@@ -10163,7 +10163,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -10826,7 +10826,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -11115,7 +11115,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7

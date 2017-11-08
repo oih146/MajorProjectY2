@@ -185,12 +185,12 @@ public class PlayerStat : CharacterStatSheet {
 
     public void AddToOrderChaos(int amountToAdd)
     {
-        Law += amountToAdd;
+        Law += amountToAdd * 10;
     }
 
     public void AddToGoodEvil(int amountToAdd)
     {
-        Light += amountToAdd;
+        Light += amountToAdd * 10;
     }
     public override void UpdateEffects()
     {

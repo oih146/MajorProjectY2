@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class CameraLookUp : MonoBehaviour {
 
+    [SerializeField]
+    private Transform[] m_moveUpWith;
+
     public GameObject m_camera;
     public float m_lerpSpeed;
     public float m_toYPos;
@@ -44,6 +47,12 @@ public class CameraLookUp : MonoBehaviour {
 
     public void StartLerp()
     {
+        foreach(Transform game in m_moveUpWith)
+        {
+            game.parent = null;
+            game.gameObject.SetActive(true);
+        }
+        PlayerMovement.Instance.RemoveEvents();
         m_initalYPos = m_camera.transform.eulerAngles.y;
         BattleMenuScript.Instance.gameObject.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
         m_timeSinceStart = Time.time;

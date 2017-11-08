@@ -21,11 +21,7 @@ public class BanditLord : EnemyBase {
 
     public override void DecideAttack()
     {
-        int m_chanceForRiposte = 0;
-        if (m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
-        {
-            m_chanceForRiposte = 30;
-        }
+        int m_chanceForRiposte = 25;
 
         if (Random.Range(0, 100) <= m_chanceForRiposte)
         {
@@ -41,19 +37,19 @@ public class BanditLord : EnemyBase {
             {
                 case 0:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 7;
                     break;
                 case 1:
                     attackStrength = 5;
-                    attackDamage = 25;
+                    attackDamage = 10;
                     break;
                 case 2:
                     attackStrength = 8;
-                    attackDamage = 35;
+                    attackDamage = 15;
                     break;
                 default:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 7;
                     break;
             }
             //using melee
@@ -84,5 +80,7 @@ public class BanditLord : EnemyBase {
                 break;
         }
         m_decidedAttack = true;
+
+        m_ActiveWeapon.OnSelect(this);
     }
 }

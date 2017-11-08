@@ -29,23 +29,6 @@ public class EnemyBase : CharacterStatSheet {
         set
         {
             m_incapacitationPoints = value;
-            if (m_incapacitationPoints > m_maxIP && !m_surrender)
-            {
-                Debug.Log(gameObject.name + " Surrendered");
-                //Vector3 temp = gameObject.transform.position;
-                //temp.y += 4;
-                //temp.x += 2;
-                //GameObject obj = Instantiate(m_notificationBox, Camera.main.WorldToScreenPoint(temp), Quaternion.identity, GetPersonalCanvas().transform);
-                //obj.GetComponent<UnityEngine.UI.Text>().text = "I Surrender!";
-                Surrendered = true;
-                GetCombatBar().m_combatActive = false;
-                GetCombatBar().enabled = false;
-                GetCombatBar().m_combatSlider.value = 0;
-                TurnBasedScript.CallOnPlayerSurrender(this);
-            } else if(m_incapacitationPoints < m_maxIP && m_surrender)
-            {
-                Surrendered = false;
-            }
         }
     }
 
@@ -119,19 +102,19 @@ public class EnemyBase : CharacterStatSheet {
             {
                 case 0:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
                 case 1:
                     attackStrength = 5;
-                    attackDamage = 25;
+                    attackDamage = 8;
                     break;
                 case 2:
                     attackStrength = 8;
-                    attackDamage = 35;
+                    attackDamage = 12;
                     break;
                 default:
                     attackStrength = 3;
-                    attackDamage = 15;
+                    attackDamage = 5;
                     break;
             }
             //using melee
