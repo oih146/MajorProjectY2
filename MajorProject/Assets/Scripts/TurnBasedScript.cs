@@ -565,7 +565,10 @@ public class TurnBasedScript : MonoBehaviour {
         yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_attackFinished);
         attacker.m_ActiveWeapon.m_attackFinished = false;
         if (attacker.m_ActiveWeapon.HasConsequences)
+        {
             attacker.AfterAttackConsequences(attacker.m_ActiveWeapon.m_consequences);
+            NotificationManager.Instance.PushNotificationBlock();
+        }
         attacker.m_ActiveWeapon.OnEnd(attacker);
         isAllDisarmed = false;
         foreach (WeaponBase.WeaponEffect we in attacker.m_ActiveWeapon.weapEffects)
@@ -1361,8 +1364,11 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.ReCheckHealth();
             if (defender.Health <= 0)
                 if (attacker.m_ActiveWeapon.HasConsequences)
+                {
                     attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
-        }
+                    NotificationManager.Instance.PushNotificationBlock();
+                }
+            }
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
 
         m_attackDone = true;
@@ -1405,7 +1411,10 @@ public class TurnBasedScript : MonoBehaviour {
         }
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         if (attacker.m_ActiveWeapon.HasConsequences)
+        {
             attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+            NotificationManager.Instance.PushNotificationBlock();
+        }
 
         m_attackDone = true;
     }
@@ -1446,7 +1455,10 @@ public class TurnBasedScript : MonoBehaviour {
                     attacker.ReCheckHealth();
                     if (defender.Health <= 0)
                         if (attacker.m_ActiveWeapon.HasConsequences)
+                        {
                             attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                            NotificationManager.Instance.PushNotificationBlock();
+                        }
                 }
                 yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1488,7 +1500,10 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.ReCheckHealth();
                 if (defender.Health <= 0)
                     if (attacker.m_ActiveWeapon.HasConsequences)
+                    {
                         attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                        NotificationManager.Instance.PushNotificationBlock();
+                    }
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1535,7 +1550,10 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.ReCheckHealth();
                 if (charSS.Health <= 0)
                     if (attacker.m_ActiveWeapon.HasConsequences)
+                    {
                         attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                        NotificationManager.Instance.PushNotificationBlock();
+                    }
             }
         }
         yield return new WaitUntil(() => attacker.m_animScript.AttackFinished);
@@ -1587,7 +1605,10 @@ public class TurnBasedScript : MonoBehaviour {
                     {
                         charSS.m_isDead = true;
                         if (attacker.m_ActiveWeapon.HasConsequences)
+                        {
                             attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                            NotificationManager.Instance.PushNotificationBlock();
+                        }
                         attacker.m_ActiveWeapon.m_animEffect.m_rootHolder.transform.position = charSS.transform.position;
                         someoneDied = true;
                         ResizeArrayOnDeath((EnemyBase[])GetDefendingTeam());
@@ -1740,7 +1761,10 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.ReCheckHealth();
             if(defender.Health <= 0)
                 if (attacker.m_ActiveWeapon.HasConsequences)
+                {
                     attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                    NotificationManager.Instance.PushNotificationBlock();
+                }
             yield return new WaitUntil(() => defender.GetAnimScript().TakeHit);
         }
 
@@ -1791,6 +1815,11 @@ public class TurnBasedScript : MonoBehaviour {
         }
 
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
+        if (attacker.m_ActiveWeapon.HasConsequences)
+        {
+            attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+            NotificationManager.Instance.PushNotificationBlock();
+        }
         //yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name) || attacker.m_ActiveWeapon.m_animToPlay.name == "Riposte_Idle");
 
         m_attackDone = true;

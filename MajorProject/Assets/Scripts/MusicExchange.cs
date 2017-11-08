@@ -29,19 +29,23 @@ public class MusicExchange : MonoBehaviour {
     {
         if (col.tag == "Player")
         {
-            ExchangeClip();
+            //ExchangeClip();
         }
     }
 
-    void ExchangeClip()
-    {
-        if(m_musicSource == MusicSource.Combat)
-        {
-            MusicSwitcher.Instance.m_battleAudio.clip = m_newClip;   
-        }
-        else if(m_musicSource == MusicSource.Regular)
-        {
-            MusicSwitcher.Instance.m_normalAudio.clip = m_newClip;
-        }
-    }
+    //void ExchangeClip()
+    //{
+    //    if(m_musicSource == MusicSource.Combat)
+    //    {
+    //        double time = MusicSwitcher.Instance.m_battleAudio.time;
+    //        MusicSwitcher.Instance.m_battleAudio.Stop();
+    //        MusicSwitcher.Instance.m_battleAudio.clip = m_newClip;
+    //        MusicSwitcher.Instance.m_battleAudio.Play();
+               
+    //    }
+    //    else if(m_musicSource == MusicSource.Regular)
+    //    {
+    //        MusicSwitcher.Instance.m_normalAudio.clip = m_newClip;
+    //    }
+    //}
 }

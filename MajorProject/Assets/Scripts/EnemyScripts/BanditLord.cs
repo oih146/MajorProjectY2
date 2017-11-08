@@ -21,11 +21,7 @@ public class BanditLord : EnemyBase {
 
     public override void DecideAttack()
     {
-        int m_chanceForRiposte = 0;
-        if (m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
-        {
-            m_chanceForRiposte = 100;
-        }
+        int m_chanceForRiposte = 25;
 
         if (Random.Range(0, 100) <= m_chanceForRiposte)
         {

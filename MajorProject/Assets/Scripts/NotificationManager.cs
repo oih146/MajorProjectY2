@@ -62,7 +62,8 @@ public class NotificationManager : MonoBehaviour {
 
     public void PushNotificationBlock()
     {
-        CreateNotification();
+        if(m_notificationText.Count > 0)
+            CreateNotification();
     }
 
     public void DestroyCurrentNotification()

@@ -21,6 +21,10 @@ public class CounterAttack : MagicAttack {
     {
         base.OnSelect(character);
 
+        for (int i = 0; i < weapAbility.Length; i++)
+        {
+            character.AddEffect(weapAbility[i].effect.Init(weapAbility[i].effectTime, weapAbility[i].effectDamage));
+        }
         character.m_animator.Play(m_startMotion.name);
     }
 

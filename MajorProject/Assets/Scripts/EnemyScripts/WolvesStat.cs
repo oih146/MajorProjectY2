@@ -13,16 +13,13 @@ public class WolvesStat : EnemyBase {
     public override void DecideAttack()
     {
         m_animator.SetBool("Disarming", false);
-        int m_chanceForHowl = 33;
-        if(m_playerToAttack.m_decidedAttack && m_playerToAttack.m_decidedTarget)
-        {
-            m_chanceForHowl = 50;
-        }
+        int m_chanceForHowl = 25;
 
         if (Random.Range(0, 100) <= m_chanceForHowl)
         {
             m_ActiveWeapon = m_abilities[0];
             m_animator.SetBool("Disarming", true);
+            m_ActiveWeapon.weapEffects[0].effectDamage = 30;
         }
         else
         {
