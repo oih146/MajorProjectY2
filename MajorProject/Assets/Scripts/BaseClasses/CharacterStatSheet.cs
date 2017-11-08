@@ -41,8 +41,8 @@ public class CharacterStatSheet : MonoBehaviour {
         set
         {
             m_health = value;
-            //if (m_health <= 0)
-            //StartFadeDeath();
+            if (m_health > 100)
+                m_health = 100;
         }
     }
 
@@ -218,7 +218,7 @@ public class CharacterStatSheet : MonoBehaviour {
             CharacterStatSheet counterAttacker = m_playerToAttack;
             //m_playerToAttack.m_animator.Play(m_ActiveWeapon.m_animToPlay.name);
             yield return new WaitUntil(() => counterAttacker.m_animScript.Attacking);
-            Health -= damageToTake;
+            Health -= damageToTake + AdditionalDamage();
             ReCheckHealth();
         }
     }

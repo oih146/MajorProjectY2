@@ -218,6 +218,8 @@ public class TurnBasedScript : MonoBehaviour {
                 if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
                 {
                     battleMenu.spellCharges[i].gameObject.SetActive(false);
+                    PlayerStat player = (PlayerStat)m_decidingCharacter;
+                    player.m_spellsAvaliable--;
                     break;
                 }
             }
