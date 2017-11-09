@@ -274,19 +274,20 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
-        string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        string prevanimName = (!GetAnimatorStateInfo().IsName("Hit")) ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
-            m_animator.Play("Hit");
+            m_animator.Play("Hit", -1, 0f);
             yield return new WaitUntil(() => GetAnimScript().TakeHit);
         }
         Health -= damageToTake;
         ReCheckHealth();
+        TurnBasedScript.Instance.CheckTeam(this);
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
             if (!m_isDead)
-                m_animator.Play(prevanimName);
+                m_animator.Play(prevanimName, -1, 0f);
         }
     }
 

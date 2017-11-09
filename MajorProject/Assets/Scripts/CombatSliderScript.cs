@@ -73,11 +73,10 @@ public class CombatSliderScript : MonoBehaviour {
             //    m_combatActive = false;
         }
 
-        //if(take)
+        //if (take)
         //{
-        //    TakeFromTimer(1);
+        //    SpeedUp(10);
         //    take = !take;
-        //    CombatActive = false;
         //}
     }
 
@@ -103,17 +102,21 @@ public class CombatSliderScript : MonoBehaviour {
         m_timeSinceStart = Time.time;
         m_combatSlider.value = 0;
         m_speed = m_defaultSpeed * 0.75f;
+        m_timeDivider = 1;
         CheckForSpeedChange();
         CalculateSpeed();
-        m_timeDivider = 1;
     }
 
     public void SlowDown(float howMuch)
     {
-        if (howMuch < 0.001)
-            howMuch = 0.001f;
         howMuch *= (0.27f * 2);
         m_timeDivider += (howMuch * 0.75f);
+    }
+
+    public void SpeedUp(float howMuch)
+    {
+        howMuch *= (0.27f * 2);
+        m_timeDivider -= (howMuch * 0.75f);
     }
 
     public void ChargeTimeReduction(float chargeTimeReduct)
@@ -140,16 +143,22 @@ public class CombatSliderScript : MonoBehaviour {
             else
             {
                 if (stat.m_effectType == eEffects.SpeedIncrease)
-                    SlowDown(-stat.Strength);
+                    m_speed += -stat.Strength;
                 else
-                    SlowDown(stat.Strength);
+                    m_speed += stat.Strength;
             }
         }
+
+        if (m_speed < 1)
+            m_speed = 1;
     }
 
     public void SetTemporarySpeedValue(StatusBase effect)
     {
-        SlowDown(effect.Strength);
+        if (effect.m_effectType == eEffects.SpeedIncrease)
+            SpeedUp(effect.Strength);
+        else
+            SlowDown(effect.Strength);
         speedEffects.Add(effect);
     }
     

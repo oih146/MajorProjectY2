@@ -43,14 +43,18 @@ public class UILerping : MonoBehaviour {
 
             if(percentage >= 1f)
             {
+                if (!m_atInitalPos)
+                    UISliderKeeper.Instance.CloseCurrentSlider();
                 m_lerping = false;
                 m_atInitalPos = !m_atInitalPos;
+
             }
         }
 	}
 
     public void StartLerp()
     {
+
         m_timeSinceStart = Time.time;
         m_lerping = true;
     }
