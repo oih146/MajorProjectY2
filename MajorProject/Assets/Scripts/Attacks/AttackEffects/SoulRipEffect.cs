@@ -17,6 +17,11 @@ public class SoulRipEffect : AnimationEffectScript {
 
     }
 
+    public override void OnEnd(CharacterStatSheet character)
+    {
+        //StopEffect();
+    }
+
     public override void StopEffect()
     {
         StartCoroutine(WaitTillDeath());

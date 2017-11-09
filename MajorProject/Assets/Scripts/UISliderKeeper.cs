@@ -40,4 +40,12 @@ public class UISliderKeeper : MonoBehaviour {
     {
         m_currentOpenSlider = null;
     }
+
+    public void CloseCurrentSlider()
+    {
+        if (m_currentOpenSlider != null && m_currentOpenSlider.m_isOpen == false)
+        {
+            m_currentOpenSlider.SetOpenClosed();
+        }
+    }
 }

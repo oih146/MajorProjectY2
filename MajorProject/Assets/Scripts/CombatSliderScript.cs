@@ -21,6 +21,9 @@ public class CombatSliderScript : MonoBehaviour {
     public bool m_combatActive = false;
     private bool m_tempSpeedChange;
     private float m_tempSpeedValue;
+
+    private List<StatusBase> speedEffects = new List<StatusBase>();
+
     //public bool take = false;
     public bool CombatActive
     {
@@ -70,11 +73,10 @@ public class CombatSliderScript : MonoBehaviour {
             //    m_combatActive = false;
         }
 
-        //if(take)
+        //if (take)
         //{
-        //    TakeFromTimer(1);
+        //    SpeedUp(10);
         //    take = !take;
-        //    CombatActive = false;
         //}
     }
 
@@ -85,6 +87,7 @@ public class CombatSliderScript : MonoBehaviour {
 
     public void TakeFromTimer(float taking)
     {
+        taking /= 0.75f;
         m_timeSinceStart += taking;
         float timeSinceLerp = m_time - m_timeSinceStart;
         float percentageComplete = timeSinceLerp / m_speed;
@@ -99,18 +102,21 @@ public class CombatSliderScript : MonoBehaviour {
         m_timeSinceStart = Time.time;
         m_combatSlider.value = 0;
         m_speed = m_defaultSpeed * 0.75f;
-        CalculateSpeed();
-        if (m_tempSpeedChange)
-            TemporarySliderSpeedChange();
         m_timeDivider = 1;
+        CheckForSpeedChange();
+        CalculateSpeed();
     }
 
     public void SlowDown(float howMuch)
     {
-        if (howMuch < 0.001)
-            howMuch = 0.001f;
         howMuch *= (0.27f * 2);
-        m_timeDivider = (howMuch * 0.75f);
+        m_timeDivider += (howMuch * 0.75f);
+    }
+
+    public void SpeedUp(float howMuch)
+    {
+        howMuch *= (0.27f * 2);
+        m_timeDivider -= (howMuch * 0.75f);
     }
 
     public void ChargeTimeReduction(float chargeTimeReduct)
@@ -125,18 +131,35 @@ public class CombatSliderScript : MonoBehaviour {
         CalculateSpeed();
     }
 
-    public void TemporarySliderSpeedChange()
+    public void CheckForSpeedChange()
     {
-        m_tempSpeedChange = false;
-        m_speed += m_tempSpeedValue;
-        m_tempSpeedValue = 0;
+        for(int i = 0; i < speedEffects.Count; i++)
+        {
+            StatusBase stat = speedEffects[i];
+            if(stat.TakeAndCheckActive())
+            {
+                speedEffects.Remove(stat);
+            }
+            else
+            {
+                if (stat.m_effectType == eEffects.SpeedIncrease)
+                    m_speed += -stat.Strength;
+                else
+                    m_speed += stat.Strength;
+            }
+        }
+
+        if (m_speed < 1)
+            m_speed = 1;
     }
 
-    public void SetTemporarySpeedValue(float amount)
+    public void SetTemporarySpeedValue(StatusBase effect)
     {
-        m_tempSpeedValue += amount;
-        m_speed += amount;
-        m_tempSpeedChange = true;
+        if (effect.m_effectType == eEffects.SpeedIncrease)
+            SpeedUp(effect.Strength);
+        else
+            SlowDown(effect.Strength);
+        speedEffects.Add(effect);
     }
     
     void CalculateSpeed()

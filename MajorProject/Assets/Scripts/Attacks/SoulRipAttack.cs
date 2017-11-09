@@ -25,10 +25,11 @@ public class SoulRipAttack : MagicAttack {
         temp.z = character.transform.position.z;
         m_animEffect.m_rootHolder.transform.position = temp;
 
-        character.m_animator.Play(m_animToPlay.name);
+        character.m_animator.Play(m_animToPlay.name, -1, 0f);
 
         m_animEffect.m_rootHolder.SetActive(true);
-        m_animEffect.m_animator.Play(m_initalAnim.name);
+        m_animEffect.m_animator.enabled = true;
+        m_animEffect.m_animator.Play(m_initalAnim.name, -1, 0f);
         m_animEffect.m_partSys.Play();
 
         DelayAnimation(m_animEffect.m_animator, (int)m_chargeTime);
@@ -47,13 +48,18 @@ public class SoulRipAttack : MagicAttack {
     public override void OnEnd(CharacterStatSheet character)
     {
         base.OnEnd(character);
+
+        m_animEffect.m_animator.enabled = false;
+        //m_animEffect.StopEffect();
+        character.m_animator.SetBool("SpellBreak", false);
+        character.m_animator.Play("Spell_End", -1, 0f);
     }
 
     public void DelayAnimation(Animator anim, float delay)
     {
         if (delay < 0.001)
             delay = 0.001f;
-        delay *= (0.27f * 2);
+        delay *= (0.27f);
 
         anim.speed /= delay;
         m_animSpeed = anim.speed;
@@ -72,7 +78,13 @@ public class SoulRipAttack : MagicAttack {
             }
         }
         if (foundclip)
-            m_animTime = percentage * clip.length;
+        {
+            m_animTime = ((percentage - 0.73) * clip.length) / clip.length;
+            if(percentage < 0)
+            {
+                m_animSpeed -= (m_animSpeed * Mathf.Abs(percentage));
+            }
+        }
         else
             Debug.Log("Error! Didn't find Soul Rip Animation Clip");
         //anim.SetTime((anim.GetTime() - delay) * anim.speed);
@@ -98,9 +110,9 @@ public class SoulRipAttack : MagicAttack {
 
         soulrip.ParentSoul(character);
         m_animEffect.m_animator.speed = m_animSpeed;
-            m_animEffect.m_animator.Play(m_initalAnim.name, -1, (float)m_animTime);
-            //m_animEffect.m_animator.Play(m_animEffect.m_anim.name);
-            Debug.Log(m_animEffect.m_animator.speed);
+        m_animEffect.m_animator.Play(m_initalAnim.name, -1, (float)m_animTime);
+        //m_animEffect.m_animator.Play(m_animEffect.m_anim.name);
+        Debug.Log(m_animEffect.m_animator.speed);
         m_animEffect.m_animator.Play(m_initalAnim.name);
     }
 }

@@ -36,6 +36,7 @@ public class TurnBasedScript : MonoBehaviour {
 
     public PointerBounce turnPointer;
     bool m_attackDone;
+    public bool m_attackOver;
     public bool m_playerTurn;
     public bool m_WhenAttackingTurn; /*When Attacking, whose turn is it? */
     public bool PlayerTurn
@@ -297,6 +298,8 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(true);
         m_decidingCharacter = null;
         SetTurnPointer(false);
+
+        UISliderKeeper.Instance.CloseCurrentSlider();
     }
 
     public void PauseAttackEffects()
@@ -562,9 +565,11 @@ public class TurnBasedScript : MonoBehaviour {
         //characterAttacking.m_animator.Play(characterAttacking.m_ActiveWeapon.GetAnimationToPlay().name);
         //turnPointer.gameObject.SetActive(false);
         bool playerTurnBuffer = PlayerTurn;
+        m_attackOver = false;
         StartCoroutine(Attacking(characterAttacking));
         CharacterStatSheet attacker = characterAttacking;
-        yield return new WaitUntil(() => attacker.m_ActiveWeapon.m_attackFinished);
+        yield return new WaitUntil(() => m_attackOver);
+        m_attackOver = false;
         attacker.m_ActiveWeapon.m_attackFinished = false;
         if (attacker.m_ActiveWeapon.HasConsequences)
         {
@@ -591,11 +596,20 @@ public class TurnBasedScript : MonoBehaviour {
         //attacker.GetCombatBar().m_combatSlider.value = 0;
         //attacker.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
         //SetTurnPointer(false);
-        if (BattleOver == true)
-            StopAllCoroutines();
+        //if (BattleOver == true)
+           // StopAllCoroutines();
         SetCombatBarMovement(true);
         //attacker.UpdateEffects();
         //attacker.GetCombatBar().Restart();
+
+        attacker.m_animScript.ResetVariables();
+        attacker.ResetCombatVars();
+        ResumeAttackEffects();
+        //attacker.GetCombatBar().CombatActive = true;
+        m_playerMoving = false;
+        //attacker.m_decidedAttack = false;
+        //attacker.m_decidedTarget = false;
+        //attacker.m_playerToAttack = null;
         if (attacker.DeathCheck())
         {
             if (playerTurnBuffer == false)
@@ -616,15 +630,6 @@ public class TurnBasedScript : MonoBehaviour {
                 WonBattleQ = false;
             }
         }
-
-        attacker.ResetCombatVars();
-        ResumeAttackEffects();
-        //attacker.GetCombatBar().CombatActive = true;
-        m_playerMoving = false;
-        //attacker.m_decidedAttack = false;
-        //attacker.m_decidedTarget = false;
-        //attacker.m_playerToAttack = null;
-
     }
 
     //Where attack type is decided
@@ -857,6 +862,7 @@ public class TurnBasedScript : MonoBehaviour {
                 co = NormalAttack(attacker, attackerBuffer);
                 break;
         }
+        m_attackDone = false;
         StartCoroutine(co);
         Debug.Log("Attack Hit");
         yield return new WaitUntil(() => m_attackDone);
@@ -872,7 +878,33 @@ public class TurnBasedScript : MonoBehaviour {
                 CheckAllPlayers(GetDefendingTeam());
                 break;
         }
-        attacker.m_ActiveWeapon.m_attackFinished = true;
+
+        if (attacker.DeathCheck())
+        {
+            if (!m_WhenAttackingTurn == true)
+            {
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Win");
+                    BattleOver = true;
+                    WonBattleQ = true;
+
+                }
+            }
+            else
+            {
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                if (friendlyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                }
+            }
+        }
+        //yield return new WaitUntil(() => (attacker.GetAnimatorStateInfo().loop));
+        m_attackOver = true;
     }
 
     void CheckAllPlayers(CharacterStatSheet[] defendingTeam)
@@ -902,7 +934,7 @@ public class TurnBasedScript : MonoBehaviour {
         }
     }
 
-    void CheckOnPlayer(CharacterStatSheet defender)
+    public void CheckOnPlayer(CharacterStatSheet defender)
     {
         if (defender.DeathCheck())
         {
@@ -923,6 +955,39 @@ public class TurnBasedScript : MonoBehaviour {
                 Debug.Log("Battle Over, You Lose");
                 BattleOver = true;
                 WonBattleQ = false;
+            }
+        }
+    }
+
+    public void CheckTeam(CharacterStatSheet character)
+    {
+        foreach(CharacterStatSheet charSS in friendlyObjects)
+        {
+            if (character == charSS && character.DeathCheck())
+            {
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = true;
+                    break;
+                }
+            }
+        }
+
+        foreach(CharacterStatSheet charSS in enemyObjects)
+        {
+            if (character == charSS && character.DeathCheck())
+            {
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Win");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                    break;
+                }
             }
         }
     }
@@ -1244,12 +1309,18 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(false);
         if (didWin)
         {
-            if (friendlyObjects[0].GetAnimatorStateInfo().loop)
-                friendlyObjects[0].m_animator.Play("Idle");
-            else
-                yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"));
+            if (!friendlyObjects[0].GetAnimatorStateInfo().IsName("Idle"))
+            {
+                yield return new WaitUntil(() => friendlyObjects[0].GetAnimatorStateInfo().loop);
+                friendlyObjects[0].m_animator.Play("Idle", -1, 0f);
+            }
+
+            if (friendlyObjects[0].m_ActiveWeapon.m_AttackName == "Soul Rip")
+            {
+                friendlyObjects[0].m_ActiveWeapon.m_animEffect.m_animator.enabled = false;
+                friendlyObjects[0].m_ActiveWeapon.m_animEffect.m_partSys.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
             friendlyObjects[0].SetToOutOfBattle();
-            //yield return new WaitForSeconds(3f);
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
             int spellLeft = 0;
@@ -1368,16 +1439,18 @@ public class TurnBasedScript : MonoBehaviour {
             defender.ReCheckHealth();
             attacker.ReCheckHealth();
             if (defender.Health <= 0)
+            {
                 if (attacker.m_ActiveWeapon.HasConsequences)
                 {
                     attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
                     NotificationManager.Instance.PushNotificationBlock();
                 }
+                CheckTeam(defender);
             }
+        }
+        yield return new WaitUntil(() => attacker.m_readyToContinue);
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
-
         m_attackDone = true;
-
     }
 
     //Multiple hits on single person
@@ -1411,15 +1484,20 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_ActiveWeapon.m_chargeTime));
                 defender.ReCheckHealth();
                 attacker.ReCheckHealth();
+                if(defender.Health <= 0)
+                {
+                    if (attacker.m_ActiveWeapon.HasConsequences)
+                    {
+                        attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
+                        NotificationManager.Instance.PushNotificationBlock();
+                    }
+                    CheckOnPlayer(defender);
+                }
             }
 
         }
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
-        if (attacker.m_ActiveWeapon.HasConsequences)
-        {
-            attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
-            NotificationManager.Instance.PushNotificationBlock();
-        }
+
 
         m_attackDone = true;
     }
@@ -1436,7 +1514,7 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
                 if (attacker.m_ActiveWeapon.HasEffect)
                 {
-                    attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = defender.transform.position;
+                    attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = charSS.transform.position;
                     StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
                     attacker.m_animator.SetBool("SpellBreak", false);
                     if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
@@ -1450,20 +1528,23 @@ public class TurnBasedScript : MonoBehaviour {
                     attacker.m_animator.SetBool("SpellBreak", true);
                 }
                 yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
-                if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
+                if (!(charSS.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
                 {
-                    attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
+                    attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                     (attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1,
                 attacker.m_ActiveWeapon.m_chargeTime));
-                    defender.ReCheckHealth();
+                    charSS.ReCheckHealth();
                     attacker.ReCheckHealth();
-                    if (defender.Health <= 0)
+                    if (charSS.Health <= 0)
+                    {
                         if (attacker.m_ActiveWeapon.HasConsequences)
                         {
                             attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
                             NotificationManager.Instance.PushNotificationBlock();
                         }
+                        CheckTeam(charSS);
+                    }
                 }
                 yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1481,7 +1562,7 @@ public class TurnBasedScript : MonoBehaviour {
             attacker.m_animator.Play(attacker.m_ActiveWeapon.GetAnimationToPlay().name);
             if (attacker.m_ActiveWeapon.HasEffect)
             {
-                attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = defender.transform.position;
+                attacker.m_ActiveWeapon.m_animEffect.gameObject.transform.position = charSS.transform.position;
                 StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
                 attacker.m_animator.SetBool("SpellBreak", false);
                 if (attacker.m_ActiveWeapon.m_animEffect.HasAnimation)
@@ -1495,20 +1576,23 @@ public class TurnBasedScript : MonoBehaviour {
                 attacker.m_animator.SetBool("SpellBreak", true);
             }
             yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
-            if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
+            if (!(charSS.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
             {
-                attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
+                attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
                 attacker.GetStatistics(),
             (attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1,
                 attacker.m_ActiveWeapon.m_chargeTime));
-                defender.ReCheckHealth();
+                charSS.ReCheckHealth();
                 attacker.ReCheckHealth();
-                if (defender.Health <= 0)
+                if (charSS.Health <= 0)
+                {
                     if (attacker.m_ActiveWeapon.HasConsequences)
                     {
                         attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
                         NotificationManager.Instance.PushNotificationBlock();
                     }
+                    CheckTeam(charSS);
+                }
             }
             yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
 
@@ -1523,7 +1607,7 @@ public class TurnBasedScript : MonoBehaviour {
         if (attacker.m_ActiveWeapon.HasEffect)
         {
             AnimationEffectScript animEffect = attacker.m_ActiveWeapon.m_animEffect;
-            Vector3 temp = attacker.m_ActiveWeapon.m_animEffect.GetEffectPosition(GetDefendingTeam());
+            Vector3 temp = animEffect.GetEffectPosition(attacker, GetDefendingTeam()[0]);
             animEffect.m_rootHolder.transform.position = temp;
             StartCoroutine(attacker.m_ActiveWeapon.PlayWeaponEffect(attacker));
             attacker.m_animator.SetBool("SpellBreak", false);
@@ -1554,11 +1638,14 @@ public class TurnBasedScript : MonoBehaviour {
                 charSS.ReCheckHealth();
                 attacker.ReCheckHealth();
                 if (charSS.Health <= 0)
+                {
                     if (attacker.m_ActiveWeapon.HasConsequences)
                     {
                         attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
                         NotificationManager.Instance.PushNotificationBlock();
                     }
+                    CheckTeam(charSS);
+                }
             }
         }
         yield return new WaitUntil(() => attacker.m_animScript.AttackFinished);
@@ -1757,24 +1844,27 @@ public class TurnBasedScript : MonoBehaviour {
         yield return new WaitUntil(() => attacker.GetAnimScript().Attacking);
         if (!(defender.GetEffectArray()[(int)eEffects.Invulnerability].IsActive))
         {
-            attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + ((int)attacker.m_attackCharge + attacker.AdditionalDamage()),
+            StartCoroutine(attacker.CounterTakeDamage(defender.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + ((int)attacker.m_attackCharge + attacker.AdditionalDamage()),
                 attacker.GetStatistics(),
                 ((attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1),
-                attacker.m_ActiveWeapon.m_chargeTime));
+                attacker.m_ActiveWeapon.m_chargeTime)));
             defender.ReCheckHealth();
             attacker.HealSelf(25.0f);
             attacker.ReCheckHealth();
-            if(defender.Health <= 0)
+            if (defender.Health <= 0)
+            {
                 if (attacker.m_ActiveWeapon.HasConsequences)
                 {
                     attacker.OnKillConsequences(attacker.m_ActiveWeapon.m_consequences);
                     NotificationManager.Instance.PushNotificationBlock();
                 }
+                CheckTeam(defender);
+            }
             yield return new WaitUntil(() => defender.GetAnimScript().TakeHit);
         }
 
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
-
+        //attacker.m_animator.SetBool("SpellBreak", false);
         m_attackDone = true;
     }
 

@@ -8,6 +8,12 @@ public class ForwardBackground : MonoBehaviour {
 
     [Tooltip("Backgrounds that will be moving forward, have them in the order that you want them to descend")]
     public GameObject[] m_backgrounds;
+
+    [SerializeField]
+    private Transform[] m_positionTransforms;
+
+    [SerializeField]
+    private float m_UpYPos;
     public int m_currentfrontBackground = 0;
     public int CurrentFrontBackground
     {
@@ -26,11 +32,18 @@ public class ForwardBackground : MonoBehaviour {
         }
     }
 
+    [Tooltip("How many tiles will be showing?")]
+    [SerializeField]
+    private int m_howManyShowing = 0;
+
+    private int m_startingIndex = 0;
+
     public float m_lerpSpeed;
     float m_timeSinceStart;
     public bool m_lerping;
     public bool m_lerpOthers;
     float m_initalYPos;
+
     public float m_lerpAmount;
     float m_toYPos;
     float[] initalPoses;
@@ -58,26 +71,32 @@ public class ForwardBackground : MonoBehaviour {
             if(m_lerpOthers)
                 LerpOthers();
 
-            float timeSinceLerp = Time.time - m_timeSinceStart;
-            float percentage = timeSinceLerp / m_lerpSpeed;
-
-            Vector3 temp = m_backgrounds[m_currentfrontBackground].transform.localPosition;
-            temp.y = Mathf.Lerp(m_initalYPos, m_toYPos, percentage);
-            m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
-            m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
-            if (percentage >= 1f)
-            {
-                m_lerping = false;
-                MoveForward();
-                temp.z += m_backgrounds.Length * 0.1f;
-                temp.y = -(m_backgrounds.Length * 0.1f);
-                m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
-                m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
-                CurrentFrontBackground++;
-
-            }
+            FrontLerp();
         }
 	}
+
+    void FrontLerp()
+    {
+        float timeSinceLerp = Time.time - m_timeSinceStart;
+        float percentage = timeSinceLerp / m_lerpSpeed;
+
+        Vector3 temp = m_backgrounds[m_currentfrontBackground].transform.localPosition;
+        temp.y = Mathf.Lerp(m_initalYPos, m_toYPos, percentage);
+        m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
+        m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
+        if (percentage >= 1f)
+        {
+            m_lerping = false;
+            MoveForward();
+            temp.z += m_backgrounds.Length * 0.1f;
+            temp.y = -(m_backgrounds.Length * 0.1f);
+            m_backgrounds[m_currentfrontBackground].transform.localPosition = temp;
+            m_backgrounds[m_currentfrontBackground].GetComponent<DualBackgrounds>().CopyOver();
+            m_startingIndex++;
+            CurrentFrontBackground++;
+
+        }
+    }
 
     public void StartLerp()
     {
@@ -105,21 +124,30 @@ public class ForwardBackground : MonoBehaviour {
 
     void LerpOthers()
     {
-
-        for (int i = 0; i < m_backgrounds.Length; i++)
+        for (int i = m_startingIndex + 1; i < m_startingIndex + m_howManyShowing + 1; i++)
         {
+            float timeSinceLerp = Time.time - m_timeSinceStart;
+            float percentage = timeSinceLerp / m_lerpSpeed;
+
+            bool addToI = false;
+            if (i >= m_backgrounds.Length)
+            {
+                addToI = true;
+                i -= m_backgrounds.Length;
+            }
             if (m_backgrounds[i] != m_backgrounds[m_currentfrontBackground])
             {
-                float timeSinceLerp = Time.time - m_timeSinceStart;
-                float percentage = timeSinceLerp / m_lerpSpeed;
 
                 Vector3 temp = m_backgrounds[i].transform.localPosition;
-                temp.y = Mathf.Lerp(initalPoses[i], toPoses[i], percentage);
+                temp.y = Mathf.Lerp(initalPoses[i], m_positionTransforms[i - m_startingIndex - 1].localPosition.y, percentage);
                 m_backgrounds[i].transform.localPosition = temp;
                 m_backgrounds[i].GetComponent<DualBackgrounds>().CopyOver();
-                if (percentage >= 1f)
-                    m_lerpOthers = false;
             }
+
+            if (addToI)
+                i += m_backgrounds.Length;
+            if (percentage >= 1f)
+                m_lerpOthers = false;
         }
     }
 }

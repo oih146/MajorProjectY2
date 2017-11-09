@@ -92,6 +92,7 @@ public class CharacterStatSheet : MonoBehaviour {
     public Animator m_animator;                 //Animator, holds animations
 
     //What Character is in Combat
+    public bool m_readyToContinue = false;
     public AnimScript m_animScript;
     public bool m_decidedTarget;
     public bool m_decidedAttack;                //Has this player decided to attack yet
@@ -220,7 +221,10 @@ public class CharacterStatSheet : MonoBehaviour {
             yield return new WaitUntil(() => counterAttacker.m_animScript.Attacking);
             Health -= damageToTake + AdditionalDamage();
             ReCheckHealth();
+            if (DeathCheck())
+                GetAnimScript().AttackDone();
         }
+        m_readyToContinue = true;
     }
 
     //Take damage, virtual to allow inheriting classes to override
@@ -249,8 +253,10 @@ public class CharacterStatSheet : MonoBehaviour {
         //Combat bar interrupt
         if (m_combatBar.m_combatSlider.value > 0.73)
         {
-            float delay = (damageToTake + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0)) / 17.5f;
-            m_combatBar.TakeFromTimer(delay);
+            float delay = ((damageToTake + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0) - (GetEffectArray()[(int)eEffects.TakeLessInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeLessInterupt].Strength : 0)) / 17.5f);
+            if(GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive)
+                GetEffectArray()[(int)eEffects.TakeBonusInterupt].TakeTime();
+            m_combatBar.TakeFromTimer(delay > 0 ? delay : 0.1f);
             if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
             {
                 SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
@@ -263,7 +269,6 @@ public class CharacterStatSheet : MonoBehaviour {
             GetEffectArray()[(int)eEffects.CounterStance].Use(this);
             CounterAttack attack = (CounterAttack)m_ActiveWeapon;
             attack.SecondaryUse(this);
-
             return GetEffectArray()[(int)eEffects.CounterStance].Strength;
         }
 
@@ -272,19 +277,20 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
-        string prevanimName = m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name;
+        string prevanimName = (!GetAnimatorStateInfo().IsName("Hit")) ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
-            m_animator.Play("Hit");
+            m_animator.Play("Hit", -1, 0f);
             yield return new WaitUntil(() => GetAnimScript().TakeHit);
         }
         Health -= damageToTake;
         ReCheckHealth();
+        TurnBasedScript.Instance.CheckTeam(this);
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));
             if (!m_isDead)
-                m_animator.Play(prevanimName);
+                m_animator.Play(prevanimName, -1, 0f);
         }
     }
 
