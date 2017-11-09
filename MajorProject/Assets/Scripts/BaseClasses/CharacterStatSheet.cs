@@ -220,6 +220,8 @@ public class CharacterStatSheet : MonoBehaviour {
             yield return new WaitUntil(() => counterAttacker.m_animScript.Attacking);
             Health -= damageToTake + AdditionalDamage();
             ReCheckHealth();
+            if (DeathCheck())
+                GetAnimScript().AttackDone();
         }
     }
 

@@ -16,11 +16,11 @@ public class SpeedIncreaseStatus : StatusBase {
 
     public override void OnApply(CharacterStatSheet applyTo)
     {
-        applyTo.GetCombatBar().SetTemporarySpeedValue(-Strength);
+        applyTo.GetCombatBar().SetTemporarySpeedValue(this);
     }
 
     public override void OnUpdate(CharacterStatSheet applyTo)
     {
-        applyTo.GetCombatBar().SetTemporarySpeedValue(-Strength);
+        applyTo.GetCombatBar().SetTemporarySpeedValue(this);
     }
 }
