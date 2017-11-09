@@ -21,6 +21,7 @@ public enum eEffects
     BonusToEvil,                    //+
     InteruptModifier,
     InteruptHealthMod,
+    TakeLessInterupt,
     NumOfEffects
 }
 

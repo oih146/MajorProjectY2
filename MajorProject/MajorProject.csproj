@@ -347,6 +347,7 @@
     <Compile Include="Assets\Scripts\StatusEffects\SpeedReductionStatus.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\StatusBase.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\TakeBonusInteruptStatus.cs" />
+    <Compile Include="Assets\Scripts\StatusEffects\TakeLessInteruptStatus.cs" />
     <Compile Include="Assets\Scripts\SwordScript.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\DialogueTest.cs" />
     <Compile Include="Assets\Scripts\TestingScripts\TestingTransitions.cs" />

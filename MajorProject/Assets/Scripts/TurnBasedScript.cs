@@ -36,7 +36,7 @@ public class TurnBasedScript : MonoBehaviour {
 
     public PointerBounce turnPointer;
     bool m_attackDone;
-    bool m_attackOver;
+    public bool m_attackOver;
     public bool m_playerTurn;
     public bool m_WhenAttackingTurn; /*When Attacking, whose turn is it? */
     public bool PlayerTurn
@@ -565,6 +565,7 @@ public class TurnBasedScript : MonoBehaviour {
         //characterAttacking.m_animator.Play(characterAttacking.m_ActiveWeapon.GetAnimationToPlay().name);
         //turnPointer.gameObject.SetActive(false);
         bool playerTurnBuffer = PlayerTurn;
+        m_attackOver = false;
         StartCoroutine(Attacking(characterAttacking));
         CharacterStatSheet attacker = characterAttacking;
         yield return new WaitUntil(() => m_attackOver);
@@ -601,7 +602,7 @@ public class TurnBasedScript : MonoBehaviour {
         //attacker.UpdateEffects();
         //attacker.GetCombatBar().Restart();
 
-
+        attacker.m_animScript.ResetVariables();
         attacker.ResetCombatVars();
         ResumeAttackEffects();
         //attacker.GetCombatBar().CombatActive = true;
@@ -861,6 +862,7 @@ public class TurnBasedScript : MonoBehaviour {
                 co = NormalAttack(attacker, attackerBuffer);
                 break;
         }
+        m_attackDone = false;
         StartCoroutine(co);
         Debug.Log("Attack Hit");
         yield return new WaitUntil(() => m_attackDone);
@@ -876,7 +878,32 @@ public class TurnBasedScript : MonoBehaviour {
                 CheckAllPlayers(GetDefendingTeam());
                 break;
         }
-        yield return new WaitUntil(() => (attacker.GetAnimatorStateInfo().loop));
+
+        if (attacker.DeathCheck())
+        {
+            if (!m_WhenAttackingTurn == true)
+            {
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Win");
+                    BattleOver = true;
+                    WonBattleQ = true;
+
+                }
+            }
+            else
+            {
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                if (friendlyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                }
+            }
+        }
+        //yield return new WaitUntil(() => (attacker.GetAnimatorStateInfo().loop));
         m_attackOver = true;
     }
 
@@ -941,7 +968,7 @@ public class TurnBasedScript : MonoBehaviour {
                 friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
                 if (enemyObjects.Length == 0)
                 {
-                    Debug.Log("Battle Over, You Win");
+                    Debug.Log("Battle Over, You Lose");
                     BattleOver = true;
                     WonBattleQ = true;
                     break;
@@ -956,7 +983,7 @@ public class TurnBasedScript : MonoBehaviour {
                 enemyObjects = ResizeArrayOnDeath(enemyObjects);
                 if (enemyObjects.Length == 0)
                 {
-                    Debug.Log("Battle Over, You Lose");
+                    Debug.Log("Battle Over, You Win");
                     BattleOver = true;
                     WonBattleQ = false;
                     break;
@@ -1421,6 +1448,7 @@ public class TurnBasedScript : MonoBehaviour {
                 CheckTeam(defender);
             }
         }
+        yield return new WaitUntil(() => attacker.m_readyToContinue);
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
         m_attackDone = true;
     }
