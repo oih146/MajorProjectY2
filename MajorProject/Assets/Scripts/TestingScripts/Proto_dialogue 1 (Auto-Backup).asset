@@ -12660,9 +12660,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: "SendMessage(ParentCameraNull,,Cinematics)@0; SendMessage(SetMovementTrue,,Player
-          1)@0; SendMessage(SetSpeed,25,Player 1)@0; SendMessage(SetSpeed,3.5,Empress
-          Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main Camera)@5; Delay(5.0)@5; "
+        value: "SendMessage(ParentCameraNull,,Cinematics)@0; SetContinueMode(false)@0;
+          SendMessage(SetMovementTrue,,Player 1)@0; SendMessage(SetSpeed,25,Player
+          1)@0; SendMessage(SetSpeed,3.5,Empress Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main
+          Camera)@5; Delay(5.0)@5; SetContinueMode(original)@10; Continue()@10;"
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13419,7 +13420,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(DisableMovement,,Player1)@0;
+        value: SendMessage(DisableMovement,,Player1)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9

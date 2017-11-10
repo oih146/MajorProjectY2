@@ -5,6 +5,9 @@ using UnityEngine;
 public class CameraLookUp : MonoBehaviour {
 
     [SerializeField]
+    private PixelCrushers.DialogueSystem.UIButtonKeyTrigger m_continueTriggerKey;
+
+    [SerializeField]
     private Transform[] m_moveUpWith;
 
     public GameObject m_camera;
@@ -14,6 +17,8 @@ public class CameraLookUp : MonoBehaviour {
 
     float m_timeSinceStart;
     bool m_lerping;
+    KeyCode m_savedButtonKeyCode;
+    string m_savedButtonstring;
 
     void Start()
     {
@@ -67,6 +72,19 @@ public class CameraLookUp : MonoBehaviour {
             BattleMenuScript.Instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
             StartLerp();
         }
+    }
+
+    public void TurnOffCancelKey()
+    {
+        m_savedButtonstring = m_continueTriggerKey.buttonName;
+        m_savedButtonKeyCode = m_continueTriggerKey.key;
+        m_continueTriggerKey.key = KeyCode.None;
+    }
+
+    public void TurnOnCancelKey()
+    {
+        m_continueTriggerKey.buttonName = m_savedButtonstring;
+        m_continueTriggerKey.key = m_savedButtonKeyCode;
     }
 
 }

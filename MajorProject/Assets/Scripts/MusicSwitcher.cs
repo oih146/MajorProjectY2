@@ -12,8 +12,6 @@ public class MusicSwitcher : MonoBehaviour {
     public bool Lerping;
     public bool m_normalAudioOn;
 
-    public bool lerping;
-
     public static MusicSwitcher Instance;
 
     void Awake()
