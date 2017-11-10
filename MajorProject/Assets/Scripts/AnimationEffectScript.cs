@@ -53,11 +53,17 @@ public class AnimationEffectScript : MonoBehaviour {
         Debug.Log(m_rootHolder.activeInHierarchy);
         if (m_animator != null)
         {
-            m_animator.Play(m_anim.name);
+            if(m_animator.enabled == false)
+                m_animator.enabled = true;
+            m_animator.Play(m_anim.name, -1, 0f);
             //m_animator.speed = 1;
         }
         if (m_partSys != null)
+        {
+            foreach (ParticleSystem partSys in m_rootHolder.GetComponentsInChildren<ParticleSystem>())
+                partSys.time = 0f;
             m_partSys.Play(true);
+        }
     }
 
     public virtual void StopEffect()

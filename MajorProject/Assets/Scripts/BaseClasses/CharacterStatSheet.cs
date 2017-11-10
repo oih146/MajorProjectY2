@@ -222,7 +222,7 @@ public class CharacterStatSheet : MonoBehaviour {
             Health -= damageToTake + AdditionalDamage();
             ReCheckHealth();
             if (DeathCheck())
-                GetAnimScript().AttackDone();
+                TurnBasedScript.Instance.CheckTeam(this);
         }
         m_readyToContinue = true;
     }
@@ -277,7 +277,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
-        string prevanimName = (!GetAnimatorStateInfo().IsName("Hit")) ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
+        string prevanimName = (GetAnimatorStateInfo().IsName("Idle") || GetAnimatorStateInfo().IsName("Riposte_Idle") || GetAnimatorStateInfo().IsName("Spell_Hold")) ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             m_animator.Play("Hit", -1, 0f);
@@ -286,6 +286,8 @@ public class CharacterStatSheet : MonoBehaviour {
         Health -= damageToTake;
         ReCheckHealth();
         TurnBasedScript.Instance.CheckTeam(this);
+        GetAnimScript().BeenHit = true;
+        //Debug.Log("Stopped")
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             yield return new WaitUntil(() => !GetAnimatorStateInfo().IsName("Hit"));

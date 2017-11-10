@@ -35,7 +35,8 @@ public class CounterAttack : MagicAttack {
 
     public void SecondaryUse(CharacterStatSheet character)
     {
-        character.m_animator.Play(m_counterMotion.name);
+        if(!character.m_isDead)
+            character.m_animator.Play(m_counterMotion.name);
         //StartCoroutine(WaitTillEnd(character));
     }
 

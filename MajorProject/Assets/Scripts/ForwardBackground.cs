@@ -139,7 +139,7 @@ public class ForwardBackground : MonoBehaviour {
             {
 
                 Vector3 temp = m_backgrounds[i].transform.localPosition;
-                temp.y = Mathf.Lerp(initalPoses[i], m_positionTransforms[i - m_startingIndex - 1].localPosition.y, percentage);
+                temp.y = Mathf.Lerp(initalPoses[i], m_positionTransforms[(addToI ? i - m_startingIndex - 1 + m_backgrounds.Length : i - m_startingIndex - 1)].localPosition.y, percentage);
                 m_backgrounds[i].transform.localPosition = temp;
                 m_backgrounds[i].GetComponent<DualBackgrounds>().CopyOver();
             }

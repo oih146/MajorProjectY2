@@ -16,6 +16,9 @@ public class AnimScript : MonoBehaviour {
     bool m_attackFinished;
     public bool AttackFinished { get { return m_attackFinished; } set { m_attackFinished = value; } }
 
+    bool m_beenHit;
+    public bool BeenHit { get { return m_beenHit; } set { m_beenHit = value; } }
+
     //For animation events
     //Syncs animation with damage
     public void HitPointOpen()
