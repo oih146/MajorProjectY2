@@ -37,6 +37,7 @@ public class TurnBasedScript : MonoBehaviour {
     public PointerBounce turnPointer;
     bool m_attackDone;
     public bool m_attackOver;
+    public bool m_turnOver;
     public bool m_playerTurn;
     public bool m_WhenAttackingTurn; /*When Attacking, whose turn is it? */
     public bool PlayerTurn
@@ -137,7 +138,7 @@ public class TurnBasedScript : MonoBehaviour {
         {
             //Has the battle finished
             //Think up better way to use
-            if (BattleOver)
+            if (BattleOver && m_turnOver)
             {
                 StartCoroutine(EndBattle(WonBattleQ));
                 enabled = false;
@@ -561,6 +562,7 @@ public class TurnBasedScript : MonoBehaviour {
     //Starts attack but waits till attack finishes
     IEnumerator ToAttack(CharacterStatSheet characterAttacking)
     {
+        m_turnOver = false;
         characterAttacking.m_animator.SetFloat("AttackType", (float)characterAttacking.m_attackCharge);
         //characterAttacking.m_animator.Play(characterAttacking.m_ActiveWeapon.GetAnimationToPlay().name);
         //turnPointer.gameObject.SetActive(false);
@@ -630,6 +632,44 @@ public class TurnBasedScript : MonoBehaviour {
                 WonBattleQ = false;
             }
         }
+        switch (attacker.m_ActiveWeapon.DoesAttackAll() || attacker.m_ActiveWeapon.m_attackType == AttackType.Branching)
+        {
+            case true:
+                CheckAllPlayers(GetDefendingTeam());
+                break;
+            case false:
+                CheckOnPlayer(characterAttacking);
+                break;
+            default:
+                CheckAllPlayers(GetDefendingTeam());
+                break;
+        }
+
+        if (attacker.DeathCheck())
+        {
+            if (!m_WhenAttackingTurn == true)
+            {
+                enemyObjects = ResizeArrayOnDeath(enemyObjects);
+                if (enemyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Win");
+                    BattleOver = true;
+                    WonBattleQ = true;
+
+                }
+            }
+            else
+            {
+                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+                if (friendlyObjects.Length == 0)
+                {
+                    Debug.Log("Battle Over, You Lose");
+                    BattleOver = true;
+                    WonBattleQ = false;
+                }
+            }
+        }
+        m_turnOver = true;
     }
 
     //Where attack type is decided
@@ -866,43 +906,43 @@ public class TurnBasedScript : MonoBehaviour {
         StartCoroutine(co);
         Debug.Log("Attack Hit");
         yield return new WaitUntil(() => m_attackDone);
-        switch (attacker.m_ActiveWeapon.DoesAttackAll() || attacker.m_ActiveWeapon.m_attackType == AttackType.Branching)
-        {
-            case true:
-                CheckAllPlayers(GetDefendingTeam());
-                break;
-            case false:
-                CheckOnPlayer(attackerBuffer);
-                break;
-            default:
-                CheckAllPlayers(GetDefendingTeam());
-                break;
-        }
+        //switch (attacker.m_ActiveWeapon.DoesAttackAll() || attacker.m_ActiveWeapon.m_attackType == AttackType.Branching)
+        //{
+        //    case true:
+        //        CheckAllPlayers(GetDefendingTeam());
+        //        break;
+        //    case false:
+        //        CheckOnPlayer(attackerBuffer);
+        //        break;
+        //    default:
+        //        CheckAllPlayers(GetDefendingTeam());
+        //        break;
+        //}
 
-        if (attacker.DeathCheck())
-        {
-            if (!m_WhenAttackingTurn == true)
-            {
-                enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                if (enemyObjects.Length == 0)
-                {
-                    Debug.Log("Battle Over, You Win");
-                    BattleOver = true;
-                    WonBattleQ = true;
+        //if (attacker.DeathCheck())
+        //{
+        //    if (!m_WhenAttackingTurn == true)
+        //    {
+        //        enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //        if (enemyObjects.Length == 0)
+        //        {
+        //            Debug.Log("Battle Over, You Win");
+        //            BattleOver = true;
+        //            WonBattleQ = true;
 
-                }
-            }
-            else
-            {
-                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                if (friendlyObjects.Length == 0)
-                {
-                    Debug.Log("Battle Over, You Lose");
-                    BattleOver = true;
-                    WonBattleQ = false;
-                }
-            }
-        }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //        if (friendlyObjects.Length == 0)
+        //        {
+        //            Debug.Log("Battle Over, You Lose");
+        //            BattleOver = true;
+        //            WonBattleQ = false;
+        //        }
+        //    }
+        //}
         //yield return new WaitUntil(() => (attacker.GetAnimatorStateInfo().loop));
         m_attackOver = true;
     }
@@ -973,7 +1013,7 @@ public class TurnBasedScript : MonoBehaviour {
                 {
                     Debug.Log("Battle Over, You Lose");
                     BattleOver = true;
-                    WonBattleQ = true;
+                    WonBattleQ = false;
                     break;
                 }
             }
@@ -988,7 +1028,7 @@ public class TurnBasedScript : MonoBehaviour {
                 {
                     Debug.Log("Battle Over, You Win");
                     BattleOver = true;
-                    WonBattleQ = false;
+                    WonBattleQ = true;
                     break;
                 }
             }
@@ -1683,11 +1723,13 @@ public class TurnBasedScript : MonoBehaviour {
         bool someoneDied = false;
         do
         {
+
             someoneDied = false;
             foreach (CharacterStatSheet charSS in GetDefendingTeam())
             {
                 if (!(charSS.GetEffectArray()[(int)eEffects.Invulnerability].IsActive) && !charSS.m_isDead)
                 {
+                    charSS.GetAnimScript().BeenHit = false;
                     StartCoroutine(attacker.CounterTakeDamage(charSS.TakeDamage(attacker.m_ActiveWeapon.GetAttackDamage + attacker.AdditionalDamage(),
                     attacker.GetStatistics(),
                 (attacker.GetEffectArray()[(int)eEffects.InteruptModifier].IsActive) ? attacker.GetEffectArray()[(int)eEffects.InteruptModifier].Strength : 1,
