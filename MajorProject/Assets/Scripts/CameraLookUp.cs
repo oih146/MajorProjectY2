@@ -10,6 +10,9 @@ public class CameraLookUp : MonoBehaviour {
     [SerializeField]
     private Transform[] m_moveUpWith;
 
+    [SerializeField]
+    private GameObject m_rain;
+
     public GameObject m_camera;
     public float m_lerpSpeed;
     public float m_toYPos;
@@ -85,6 +88,14 @@ public class CameraLookUp : MonoBehaviour {
     {
         m_continueTriggerKey.buttonName = m_savedButtonstring;
         m_continueTriggerKey.key = m_savedButtonKeyCode;
+    }
+
+    public void TurnOffRain()
+    {
+        foreach(ParticleSystem part in m_rain.GetComponentsInChildren<ParticleSystem>())
+        {
+            part.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        }
     }
 
 }

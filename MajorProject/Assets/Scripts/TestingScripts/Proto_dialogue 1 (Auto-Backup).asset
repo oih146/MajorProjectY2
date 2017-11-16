@@ -12661,8 +12661,8 @@ MonoBehaviour:
         typeString: CustomFieldType_Text
       - title: Sequence
         value: "SendMessage(ParentCameraNull,,Cinematics)@0; SetContinueMode(false)@0;
-          SendMessage(SetMovementTrue,,Player 1)@0; SendMessage(SetSpeed,25,Player
-          1)@0; SendMessage(SetSpeed,3.5,Empress Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main
+          SendMessage(SetMovementTrue,,Player 1)@0; SendMessage(SetSpeed,30,Player
+          1)@0; SendMessage(SetSpeed,4,Empress Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main
           Camera)@5; Delay(5.0)@5; SetContinueMode(original)@10; Continue()@10;"
         type: 0
         typeString: CustomFieldType_Text
@@ -13347,7 +13347,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: Continue()@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13505,7 +13505,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}}; SendMessage(TurnOffRain,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13573,7 +13573,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}}; SendMessage(TurnOffRain,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13641,7 +13641,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(StartLerp,,CameraTrigger)@{{end}};
+        value: SendMessage(StartLerp,,CameraTrigger)@{{end}}; SendMessage(TurnOffRain,,CameraTrigger)@{{end}};
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
@@ -13661,8 +13661,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 729.99994
-        y: 504.53616
+        x: 726.99994
+        y: 503.53616
         width: 160
         height: 30
   - id: 10
