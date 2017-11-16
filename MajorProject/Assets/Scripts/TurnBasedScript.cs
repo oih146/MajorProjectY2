@@ -603,7 +603,7 @@ public class TurnBasedScript : MonoBehaviour {
         SetCombatBarMovement(true);
         //attacker.UpdateEffects();
         //attacker.GetCombatBar().Restart();
-
+        attacker.UpdateEffects();
         attacker.m_animScript.ResetVariables();
         //attacker.GetCombatBar().CombatActive = true;
         m_playerMoving = false;

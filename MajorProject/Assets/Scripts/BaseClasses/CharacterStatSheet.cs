@@ -419,7 +419,6 @@ public class CharacterStatSheet : MonoBehaviour {
         m_ActiveWeapon.m_attackFinished = false;
         GetCombatBar().m_combatSlider.value = 0;
         GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Neutral]);
-        UpdateEffects();
         GetCombatBar().Restart();
         GetCombatBar().CombatActive = true;
         m_decidedAttack = false;
