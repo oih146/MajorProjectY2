@@ -2267,7 +2267,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 879.42267
+        x: 881.48456
         y: 202.98969
         width: 160
         height: 30
@@ -2461,7 +2461,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SendMessage(AttachToEvents,,BanditGroup)@{{end}}
+        value: SendMessage(AttachToEvents,,BanditGroup)@0;
         type: 0
         typeString: 
       conversationID: 2
@@ -2499,7 +2499,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 878.45355
+        x: 882.45355
         y: 117.42266
         width: 160
         height: 30
@@ -2578,8 +2578,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 691.85565
-        y: 365.36084
+        x: 690.8247
+        y: 364.32993
         width: 160
         height: 30
     - id: 6
@@ -3004,7 +3004,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false)@0;
+
+          SetContinueMode(original)@{{end}};'
         type: 0
         typeString: 
       conversationID: 2
@@ -3227,7 +3229,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false)@0;
+
+          SetContinueMode(original)@{{end}};'
         type: 0
         typeString: 
       conversationID: 2
@@ -3294,7 +3298,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false)@0;
+
+          SetContinueMode(original)@{{end}};'
         type: 0
         typeString: 
       conversationID: 2
@@ -3362,7 +3368,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false)@0;
+
+          SetContinueMode(original)@{{end}};'
         type: 0
         typeString: 
       conversationID: 2
@@ -3429,7 +3437,9 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'SetContinueMode(false)@0;
+
+          SetContinueMode(original)@{{end}};'
         type: 0
         typeString: 
       conversationID: 2
@@ -6651,7 +6661,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SendMessage(StartFade,,Pre-FamersDialogue)@1; Delay(4.0);
+        value: SetContinueMode(false)@0; SendMessage(StartFade,,Pre-FamersDialogue)@1;
+          Delay(4.0); SetContinueMode(original);
         type: 0
         typeString: 
       conversationID: 5
@@ -7097,7 +7108,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SendMessage(StartFade,,Pre-FamersDialogue)@2; Delay(4.0);
+        value: SetContinueMode(false)@0; SendMessage(StartFade,,Pre-FamersDialogue)@2;
+          Delay(4.0); SetContinueMode(original);
         type: 0
         typeString: 
       conversationID: 5
@@ -7123,7 +7135,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 476.78357
+        x: 477.8145
         y: 534.88654
         width: 160
         height: 30
