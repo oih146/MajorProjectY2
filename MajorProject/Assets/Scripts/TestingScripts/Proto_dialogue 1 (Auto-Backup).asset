@@ -12644,7 +12644,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: The Town!!
+        value: The Town!
         type: 0
         typeString: CustomFieldType_Text
       - title: Parenthetical
@@ -12663,7 +12663,7 @@ MonoBehaviour:
         value: "SendMessage(ParentCameraNull,,Cinematics)@0; SetContinueMode(false)@0;
           SendMessage(SetMovementTrue,,Player 1)@0; SendMessage(SetSpeed,30,Player
           1)@0; SendMessage(SetSpeed,4,Empress Sarahpagus)@0; Delay(5.0)@0;\n SendMessage(StartLerp,,Main
-          Camera)@5; Delay(5.0)@5; SetContinueMode(original)@10; Continue()@10;"
+          Camera)@5; Delay(5.0)@2; SetContinueMode(original)@7;"
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 9
