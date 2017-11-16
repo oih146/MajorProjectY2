@@ -605,8 +605,6 @@ public class TurnBasedScript : MonoBehaviour {
         //attacker.GetCombatBar().Restart();
 
         attacker.m_animScript.ResetVariables();
-        attacker.ResetCombatVars();
-        ResumeAttackEffects();
         //attacker.GetCombatBar().CombatActive = true;
         m_playerMoving = false;
         //attacker.m_decidedAttack = false;
@@ -638,7 +636,7 @@ public class TurnBasedScript : MonoBehaviour {
                 CheckAllPlayers(GetDefendingTeam());
                 break;
             case false:
-                CheckOnPlayer(characterAttacking);
+                CheckOnPlayer(characterAttacking.m_playerToAttack);
                 break;
             default:
                 CheckAllPlayers(GetDefendingTeam());
@@ -669,6 +667,9 @@ public class TurnBasedScript : MonoBehaviour {
                 }
             }
         }
+
+        attacker.ResetCombatVars();
+        ResumeAttackEffects();
         m_turnOver = true;
     }
 
@@ -1375,6 +1376,11 @@ public class TurnBasedScript : MonoBehaviour {
             PlayerStat playStat = (PlayerStat)friendlyObjects[0];
             playStat.SpellAvaliable = spellLeft;
             //friendlyObjects[0].m_animator.Play("Idle");
+        }
+        else
+        {
+            FadeBlack.OnFadeBlackMidle += DeathScreen.Instance.ShowDeathScreen;
+            FadeBlack.Instance.Activate(false);
         }
         SetPlayerButtons(false);
         turnPointer.gameObject.SetActive(false);

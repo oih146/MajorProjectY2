@@ -9629,7 +9629,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@0;
         type: 0
         typeString: CustomFieldType_Text
       - title: Response Menu Sequence
@@ -10305,7 +10305,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@0;
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -10901,7 +10901,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@0;
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -11266,7 +11266,7 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: SendMessage(AddToConversationEnd,,BountyHunter)@{{end}};
+        value: SendMessage(AddToConversationEnd,,BountyHunter)@0;
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 7
@@ -11286,7 +11286,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 256.86072
+        x: 257.86072
         y: 615.5316
         width: 160
         height: 30
