@@ -291,6 +291,9 @@
     <Compile Include="Assets\Scripts\BumpUp.cs" />
     <Compile Include="Assets\Scripts\CameraLookAcross.cs" />
     <Compile Include="Assets\Scripts\CameraLookUp.cs" />
+    <Compile Include="Assets\Scripts\Cheats\Cheat.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatChickenWalk.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatTextFlash.cs" />
     <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\CombatSliderScript.cs" />
@@ -303,6 +306,7 @@
     <Compile Include="Assets\Scripts\EnemyScripts\BanditLord.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\BanditStat.cs" />
     <Compile Include="Assets\Scripts\EnemyScripts\WolvesStat.cs" />
+    <Compile Include="Assets\Scripts\Entrance.cs" />
     <Compile Include="Assets\Scripts\FadeBlack.cs" />
     <Compile Include="Assets\Scripts\FarmersSetup.cs" />
     <Compile Include="Assets\Scripts\FollowTarget.cs" />

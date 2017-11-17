@@ -1086,7 +1086,7 @@ public class TurnBasedScript : MonoBehaviour {
             //Setup CombatBar
             echarSS.GetCombatBar().m_combatSlider.value = 0;
             echarSS.GetCombatBar().transform.SetParent(battleMenu.CombatBar.transform);
-            echarSS.GetCombatBar().transform.localPosition = new Vector3(-10, -43, -23);
+            echarSS.GetCombatBar().transform.localPosition = new Vector3(-10, -29, -23);
             echarSS.GetCombatBar().gameObject.SetActive(true);
 
             echarSS.GetCombatBar().Restart();

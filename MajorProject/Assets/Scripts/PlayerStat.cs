@@ -5,6 +5,15 @@ using PixelCrushers.DialogueSystem;
 
 public class PlayerStat : CharacterStatSheet {
 
+    [SerializeField]
+    private ParticleSystem m_chaosParts;
+    [SerializeField]
+    private ParticleSystem m_lawParts;
+    [SerializeField]
+    private ParticleSystem m_lightParts;
+    [SerializeField]
+    private ParticleSystem m_evilParts;
+
     public AlignmentLines m_alignmentLines;
     public int m_light;
     public int Light
@@ -23,9 +32,15 @@ public class PlayerStat : CharacterStatSheet {
             else
                 m_light = value;
             if (m_light - value < 0)
+            {
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(30));
+                StartCoroutine(PlayParticleSystem(m_lightParts));
+            }
             else
+            {
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(0));
+                StartCoroutine(PlayParticleSystem(m_evilParts));
+            }
             m_light = value;
             m_LightSlider.value = m_light;
             if (value < 0)
@@ -46,9 +61,15 @@ public class PlayerStat : CharacterStatSheet {
         set
         {
             if (m_law - value < 0)
+            {
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(30));
+                StartCoroutine(PlayParticleSystem(m_lawParts));
+            }
             else
+            {
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLawLine(0));
+                StartCoroutine(PlayParticleSystem(m_chaosParts));
+            }
             m_law = value;
             m_LawSlider.value = m_law;
             if (value < 0)
@@ -102,7 +123,8 @@ public class PlayerStat : CharacterStatSheet {
     void Start () {
         Starts();
         //AddToOrderChaos(5);
-        //AddToOrderChaos(-30);
+        //AddToOrderChaos(-3);
+        //AddToGoodEvil(-3);
         //AddToOrderChaos(-30);
         NotificationManager.Instance.PushNotificationBlock();
         GenerateWillPower();
@@ -211,6 +233,15 @@ public class PlayerStat : CharacterStatSheet {
     public override void OnKillConsequences(UseConsequences conseq)
     {
         conseq.ApplyConsequences(this, UseConsequences.ConsequenceApplication.OnKill);
+    }
+
+    IEnumerator PlayParticleSystem(ParticleSystem parts)
+    {
+        parts.Play();
+        yield return new WaitForSeconds(5f);
+        parts.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+        yield return new WaitUntil(() => !parts.IsAlive(true));
+        parts.Stop();
     }
 
 }

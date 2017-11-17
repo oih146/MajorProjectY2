@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour {
 
     public static PlayerMovement Instance;
 
+    bool m_chickenWalk = false;
     public int m_InterruptBase;
     public static bool m_amMoving;
     public float maxSpeed = 10f;
@@ -46,7 +47,7 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (!m_walking)
             {
-                GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                GetComponentInChildren<PlayerStat>().m_animator.Play(m_chickenWalk ? "Walk2" : "Walk");
                 m_walking = true;
             }
             m_amMoving = true;
@@ -97,6 +98,11 @@ public class PlayerMovement : MonoBehaviour {
     public void DisableMovement()
     {
         enabled = false;
+    }
+
+    public void SwitchWalk()
+    {
+        m_chickenWalk = !m_chickenWalk;
     }
 
 }
