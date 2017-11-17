@@ -243,7 +243,7 @@ public class CharacterStatSheet : MonoBehaviour {
             //damageToTake -= m_armor.GetDamageReduction((GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0);
         //m_armor.TookAHit();
         if(attacktype != ChargeTime.Magic)
-            damageToTake -= (GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 0;
+            damageToTake /= (GetEffectArray()[(int)eEffects.DamageReduction].IsActive) ? (int)GetEffectArray()[(int)eEffects.DamageReduction].Strength : 1;
         //Damage can't be less than zero
         //Would be adding to health
         if (damageToTake < 0)
@@ -419,7 +419,6 @@ public class CharacterStatSheet : MonoBehaviour {
         m_ActiveWeapon.m_attackFinished = false;
         GetCombatBar().m_combatSlider.value = 0;
         GetCombatBar().SetPortraitBackgroundColor(TurnBasedScript.Instance.m_attackColors[(int)eAttackColors.Neutral]);
-        UpdateEffects();
         GetCombatBar().Restart();
         GetCombatBar().CombatActive = true;
         m_decidedAttack = false;
