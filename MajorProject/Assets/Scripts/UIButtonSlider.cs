@@ -4,10 +4,7 @@ using UnityEngine;
 
 public class UIButtonSlider : MonoBehaviour {
 
-    [SerializeField]
-    private MaterialHandler m_matHandler;
-
-    public bool m_isOpen = true;
+    public bool m_isOpen = false;
     public bool m_lerping = false;
     public UnityEngine.UI.Button m_tabCloser;
     private float m_timeSinceStart = 0;
@@ -68,7 +65,6 @@ public class UIButtonSlider : MonoBehaviour {
     public void SetOpenClosed()
     {
         m_isOpen = !m_isOpen;
-        SetMatHandler();
         if (!m_isOpen)
         {
             UISliderKeeper.Instance.ProcessSlideRequest(this);
@@ -103,10 +99,5 @@ public class UIButtonSlider : MonoBehaviour {
     public Animator GetAnimator()
     {
         return m_animator;
-    }
-
-    public void SetMatHandler()
-    {
-        m_matHandler.SetOpen(m_isOpen);
     }
 }
