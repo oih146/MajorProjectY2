@@ -13,14 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PixelRect:
     serializedVersion: 2
-    x: 0
-    y: 42
+    x: 8
+    y: 50
     width: 1680
     height: 968
   m_ShowMode: 4
   m_Title: 
   m_RootView: {fileID: 2}
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &2
 MonoBehaviour:
@@ -43,7 +43,7 @@ MonoBehaviour:
     y: 0
     width: 1680
     height: 968
-  m_MinSize: {x: 950, y: 542}
+  m_MinSize: {x: 950, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
 --- !u!114 &3
 MonoBehaviour:
@@ -108,7 +108,7 @@ MonoBehaviour:
   m_MinSize: {x: 687, y: 492}
   m_MaxSize: {x: 16012, y: 14042}
   vertical: 0
-  controlID: 47
+  controlID: 101
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -132,7 +132,7 @@ MonoBehaviour:
   m_MinSize: {x: 687, y: 492}
   m_MaxSize: {x: 16012, y: 14042}
   vertical: 1
-  controlID: 48
+  controlID: 102
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_MinSize: {x: 687, y: 221}
   m_MaxSize: {x: 16012, y: 4021}
   vertical: 0
-  controlID: 34
+  controlID: 103
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -308,8 +308,8 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 811
-    y: 91
+    x: 819
+    y: 99
     width: 590
     height: 618
   m_MaximizeOnPlay: 0
@@ -384,15 +384,15 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 91
+    x: 8
+    y: 99
     width: 262
     height: 618
   m_TreeViewState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 1afcffff00000000
+    m_ExpandedIDs: bcceffff000000001a63000018660000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -437,8 +437,8 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 266
-    y: 91
+    x: 274
+    y: 99
     width: 541
     height: 618
   m_SceneLighting: 1
@@ -577,8 +577,8 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 1405
-    y: 91
+    x: 1413
+    y: 99
     width: 275
     height: 618
   m_ScrollPosition: {x: 0, y: 0}
@@ -610,8 +610,8 @@ MonoBehaviour:
   m_DepthBufferBits: 0
   m_Pos:
     serializedVersion: 2
-    x: 0
-    y: 730
+    x: 8
+    y: 738
     width: 1680
     height: 258
   m_SearchFilter:
@@ -626,19 +626,19 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SearchArea: 0
     m_Folders:
-    - Assets/Scripts
+    - Assets/Sounds
   m_ViewMode: 1
   m_StartGridSize: 57
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Sounds
   m_LastFoldersGridSize: 57
-  m_LastProjectPath: C:\Users\s171266\Documents\Unity Projects\MajorProjectY2\MajorProject
+  m_LastProjectPath: C:\Users\s171606\Desktop\Paladin\MajorProject
   m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 511}
-    m_SelectedIDs: e4400000
-    m_LastClickedID: 16612
-    m_ExpandedIDs: 00000000a4290000502a0000a22a00005e2b0000982c0000ee2f000096300000f63400002a3d0000ee3d0000983e0000e4400000684100001c78000000ca9a3bffffff7f
+    scrollPos: {x: 0, y: 751}
+    m_SelectedIDs: d8560000
+    m_LastClickedID: 22232
+    m_ExpandedIDs: 00000000524e0000ec4e00003c4f0000e24f000000510000f6530000925400005a580000c85e0000745f000000600000146200008a6200005693000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -666,7 +666,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000a4290000502a0000a22a00005e2b0000982c0000ee2f000096300000f63400002a3d0000ee3d0000983e0000e4400000684100001c780000
+    m_ExpandedIDs: 00000000524e0000ec4e00003c4f0000e24f000000510000f6530000925400005a580000c85e0000745f000000600000146200008a62000056930000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -693,7 +693,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 9e240000382400002c240000cc240000c0ebffff60dfffffb4240000782c0000ec8000009e7f0000042e0000e02600003a2a0000fe2c0000024000009a2e0000a22e00009e2e000080440000063700006a380000a8eaffffb22e000006420000ec380000c25000008c700000382e0000b63300000c450000863b00000e330000143600001236000028380000d42f0000003800007a2f000034310000966000005c3a000040370000d4770000047800000c7800005878000062780000e26c0000003300009a3d00005e2b0000ca29000068300000303e0000383a000068430000c82a0000000000006a520000b439000014370000ae3700000c38000030310000022d0000e4370000fe2a00000c3900003e390000362b000002390000a42d0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -718,7 +718,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 144}
+    m_ScrollPosition: {x: 0, y: 0}
     m_GridSize: 57
   m_DirectoriesAreaWidth: 174
 --- !u!114 &19
