@@ -30,7 +30,11 @@ public class UISliderKeeper : MonoBehaviour {
         if (m_currentOpenSlider != null)
         {
             m_currentOpenSlider.m_isOpen = !m_currentOpenSlider.m_isOpen;
-            m_currentOpenSlider.SetMatHandler();
+            if (!m_currentOpenSlider.MaterialHandler().IsOpen)
+            {
+                m_currentOpenSlider.SetMatHandler();
+                m_currentOpenSlider.MaterialHandler().StartLerp(false);
+            }
             m_currentOpenSlider.StartLerp();
         }
         m_currentOpenSlider = newSlider;

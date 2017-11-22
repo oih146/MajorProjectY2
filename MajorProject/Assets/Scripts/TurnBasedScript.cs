@@ -579,22 +579,6 @@ public class TurnBasedScript : MonoBehaviour {
             NotificationManager.Instance.PushNotificationBlock();
         }
         attacker.m_ActiveWeapon.OnEnd(attacker);
-        isAllDisarmed = false;
-        foreach (WeaponBase.WeaponEffect we in attacker.m_ActiveWeapon.weapEffects)
-        {
-            if(we.effect.m_effectType == eEffects.Disarmed)
-            {
-                isAllDisarmed = true;
-                foreach(CharacterStatSheet charSS in GetDefendingTeam())
-                {
-                    if(charSS.Disarmed == false)
-                    {
-                        isAllDisarmed = false;
-                        break;   
-                    }
-                }
-            }
-        }
         //attacker.GetCombatBar().m_combatSlider.value = 0;
         //attacker.GetCombatBar().SetPortraitBackgroundColor(m_attackColors[(int)eAttackColors.Neutral]);
         //SetTurnPointer(false);
@@ -607,29 +591,31 @@ public class TurnBasedScript : MonoBehaviour {
         attacker.m_animScript.ResetVariables();
         //attacker.GetCombatBar().CombatActive = true;
         m_playerMoving = false;
+        if (friendlyObjects.Length != 0)
+            CheckAllButtons();
         //attacker.m_decidedAttack = false;
         //attacker.m_decidedTarget = false;
         //attacker.m_playerToAttack = null;
-        if (attacker.DeathCheck())
-        {
-            if (playerTurnBuffer == false)
-            {
-                enemyObjects = ResizeArrayOnDeath(enemyObjects);
-                if (enemyObjects.Length == 0)
-                {
-                    Debug.Log("Battle Over, You Win");
-                    BattleOver = true;
-                    WonBattleQ = true;
-                }
-            }
-            else
-            {
-                friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
-                Debug.Log("Battle Over, You Lose");
-                BattleOver = true;
-                WonBattleQ = false;
-            }
-        }
+        //if (attacker.DeathCheck())
+        //{
+        //    if (playerTurnBuffer == false)
+        //    {
+        //        enemyObjects = ResizeArrayOnDeath(enemyObjects);
+        //        if (enemyObjects.Length == 0)
+        //        {
+        //            Debug.Log("Battle Over, You Win");
+        //            BattleOver = true;
+        //            WonBattleQ = true;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        friendlyObjects = ResizeArrayOnDeath(friendlyObjects);
+        //        Debug.Log("Battle Over, You Lose");
+        //        BattleOver = true;
+        //        WonBattleQ = false;
+        //    }
+        //}
         switch (attacker.m_ActiveWeapon.DoesAttackAll() || attacker.m_ActiveWeapon.m_attackType == AttackType.Branching)
         {
             case true:
@@ -1109,15 +1095,30 @@ public class TurnBasedScript : MonoBehaviour {
         {
             battleMenu.spellCharges[i].SetActive(true);
         }
-        int spellNum = friendlyPlayers[0].m_spells.Length;
-        int abilityNum = friendlyPlayers[0].m_abilities.Length;
+
+        CheckAllButtons();
+
+        OnBattleStart();
+
+        //Meant to reposition ally health bar, follow script throws off placement
+        //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
+        //otherbuff.y += 35;
+        //friendlyObjects[1].GetHealthBar().transform.position = otherbuff;
+        //SetTurnPointer();
+        //OnTurnEnd();
+    }
+
+    void CheckAllButtons()
+    {
+        int spellNum = friendlyObjects[0].m_spells.Length;
+        int abilityNum = friendlyObjects[0].m_abilities.Length;
         //Disable Inactive Spell Buttons
         for (int t = 0; t < battleMenu.magicButtons.Length; t++)
         {
-            if(t < 6)
+            if (t < 6)
             {
                 if (t < abilityNum)
-                    if (friendlyPlayers[0].m_abilities[t].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
+                    if (friendlyObjects[0].m_abilities[t].CanUseSpell(friendlyObjects[0].GetComponent<PlayerStat>().Law, friendlyObjects[0].GetComponent<PlayerStat>().Light))
                     {
                         //battleMenu.magicButtons[t].interactable = true;
                         magicCanBePressed.Add(battleMenu.magicButtons[t]);
@@ -1130,7 +1131,7 @@ public class TurnBasedScript : MonoBehaviour {
             else
             {
                 if (t - 6 < spellNum)
-                    if (friendlyPlayers[0].m_spells[t - 6].CanUseSpell(friendlyPlayers[0].GetComponent<PlayerStat>().Law, friendlyPlayers[0].GetComponent<PlayerStat>().Light))
+                    if (friendlyObjects[0].m_spells[t - 6].CanUseSpell(friendlyObjects[0].GetComponent<PlayerStat>().Law, friendlyObjects[0].GetComponent<PlayerStat>().Light))
                     {
                         //battleMenu.magicButtons[t].interactable = true;
                         magicCanBePressed.Add(battleMenu.magicButtons[t]);
@@ -1142,15 +1143,6 @@ public class TurnBasedScript : MonoBehaviour {
             }
 
         }
-
-        OnBattleStart();
-
-        //Meant to reposition ally health bar, follow script throws off placement
-        //Vector3 otherbuff = Camera.main.WorldToScreenPoint(friendlyObjects[1].transform.position);
-        //otherbuff.y += 35;
-        //friendlyObjects[1].GetHealthBar().transform.position = otherbuff;
-        //SetTurnPointer();
-        //OnTurnEnd();
     }
 
     public void SetEnemy(EnemyBase[] enemyPlayers)

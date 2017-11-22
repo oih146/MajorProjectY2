@@ -105,6 +105,11 @@ public class UIButtonSlider : MonoBehaviour {
         return m_animator;
     }
 
+    public MaterialHandler MaterialHandler()
+    {
+        return m_matHandler;
+    }
+
     public void SetMatHandler()
     {
         m_matHandler.SetOpen(m_isOpen);

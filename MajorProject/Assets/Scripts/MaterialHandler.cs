@@ -13,7 +13,7 @@ public class MaterialHandler : MonoBehaviour {
     float m_timeSinceStart;
     float m_startValue;
 
-    bool m_isOpen = false;
+    bool m_isOpen = true;
     public bool IsOpen
     {
         get
@@ -22,10 +22,6 @@ public class MaterialHandler : MonoBehaviour {
         }
         set
         {
-            if(value == false)
-            {
-                StartLerp(false);
-            }
             m_isOpen = value;
         }
     }
@@ -56,7 +52,7 @@ public class MaterialHandler : MonoBehaviour {
         }
     }
 
-    void StartLerp(bool isFadingIn)
+    public void StartLerp(bool isFadingIn)
     {
         m_fadingIn = isFadingIn;
         m_startValue = image.material.GetFloat("_SparkleAmp");
@@ -70,11 +66,12 @@ public class MaterialHandler : MonoBehaviour {
         //Material mat = Instantiate(image.material);
         if (status)
         {
-            StartLerp(true);
+            if(IsOpen)
+                StartLerp(true);
         }
         else
         {
-            if(!IsOpen && m_fadingIn == true)
+            if(IsOpen)
                 StartLerp(false);
         }
         //image.material = mat;
