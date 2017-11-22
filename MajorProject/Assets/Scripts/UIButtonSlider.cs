@@ -43,11 +43,13 @@ public class UIButtonSlider : MonoBehaviour {
             m_time += Time.deltaTime;
             float timeInLerp = m_time - m_timeSinceStart;
             m_percentage = timeInLerp / m_lerpSpeed;
-            rect.position = Vector3.Lerp(
-                                (m_isOpen ? m_LerpPos.position : m_originalPos.position),
-                                (m_isOpen ? m_originalPos.position : m_LerpPos.position),
+            Vector3 temp = rect.position;
+            temp.y = Mathf.Lerp(
+                                (m_isOpen ? m_LerpPos.position.y : m_originalPos.position.y),
+                                (m_isOpen ? m_originalPos.position.y : m_LerpPos.position.y),
                                 m_percentage
                                 );
+            rect.position = temp;
             if (m_percentage >= 1f)
             {
                 m_lerping = false;
