@@ -17,21 +17,21 @@ public class ParallaxBackground : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
-        if (PlayerMovement.m_amMoving && m_target.transform.parent != null)
+        if (PlayerMovement.Instance.m_amMoving && m_target.transform.parent != null)
         {
             Vector3 buff = gameObject.transform.position;
-            buff.x += (PlayerMovement.m_speed * m_moveSpeed);
+            buff.x += (PlayerMovement.Instance.m_speed * m_moveSpeed);
             gameObject.transform.position = buff;
 
             buff = m_rainHolders[1].transform.position;
-            buff.x += (PlayerMovement.m_speed * m_moveSpeed);
+            buff.x += (PlayerMovement.Instance.m_speed * m_moveSpeed);
             m_rainHolders[1].transform.position = buff;
         }
 	}
 
     void Update()
     {
-        if(PlayerMovement.m_amMoving || m_target.transform.parent == null)
+        if(PlayerMovement.Instance.m_amMoving || m_target.transform.parent == null)
             LeapFrog();
     }
 

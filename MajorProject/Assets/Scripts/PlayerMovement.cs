@@ -8,9 +8,9 @@ public class PlayerMovement : MonoBehaviour {
 
     bool m_chickenWalk = false;
     public int m_InterruptBase;
-    public static bool m_amMoving;
+    public bool m_amMoving;
     public float maxSpeed = 10f;
-    public static float m_speed;
+    public float m_speed;
     public bool m_walking = false;
     public bool m_autoMove;
     Rigidbody rigid;
@@ -25,6 +25,11 @@ public class PlayerMovement : MonoBehaviour {
     {
         ConversationEvents.OnConversationStart -= SetMovementFalse;
         ConversationEvents.OnConversationEnd -= SetMovementTrue;
+    }
+
+    void OnDestroy()
+    {
+        RemoveEvents();
     }
 
     // Use this for initialization

@@ -31,7 +31,7 @@ public class AreaDivider : MonoBehaviour {
     {
         if (hit.tag == "Player" && m_PlayerIn == true)
         {
-            if (PlayerMovement.m_speed > 0)
+            if (PlayerMovement.Instance.m_speed > 0)
             {
                 m_AlreadyPassed = true;
                 ForwardBackground.Instance.StartLerp();

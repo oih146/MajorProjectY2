@@ -2499,7 +2499,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 882.45355
+        x: 881.45355
         y: 117.42266
         width: 160
         height: 30
@@ -2957,7 +2957,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 1054.7422
+        x: 1056.7422
         y: 416.9072
         width: 160
         height: 30
@@ -6615,7 +6615,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 830
-        y: 294
+        y: 295
         width: 160
         height: 30
     - id: 6
@@ -6661,8 +6661,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetContinueMode(false)@0; SendMessage(StartFade,,Pre-FamersDialogue)@1;
-          Delay(4.0); SetContinueMode(original);
+        value: "SetContinueMode(false)@0; SendMessage(StartStageTwoFade,,Pre-FamersDialogue)@2;
+          \nDelay(4.0); \nSetContinueMode(original)@4; Continue()@4;"
         type: 0
         typeString: 
       conversationID: 5
@@ -6690,8 +6690,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 650.8557
-        y: 393.6598
+        x: 646.7629
+        y: 394.6598
         width: 160
         height: 30
     - id: 7
@@ -6918,8 +6918,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 651.8557
-        y: 443.6598
+        x: 648.8557
+        y: 444.6598
         width: 160
         height: 30
     - id: 10
@@ -7108,8 +7108,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: SetContinueMode(false)@0; SendMessage(StartFade,,Pre-FamersDialogue)@2;
-          Delay(4.0); SetContinueMode(original);
+        value: "SetContinueMode(false)@0; SendMessage(StartStageThreeFade,,Pre-FamersDialogue)@2;
+          \nDelay(4.0); \nSetContinueMode(original)@4;"
         type: 0
         typeString: 
       conversationID: 5

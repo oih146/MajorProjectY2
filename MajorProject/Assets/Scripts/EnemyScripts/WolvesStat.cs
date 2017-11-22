@@ -31,15 +31,15 @@ public class WolvesStat : EnemyBase {
             {
                 case 0:
                     attackStrength = 3;
-                    attackDamage = 5;
+                    attackDamage = 3;
                     break;
                 case 1:
                     attackStrength = 5;
-                    attackDamage = 8;
+                    attackDamage = 5;
                     break;
                 case 2:
                     attackStrength = 8;
-                    attackDamage = 10;
+                    attackDamage = 8;
                     break;
                 default:
                     attackStrength = 3;

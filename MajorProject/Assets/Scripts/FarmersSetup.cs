@@ -5,13 +5,16 @@ using UnityEngine;
 public class FarmersSetup : MonoBehaviour {
 
     [SerializeField]
-    private GameObject[] m_turnOffs;
+    private GameObject[] m_stageOn;
 
     [SerializeField]
-    private GameObject[] m_turnOns;
+    private GameObject[] m_stageTwo;
 
-	// Use this for initialization
-	void Start () {
+    [SerializeField]
+    private GameObject[] m_stageThree;
+
+    // Use this for initialization
+    void Start () {
 		
 	}
 	
@@ -20,25 +23,37 @@ public class FarmersSetup : MonoBehaviour {
 		
 	}
 
-    void ActivatePostFarmers()
+    void ActivateStageTwo()
     {
-        foreach (GameObject game in m_turnOffs)
+        foreach (GameObject game in m_stageOn)
             game.SetActive(false);
-        foreach (GameObject game in m_turnOns)
+        foreach (GameObject game in m_stageTwo)
             game.SetActive(true);
-        FadeBlack.OnFadeBlackMidle -= ActivatePostFarmers;
+        foreach (GameObject game in m_stageThree)
+            game.SetActive(false);
+        FadeBlack.OnFadeBlackMidle -= ActivateStageTwo;
     }
 
-    void OnTriggerEnter(Collider col)
+    void ActivateStageThree()
     {
-        if(col.tag == "Player")
-        {
-            FadeBlack.OnFadeBlackMidle += ActivatePostFarmers;
-        }
+        foreach (GameObject game in m_stageOn)
+            game.SetActive(false);
+        foreach (GameObject game in m_stageTwo)
+            game.SetActive(false);
+        foreach (GameObject game in m_stageThree)
+            game.SetActive(true);
+        FadeBlack.OnFadeBlackMidle -= ActivateStageThree;
     }
 
-    void StartFade()
+    void StartStageTwoFade()
     {
+        FadeBlack.OnFadeBlackMidle += ActivateStageTwo;
+        FadeBlack.Instance.Activate(false);
+    }
+
+    void StartStageThreeFade()
+    {
+        FadeBlack.OnFadeBlackMidle += ActivateStageThree;
         FadeBlack.Instance.Activate(false);
     }
 }
