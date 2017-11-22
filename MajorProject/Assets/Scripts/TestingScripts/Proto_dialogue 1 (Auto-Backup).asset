@@ -3004,9 +3004,7 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 'SetContinueMode(false)@0;
-
-          SetContinueMode(original)@{{end}};'
+        value: 
         type: 0
         typeString: 
       conversationID: 2
@@ -3459,8 +3457,8 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 691.8556
-        y: 499.38147
+        x: 694.8556
+        y: 498.38147
         width: 160
         height: 30
   - id: 3
@@ -7250,7 +7248,8 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: "SetContinueMode(false)@0; SendMessage(ActivateFade,,Pre-FamersDialogue)@2;
+          \nDelay(4.0); \nSetContinueMode(original)@4;"
         type: 0
         typeString: 
       conversationID: 5
@@ -7270,7 +7269,7 @@ MonoBehaviour:
           PublicKeyToken=null
       canvasRect:
         serializedVersion: 2
-        x: 829
+        x: 830
         y: 447
         width: 160
         height: 30

@@ -211,6 +211,13 @@ public class TurnBasedScript : MonoBehaviour {
         }
     }
 
+    IEnumerator WaitToPop(int index)
+    {
+        int localIndex = index;
+        yield return new WaitForSeconds(5.0f);
+        battleMenu.spellCharges[localIndex].gameObject.SetActive(false);
+    }
+
     void ContinueFromPlayer()
     {
         if (usingMagic)
@@ -219,7 +226,10 @@ public class TurnBasedScript : MonoBehaviour {
             {
                 if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
                 {
-                    battleMenu.spellCharges[i].gameObject.SetActive(false);
+                    //battleMenu.spellCharges[i].gameObject.SetActive(false);
+                    battleMenu.spellCharges[i].transform.GetChild(0).gameObject.SetActive(true);
+                    battleMenu.spellCharges[i].transform.GetChild(1).gameObject.SetActive(false);
+                    StartCoroutine(WaitToPop(i));
                     PlayerStat player = (PlayerStat)m_decidingCharacter;
                     player.m_spellsAvaliable--;
                     break;

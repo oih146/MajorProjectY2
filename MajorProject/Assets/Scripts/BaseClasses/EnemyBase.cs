@@ -117,7 +117,6 @@ public class EnemyBase : CharacterStatSheet {
                     attackDamage = 5;
                     break;
             }
-            attackDamage = 200;
             //using melee
             m_weapon.m_damageSet = AttackDamage.Custom;
             m_weapon.m_chargeTime = (ChargeTime)attackStrength;

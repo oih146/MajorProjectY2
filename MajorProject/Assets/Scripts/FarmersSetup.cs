@@ -56,4 +56,9 @@ public class FarmersSetup : MonoBehaviour {
         FadeBlack.OnFadeBlackMidle += ActivateStageThree;
         FadeBlack.Instance.Activate(false);
     }
+
+    public void ActivateFade()
+    {
+        FadeBlack.Instance.Activate(false);
+    }
 }
