@@ -5,7 +5,7 @@ using UnityEngine;
 public class Entrance : MonoBehaviour {
 
     [SerializeField]
-    private GameObject m_monster;
+    private CharacterStatSheet m_monster;
 
     [SerializeField]
     private float m_lerpSpeed;
@@ -54,7 +54,7 @@ public class Entrance : MonoBehaviour {
         {
             if (m_setThisActive)
             {
-                m_monster.SetActive(true);
+                m_monster.gameObject.SetActive(true);
                 PlayerMovement.Instance.SetMovementFalse();
                 StartLerp();
             }

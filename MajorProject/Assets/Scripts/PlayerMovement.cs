@@ -36,6 +36,14 @@ public class PlayerMovement : MonoBehaviour {
         SetMovement(false);
     }
 
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+    }
+
     // Update is called once per frame
     void FixedUpdate() {
         float move;

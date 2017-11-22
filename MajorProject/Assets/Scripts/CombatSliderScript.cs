@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class CombatSliderScript : MonoBehaviour {
 
+    [SerializeField]
+    private ParticleSystem m_partSystem;
+
     public Slider m_combatSlider;
     public Image m_sliderPortraitRoot2;
     float m_timeSinceStart;
@@ -35,6 +38,13 @@ public class CombatSliderScript : MonoBehaviour {
         set
         {
             //stopCatcher = m_combatSlider.value;
+            if(value == true)
+            {
+                m_partSystem.Play();
+            } else
+            {
+                m_partSystem.Stop(true, ParticleSystemStopBehavior.StopEmitting);
+            }
             m_combatActive = value;
         }
     }
