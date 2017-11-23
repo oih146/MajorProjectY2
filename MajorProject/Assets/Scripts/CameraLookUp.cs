@@ -6,18 +6,18 @@ public class CameraLookUp : MonoBehaviour {
 
     [SerializeField]
     private PixelCrushers.DialogueSystem.UIButtonKeyTrigger m_continueTriggerKey;
-
     [SerializeField]
     private Transform[] m_moveUpWith;
-
     [SerializeField]
     private GameObject m_rain;
+    [SerializeField]
+    private GameObject m_camera;
+    [SerializeField]
+    private float m_lerpSpeed;
+    [SerializeField]
+    private float m_toYPos;
 
-    public GameObject m_camera;
-    public float m_lerpSpeed;
-    public float m_toYPos;
     float m_initalYPos;
-
     float m_timeSinceStart;
     bool m_lerping;
     KeyCode m_savedButtonKeyCode;
@@ -32,6 +32,16 @@ public class CameraLookUp : MonoBehaviour {
         if(m_lerping)
         {
             LerpBody();
+        }
+    }
+
+    void OnTriggerEnter(Collider col)
+    {
+        if (col.tag == "Player")
+        {
+            //PlayerMovement.Instance.SetMovementFalse();
+            BattleMenuScript.Instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
+            StartLerp();
         }
     }
 
@@ -65,16 +75,6 @@ public class CameraLookUp : MonoBehaviour {
         BattleMenuScript.Instance.gameObject.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
         m_timeSinceStart = Time.time;
         m_lerping = true;
-    }
-
-    void OnTriggerEnter(Collider col)
-    {
-        if(col.tag == "Player")
-        {
-            //PlayerMovement.Instance.SetMovementFalse();
-            BattleMenuScript.Instance.GetComponent<Canvas>().renderMode = RenderMode.WorldSpace;
-            StartLerp();
-        }
     }
 
     public void TurnOffCancelKey()

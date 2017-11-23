@@ -182,4 +182,9 @@ public class CombatSliderScript : MonoBehaviour {
         m_sliderPortraitRoot2.color = color;
         m_sliderPortraitRoot2.GetComponent<Image>().color = color;
     }
+
+    public void ResetTempSpeedArray()
+    {
+        speedEffects.Clear();
+    }
 }

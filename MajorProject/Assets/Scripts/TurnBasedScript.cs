@@ -1367,6 +1367,7 @@ public class TurnBasedScript : MonoBehaviour {
             friendlyObjects[0].SetToOutOfBattle();
             friendlyObjects[0].GetComponentInParent<Rigidbody>().isKinematic = !didWin;
             friendlyObjects[0].GetComponentInParent<PlayerMovement>().enabled = didWin;
+            friendlyObjects[0].GetCombatBar().ResetTempSpeedArray();
             int spellLeft = 0;
             foreach(GameObject spell in battleMenu.spellCharges)
             {

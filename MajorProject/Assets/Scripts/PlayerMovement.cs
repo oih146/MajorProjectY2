@@ -15,21 +15,15 @@ public class PlayerMovement : MonoBehaviour {
     public bool m_autoMove;
     Rigidbody rigid;
 
+    void OnDestroy()
+    {
+        RemoveEvents();
+    }
+
     void OnEnable()
     {
         Instance = this;
         CharacterStatSheet.m_InteruptMultiplier = m_InterruptBase;
-    }
-
-    public void RemoveEvents()
-    {
-        ConversationEvents.OnConversationStart -= SetMovementFalse;
-        ConversationEvents.OnConversationEnd -= SetMovementTrue;
-    }
-
-    void OnDestroy()
-    {
-        RemoveEvents();
     }
 
     // Use this for initialization
@@ -43,10 +37,6 @@ public class PlayerMovement : MonoBehaviour {
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.T))
-        {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
-        }
     }
 
     // Update is called once per frame
@@ -73,6 +63,12 @@ public class PlayerMovement : MonoBehaviour {
         rigid.velocity = new Vector2(move * maxSpeed, rigid.velocity.y);
         m_speed = move;
 
+    }
+
+    public void RemoveEvents()
+    {
+        ConversationEvents.OnConversationStart -= SetMovementFalse;
+        ConversationEvents.OnConversationEnd -= SetMovementTrue;
     }
 
     public void SetMovement(bool status)
