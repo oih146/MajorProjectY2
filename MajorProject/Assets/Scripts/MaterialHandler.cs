@@ -43,11 +43,12 @@ public class MaterialHandler : MonoBehaviour {
         float timeInLerp = Time.time - m_timeSinceStart;
         float percentage = timeInLerp / m_lerpSpeed;
 
-        float temp = Mathf.Lerp(m_startValue, m_fadingIn ? 1 : 0, percentage);
+        float temp = Mathf.Clamp(Mathf.Lerp(m_startValue, m_fadingIn ? 1 : 0, percentage), 0, 1);
         SetMaterialValues(temp);
 
         if(percentage >= 1f)
         {
+            SetMaterialValues(m_fadingIn ? 1 : 0);
             m_lerping = false;
         }
     }
@@ -88,5 +89,15 @@ public class MaterialHandler : MonoBehaviour {
     public void SetOpen(bool status)
     {
         IsOpen = status;
+    }
+
+    public void SetMaterialOn()
+    {
+        SetMaterialValues(1);
+    }
+
+    public void SetMaterialOff()
+    {
+        SetMaterialValues(0);
     }
 }

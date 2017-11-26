@@ -50,6 +50,8 @@ public class UISliderKeeper : MonoBehaviour {
     {
         if (m_currentOpenSlider != null && m_currentOpenSlider.m_isOpen == false)
         {
+            m_currentOpenSlider.SetMatHandler();
+            m_currentOpenSlider.MaterialHandler().StartLerp(false);
             m_currentOpenSlider.SetOpenClosed();
         }
     }

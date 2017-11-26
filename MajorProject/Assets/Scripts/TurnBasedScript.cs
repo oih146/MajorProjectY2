@@ -1916,9 +1916,11 @@ public class TurnBasedScript : MonoBehaviour {
                 }
                 CheckTeam(defender);
             }
-            yield return new WaitUntil(() => defender.GetAnimScript().TakeHit);
+            Debug.Log("Doesn't Hit");
+            yield return new WaitUntil(() => defender.GetAnimScript().BeenHit);
         }
 
+        Debug.Log("Doesn't transition");
         yield return new WaitUntil(() => !attacker.GetAnimatorStateInfo().IsName(attacker.m_ActiveWeapon.GetAnimationToPlay().name));
         //attacker.m_animator.SetBool("SpellBreak", false);
         m_attackDone = true;

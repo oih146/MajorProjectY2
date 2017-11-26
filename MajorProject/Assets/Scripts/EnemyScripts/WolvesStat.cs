@@ -15,6 +15,7 @@ public class WolvesStat : EnemyBase {
         m_animator.SetBool("Disarming", false);
         int m_chanceForHowl = 25;
 
+
         if (Random.Range(0, 100) <= m_chanceForHowl)
         {
             m_ActiveWeapon = m_abilities[0];

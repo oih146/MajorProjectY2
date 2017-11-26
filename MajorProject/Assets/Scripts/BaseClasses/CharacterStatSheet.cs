@@ -223,6 +223,7 @@ public class CharacterStatSheet : MonoBehaviour {
             ReCheckHealth();
             if (DeathCheck())
                 TurnBasedScript.Instance.CheckTeam(this);
+            GetAnimScript().AttackFinished = true;
         }
         m_readyToContinue = true;
     }
@@ -277,7 +278,7 @@ public class CharacterStatSheet : MonoBehaviour {
 
     IEnumerator TakeHit(float damageToTake)
     {
-        string prevanimName = (GetAnimatorStateInfo().IsName("Idle") || GetAnimatorStateInfo().IsName("Riposte_Idle") || GetAnimatorStateInfo().IsName("Spell_Hold")) ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
+        string prevanimName = (GetAnimatorStateInfo().IsName("Idle") || GetAnimatorStateInfo().IsName("Riposte_Idle") || GetAnimatorStateInfo().IsName("Spell_Hold")) || GetAnimatorStateInfo().IsName("Spell_Start") ? m_animator.GetCurrentAnimatorClipInfo(0)[0].clip.name : "Idle";
         if (!GetEffectArray()[(int)eEffects.CounterStance].IsActive)
         {
             m_animator.Play("Hit", -1, 0f);

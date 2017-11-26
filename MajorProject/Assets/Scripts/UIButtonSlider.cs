@@ -116,4 +116,9 @@ public class UIButtonSlider : MonoBehaviour {
     {
         m_matHandler.SetOpen(m_isOpen);
     }
+
+    public void TurnOffMatHandler()
+    {
+        m_matHandler.SetMaterialOff();
+    }
 }
