@@ -6,11 +6,26 @@ using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour {
 
-    public Image m_blackScreen;
-    public AudioSource m_audio;
+    [SerializeField]
+    private GameObject[] m_MainMenuObjects;
+    
+    [SerializeField]
+    private GameObject m_MainScreen;
+
+    [SerializeField]
+    private GameObject m_CreditsScreen;
+
+    [SerializeField]
+    private Image m_blackScreen;
+
+    [SerializeField]
+    private AudioSource m_audio;
+
+    [SerializeField]
+    private float m_lerpSpeed;
+
     bool m_isLerping;
     float m_timeSinceStart;
-    public float m_lerpSpeed;
 
     void Update()
     {
@@ -45,5 +60,15 @@ public class MainMenuScript : MonoBehaviour {
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void ToggleCreditsScreen()
+    {
+        m_CreditsScreen.SetActive(!m_CreditsScreen.activeInHierarchy);
+        m_MainScreen.SetActive(!m_CreditsScreen.activeInHierarchy);
+        foreach(GameObject game in m_MainMenuObjects)
+        {
+            game.SetActive(m_MainScreen.activeInHierarchy);
+        }
     }
 }

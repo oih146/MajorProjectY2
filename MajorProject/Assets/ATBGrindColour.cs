@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ATBGrindColour : MonoBehaviour {
 
+    [SerializeField]
+    private UnityEngine.UI.Slider m_slider;
+
     private ParticleSystem ps;
     public float initialR = 0.0F;
     public float initialG = 0.0F;
@@ -27,7 +30,7 @@ public class ATBGrindColour : MonoBehaviour {
     {
 		currentPos = transform.position.x;
         var main = ps.main;
-		if (currentPos >= colourChangeCoord) 
+		if (m_slider.value >= 0.73) 
 		{
         main.startColor = new Color(newR, newG, newB, newA);
 		}else{

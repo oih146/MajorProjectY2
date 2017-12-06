@@ -219,7 +219,7 @@ public class CharacterStatSheet : MonoBehaviour {
             CharacterStatSheet counterAttacker = m_playerToAttack;
             //m_playerToAttack.m_animator.Play(m_ActiveWeapon.m_animToPlay.name);
             yield return new WaitUntil(() => counterAttacker.m_animScript.Attacking);
-            Health -= damageToTake + AdditionalDamage();
+            Health -= damageToTake;
             ReCheckHealth();
             if (DeathCheck())
                 TurnBasedScript.Instance.CheckTeam(this);
@@ -255,9 +255,7 @@ public class CharacterStatSheet : MonoBehaviour {
         if (m_combatBar.m_combatSlider.value > 0.73)
         {
             float delay = ((damageToTake + (GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeBonusInterupt].Strength : 0) - (GetEffectArray()[(int)eEffects.TakeLessInterupt].IsActive ? GetEffectArray()[(int)eEffects.TakeLessInterupt].Strength : 0)) / 17.5f);
-            if(GetEffectArray()[(int)eEffects.TakeBonusInterupt].IsActive)
-                GetEffectArray()[(int)eEffects.TakeBonusInterupt].TakeTime();
-            m_combatBar.TakeFromTimer(delay > 0 ? delay : 0.1f);
+            m_combatBar.TakeFromTimer(delay > 1 ? delay : 1f);
             if(m_ActiveWeapon.GetType().ToString() == "SoulRipAttack")
             {
                 SoulRipAttack attack = (SoulRipAttack)m_ActiveWeapon;
@@ -270,7 +268,7 @@ public class CharacterStatSheet : MonoBehaviour {
             GetEffectArray()[(int)eEffects.CounterStance].Use(this);
             CounterAttack attack = (CounterAttack)m_ActiveWeapon;
             attack.SecondaryUse(this);
-            return GetEffectArray()[(int)eEffects.CounterStance].Strength;
+            return GetEffectArray()[(int)eEffects.CounterStance].Strength + AdditionalDamage();
         }
 
             return 0;

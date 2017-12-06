@@ -18,7 +18,7 @@ public class PtUEffect : AnimationEffectScript {
 
     public override void StopEffect()
     {
-
+        m_rootHolder.SetActive(true);
         StartCoroutine(WaitTillDeath());
     }
 

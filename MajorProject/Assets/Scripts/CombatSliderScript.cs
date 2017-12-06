@@ -97,8 +97,10 @@ public class CombatSliderScript : MonoBehaviour {
 
     public void TakeFromTimer(float taking)
     {
-        taking /= 0.75f;
+        //taking /= 0.75f;
         m_timeSinceStart += taking;
+        if (m_timeSinceStart > m_time)
+            m_timeSinceStart = m_time;
         float timeSinceLerp = m_time - m_timeSinceStart;
         float percentageComplete = timeSinceLerp / m_speed;
 
@@ -149,6 +151,7 @@ public class CombatSliderScript : MonoBehaviour {
             if(stat.TakeAndCheckActive())
             {
                 speedEffects.Remove(stat);
+                i--;
             }
             else
             {
@@ -169,7 +172,12 @@ public class CombatSliderScript : MonoBehaviour {
             SpeedUp(effect.Strength);
         else
             SlowDown(effect.Strength);
-        speedEffects.Add(effect);
+        StatusBase newEffect = (StatusBase)ScriptableObject.CreateInstance("StatusBase");
+        newEffect.Strength = effect.Strength;
+        newEffect.TimeActive = effect.TimeActive;
+        newEffect.m_effectType = effect.m_effectType;
+        speedEffects.Add(newEffect);
+
     }
     
     void CalculateSpeed()

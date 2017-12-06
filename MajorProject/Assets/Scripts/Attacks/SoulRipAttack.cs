@@ -33,7 +33,7 @@ public class SoulRipAttack : MagicAttack {
         m_animEffect.m_partSys.Play();
 
         DelayAnimation(m_animEffect.m_animator, (int)m_chargeTime);
-
+        character.m_animator.SetBool("SpellBreak", false);
         m_animEffect.OnSelect(character);
     }
 

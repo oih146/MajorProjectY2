@@ -1499,6 +1499,8 @@ public class TurnBasedScript : MonoBehaviour {
                 CheckTeam(defender);
             }
         }
+        else
+            attacker.m_readyToContinue = true;
         yield return new WaitUntil(() => attacker.m_readyToContinue);
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
         m_attackDone = true;
@@ -1546,7 +1548,10 @@ public class TurnBasedScript : MonoBehaviour {
                     CheckOnPlayer(defender);
                 }
             }
+            else
+                attacker.m_readyToContinue = true;
         }
+
         yield return new WaitUntil(() => attacker.m_readyToContinue);
         yield return new WaitUntil(() => attacker.GetAnimScript().AttackFinished);
 
@@ -1762,6 +1767,8 @@ public class TurnBasedScript : MonoBehaviour {
 
                     }
                 }
+                else
+                    attacker.m_readyToContinue = true;
             }
             NotificationManager.Instance.PushNotificationBlock();
             if (attacker.m_ActiveWeapon.HasEffect && someoneDied)
