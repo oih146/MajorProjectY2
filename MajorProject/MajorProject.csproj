@@ -90,7 +90,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ATBGrindColour.cs" />
     <Compile Include="Assets\Dialogue System\Examples\Feature Demo\FeatureDemo.cs" />
     <Compile Include="Assets\Dialogue System\Examples\Feature Demo\Multiple Database Example\AddRemoveDatabaseTrigger.cs" />
     <Compile Include="Assets\Dialogue System\Examples\Lua Example\LuaExample.cs" />
@@ -270,6 +269,7 @@
     <Compile Include="Assets\Scripts\AnimationEffectScript.cs" />
     <Compile Include="Assets\Scripts\AnimScript.cs" />
     <Compile Include="Assets\Scripts\AreaDivider.cs" />
+    <Compile Include="Assets\Scripts\ATBGrindColour.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\DivineFlameEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\PtUEffect.cs" />
     <Compile Include="Assets\Scripts\Attacks\AttackEffects\SoulRipEffect.cs" />
@@ -292,8 +292,11 @@
     <Compile Include="Assets\Scripts\CameraLookAcross.cs" />
     <Compile Include="Assets\Scripts\CameraLookUp.cs" />
     <Compile Include="Assets\Scripts\Cheats\Cheat.cs" />
-    <Compile Include="Assets\Scripts\Cheats\CheatChickenWalk.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatHeadReplace.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatManager.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatPlayer.cs" />
     <Compile Include="Assets\Scripts\Cheats\CheatTextFlash.cs" />
+    <Compile Include="Assets\Scripts\Cheats\CheatWalk.cs" />
     <Compile Include="Assets\Scripts\CinematicsHolder.cs" />
     <Compile Include="Assets\Scripts\CloudMover.cs" />
     <Compile Include="Assets\Scripts\CombatSliderScript.cs" />
@@ -336,6 +339,7 @@
     <Compile Include="Assets\Scripts\PointerBounce.cs" />
     <Compile Include="Assets\Scripts\Quitter.cs" />
     <Compile Include="Assets\Scripts\ResponseMaskDecider.cs" />
+    <Compile Include="Assets\Scripts\SpellCharge.cs" />
     <Compile Include="Assets\Scripts\StatusBar.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\BonusDamageStatus.cs" />
     <Compile Include="Assets\Scripts\StatusEffects\BonusEvilStatus.cs" />

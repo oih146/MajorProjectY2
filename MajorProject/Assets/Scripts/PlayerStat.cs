@@ -25,12 +25,7 @@ public class PlayerStat : CharacterStatSheet {
 
         set
         {
-            if (value < 0)
-                m_light = 0;
-            else if (value > 100)
-                m_light = 100;
-            else
-                m_light = value;
+
             if (m_light - value < 0)
             {
                 NotificationManager.Instance.AddToList(m_alignmentLines.GetLightLine(30));
@@ -111,9 +106,9 @@ public class PlayerStat : CharacterStatSheet {
             for (int i = 0; i < spellRoot.transform.childCount; i++)
             {
                 if (m_spellsAvaliable > i)
-                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(true);
+                    spellRoot.transform.GetChild(i).GetComponentInChildren<SpellCharge>().TurnOn();
                 else
-                    spellRoot.transform.GetChild(i).GetChild(0).gameObject.SetActive(false);
+                    spellRoot.transform.GetChild(i).GetComponentInChildren<SpellCharge>().TurnOff();
             }
         }
     }
@@ -128,7 +123,7 @@ public class PlayerStat : CharacterStatSheet {
         //AddToOrderChaos(-30);
         NotificationManager.Instance.PushNotificationBlock();
         GenerateWillPower();
-        m_spellsAvaliable = MaxSpells;
+        SpellAvaliable = MaxSpells;
         m_LawSlider.maxValue = (int)LawNOrder.Lawful;
         m_LawSlider.value = Law;
         m_LightSlider.maxValue = (int)GoodNEvil.Paladin;

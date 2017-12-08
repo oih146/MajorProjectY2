@@ -6,7 +6,14 @@ public class PlayerMovement : MonoBehaviour {
 
     public static PlayerMovement Instance;
 
-    bool m_chickenWalk = false;
+    public enum EWalk
+    {
+        Normal,
+        Chicken,
+        Crab
+    }
+
+
     public int m_InterruptBase;
     public bool m_amMoving;
     public float maxSpeed = 10f;
@@ -14,6 +21,7 @@ public class PlayerMovement : MonoBehaviour {
     public bool m_walking = false;
     public bool m_autoMove;
     Rigidbody rigid;
+    private EWalk m_walkType = EWalk.Normal;
 
     void OnDestroy()
     {
@@ -50,7 +58,24 @@ public class PlayerMovement : MonoBehaviour {
         {
             if (!m_walking)
             {
-                GetComponentInChildren<PlayerStat>().m_animator.Play(m_chickenWalk ? "Walk2" : "Walk");
+                switch (m_walkType)
+                {
+                    case EWalk.Normal:
+                        GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                        Debug.Log("Using Normal Walk");
+                        break;
+                    case EWalk.Chicken:
+                        GetComponentInChildren<PlayerStat>().m_animator.Play("Walk2");
+                        Debug.Log("Using Chicken Walk");
+                        break;
+                    case EWalk.Crab:
+                        GetComponentInChildren<PlayerStat>().m_animator.Play("Walk3");
+                        Debug.Log("Using Crab Walk");
+                        break;
+                    default:
+                        GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                        break;
+                }
                 m_walking = true;
             }
             m_amMoving = true;
@@ -109,9 +134,30 @@ public class PlayerMovement : MonoBehaviour {
         enabled = false;
     }
 
-    public void SwitchWalk()
+    public void SwitchWalk(EWalk walk)
     {
-        m_chickenWalk = !m_chickenWalk;
+        m_walkType = walk;
+        if(m_walking)
+        {
+            switch (m_walkType)
+            {
+                case EWalk.Normal:
+                    GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                    Debug.Log("Using Normal Walk");
+                    break;
+                case EWalk.Chicken:
+                    GetComponentInChildren<PlayerStat>().m_animator.Play("Walk2");
+                    Debug.Log("Using Chicken Walk");
+                    break;
+                case EWalk.Crab:
+                    GetComponentInChildren<PlayerStat>().m_animator.Play("Walk3");
+                    Debug.Log("Using Crab Walk");
+                    break;
+                default:
+                    GetComponentInChildren<PlayerStat>().m_animator.Play("Walk");
+                    break;
+            }
+        }
     }
 
 }

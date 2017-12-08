@@ -5,55 +5,29 @@ using UnityEngine;
 public class Cheat : MonoBehaviour {
 
     [SerializeField]
-    private string[] cheatCode;
+    private string[] m_cheatCodes;
 
-    private string m_activationMessage = "Cheat Activated!";
+    public string[] CheatCodes { get { return m_cheatCodes; } }
 
-    private int index;
-
-    void Start()
+    private void Awake()
     {
-        index = 0;
-        foreach(string st in cheatCode)
-        {
-            st.ToLower();
-        }
+        Awakes();
     }
 
-    void Update()
+    protected virtual void Awakes()
     {
-        // Check if any key is pressed
-        if (Input.anyKeyDown)
-        {
-            // Check if the next key in the code is pressed
-            if (Input.GetKeyDown(cheatCode[index]))
-            {
-                // Add 1 to index to check the next key in the code
-                index++;
-                // If index reaches the length of the cheatCode string, 
-                // the entire code was correctly entered
-                if (index == cheatCode.Length)
-                {
-                    // Cheat code successfully inputted!
-                    Execute();
-                    index = 0;
-                }
-            }
-            // Wrong key entered, we reset code typing
-            else
-            {
-                index = 0;
-            }
-        }
+
     }
 
-    protected virtual void ChangeActivationMessage(string newMessage)
+
+
+    public virtual void SetCheatCode(string acceptedCode)
     {
-        m_activationMessage = newMessage;
+
     }
 
     public virtual void Execute()
     {
-        CheatTextFlash.Instance.StartLerp(m_activationMessage);
+
     }
 }

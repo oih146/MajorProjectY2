@@ -211,30 +211,24 @@ public class TurnBasedScript : MonoBehaviour {
         }
     }
 
-    IEnumerator WaitToPop(int index)
-    {
-        int localIndex = index;
-        yield return new WaitForSeconds(5.0f);
-        battleMenu.spellCharges[localIndex].gameObject.SetActive(false);
-    }
-
     void ContinueFromPlayer()
     {
         if (usingMagic)
         {
-            for (int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
-            {
-                if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
-                {
-                    //battleMenu.spellCharges[i].gameObject.SetActive(false);
-                    battleMenu.spellCharges[i].transform.GetChild(0).gameObject.SetActive(true);
-                    battleMenu.spellCharges[i].transform.GetChild(1).gameObject.SetActive(false);
-                    StartCoroutine(WaitToPop(i));
-                    PlayerStat player = (PlayerStat)m_decidingCharacter;
-                    player.m_spellsAvaliable--;
-                    break;
-                }
-            }
+            //for (int i = battleMenu.spellCharges.Length - 1; i >= 0; i--)
+            //{
+            //    if (battleMenu.spellCharges[i].gameObject.activeInHierarchy == true)
+            //    {
+            //        //battleMenu.spellCharges[i].gameObject.SetActive(false);
+            //        battleMenu.spellCharges[i].GetComponent<SpellCharge>().TurnOff();
+            //        PlayerStat player = (PlayerStat)m_decidingCharacter;
+            //        player.m_spellsAvaliable--;
+            //        break;
+            //    }
+            //}
+
+            PlayerStat player = (PlayerStat)m_decidingCharacter;
+            player.SpellAvaliable--;
 
             m_decidingCharacter.m_attackCharge = 0;
             m_decidingCharacter.m_ActiveWeapon = m_decidingCharacter.m_spells[magicAbilityValue];
